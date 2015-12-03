@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dee4ee"
+    android:orientation="vertical"
+    android:padding="@dimen/espacio_norma_1"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/titulo_soporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/etiqueta_titulo_desconexion"
+        android:textSize="24dp"
+        android:paddingBottom="36dp"
+        android:paddingTop="50dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_gravity="center_horizontal" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/espacio_norma_1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/info_adios"
+                android:text="Usted abandonará la sesión perdiéndose su localización y dejando todos los servicios de medical_alarm"
+                android:textStyle="italic"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOGOUT"
+        android:id="@+id/buttonLogout"
+        android:layout_marginTop="36dp"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

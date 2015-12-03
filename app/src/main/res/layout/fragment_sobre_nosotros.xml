@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dee4ee"
+    android:orientation="vertical"
+    android:padding="@dimen/espacio_norma_1"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/titulo_soporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/etiqueta_titulo_soporte"
+        android:textSize="20dp"
+        android:paddingBottom="@dimen/espacio_norma_1"
+        android:layout_marginTop="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/espacio_norma_1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/texto_sobreNos"
+                android:text="@string/text_nosotros"
+                android:textAlignment="gravity"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_ucm"
+                android:layout_marginLeft="260dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/ucm_opt"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/titulo_soporte2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/etiqueta_titulo_soporte2"
+        android:textSize="20dp"
+        android:paddingBottom="@dimen/espacio_norma_1"
+        android:layout_marginTop="@dimen/espacio_norma_1"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/espacio_norma_1"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/texto_sobreNos_autores1"
+                android:text="@string/text_nosotros_autores1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="50dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/texto_sobreNos_autores2"
+                android:text="@string/text_nosotros_autores2"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/texto_sobreNos_autores3"
+                android:text="@string/text_nosotros_autores3"
+                android:layout_below="@+id/texto_sobreNos_autores1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_fdi"
+                android:src="@drawable/fdi_opt"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
