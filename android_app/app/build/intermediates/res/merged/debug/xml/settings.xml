@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- PREFERENCIAS GENERALES -->
+    <PreferenceCategory
+        android:key="@string/settings_gen"
+        android:title="@string/settings_gen">
+        <!-- Visibilidad de Miniaturas de las Entradas -->
+        <SwitchPreference
+            android:key="gps"
+            android:title="@string/setting_GPS"
+            android:defaultValue="true"
+            android:summary="La función de localización del GPS está activa"/>
+        <SwitchPreference
+            android:key="notificaciones"
+            android:title="@string/notificaciones"
+            android:defaultValue="true"
+            android:summary="Se reciben notificaciones periódicas de la aplicación"/>
+        <SwitchPreference
+            android:key="wifi"
+            android:title="@string/wifi"
+            android:defaultValue="true"
+            android:summary="La aplicación no gastará datos del móvil y sólo enviará información estando activado el wifi"/>
+    </PreferenceCategory>
+
+    <!-- PREFERENCIAS Cuentas -->
+    <PreferenceCategory
+        android:key="@string/settings_Twitter"
+        android:title="@string/settings_Twitter">
+        <!-- Usuario de Twitter -->
+        <EditTextPreference
+            android:key="usuario_twitter"
+            android:title="@string/settings_usuario_tituloT"
+            android:summary="@string/settings_usuario_resumenT"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+
+        <!-- Password de Twitter -->
+        <EditTextPreference
+            android:key="contraseña_twitter"
+            android:title="@string/settings_contraseña_tituloT"
+            android:summary="@string/settings_contraseña_resumenT"
+            android:selectAllOnFocus="true"
+            android:inputType="textWebPassword"
+            android:singleLine="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/settings_Google"
+        android:title="@string/settings_Google">
+        <!-- Usuario de Twitter -->
+        <EditTextPreference
+            android:key="usuario_google"
+            android:title="@string/settings_usuario_tituloG"
+            android:summary="@string/settings_usuario_resumenG"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+
+        <!-- Password de Twitter -->
+        <EditTextPreference
+            android:key="contraseña_google"
+            android:title="@string/settings_contraseña_tituloG"
+            android:summary="@string/settings_contraseña_resumenG"
+            android:selectAllOnFocus="true"
+            android:inputType="textWebPassword"
+            android:singleLine="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen><!-- From: file:/C:/Users/Manuel/AndroidStudioProjects/Prueba/app/src/main/res/xml/settings.xml -->

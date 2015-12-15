@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\build\\intermediates\\res\\merged\\debug\\xml\\settings_headers.xml",
+        "source": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\src\\main\\res\\xml\\settings_headers.xml"
+    },
+    {
+        "merged": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\build\\intermediates\\res\\merged\\debug\\xml\\settings_google.xml",
+        "source": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\src\\main\\res\\xml\\settings_google.xml"
+    },
+    {
+        "merged": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\build\\intermediates\\res\\merged\\debug\\xml\\settings.xml",
+        "source": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\src\\main\\res\\xml\\settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\build\\intermediates\\res\\merged\\debug\\xml\\settings_twitter.xml",
+        "source": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\src\\main\\res\\xml\\settings_twitter.xml"
+    },
+    {
+        "merged": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\build\\intermediates\\res\\merged\\debug\\xml\\settings_gen.xml",
+        "source": "C:\\Users\\Manuel\\AndroidStudioProjects\\Prueba\\app\\src\\main\\res\\xml\\settings_gen.xml"
+    }
+]

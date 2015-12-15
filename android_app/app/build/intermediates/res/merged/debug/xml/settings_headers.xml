@@ -1,0 +1,30 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.example.android.prueba.FragmentSettings"
+        android:title="@string/settings_gen"
+        android:summary="Ajustes Generales" >
+        <extra
+            android:name="settings"
+            android:value="generales"/>
+    </header>
+    <header
+        android:fragment="com.example.android.prueba.FragmentSettings"
+        android:title="@string/settings_Twitter"
+        android:summary="Datos de Twitter" >
+        <extra
+            android:name="settings"
+            android:value="twitter" />
+    </header>
+    <header
+        android:fragment="com.example.android.prueba.FragmentSettings"
+        android:title="@string/settings_Google"
+        android:summary="Datos de Google" >
+        <extra
+            android:name="settings"
+            android:value="google" />
+    </header>
+
+</preference-headers><!-- From: file:/C:/Users/Manuel/AndroidStudioProjects/Prueba/app/src/main/res/xml/settings_headers.xml -->
