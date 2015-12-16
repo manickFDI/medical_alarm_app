@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">"Medical Alarm"</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Buscar</string>
+
+    <string name="item_inicio">Inicio</string>
+    <string name="item_cuenta">Mi Cuenta</string>
+    <string name="item_categorias">Categorías</string>
+    <string name="item_configuracion">Configuración</string>
+
+    <string name="titulo_tab_perfil">PERFIL</string>
+    <string name="titulo_tab_info">NOTICIAS</string>
+    <string name="titulo_tab_estado">ESTADO</string>
+
+    <string name="texto_cambiar_contrasena">Cambia tu contraseña</string>
+    <string name="etiqueta_contrasena">Contraseña</string>
+    <string name="etiqueta_contagio_persona">RIESGO CONTAGIO DE INDIVIDUO</string>
+    <string name="etiqueta_contagio_zona">RIESGO CONTAGIO DE ZONA</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="medical">Medical Alarm</string>
+    <string name="no_contagio_individuo">NO HAY RIESGO DE CONTAGIO</string>
+    <string name="no_contagio_zona">ZONA LIBRE DE CONTAGIOS</string>
+    <string name="etiqueta_datos_actuales">DATOS ACTUALES</string>
+    <string name="localizacion">Madrid, 23 ºC</string>
+    <string name="etiqueta_info_usuario">Datos personales</string>
+    <string name="ejemplo_epidemia_1">Epidemia de Ébola en Madrid: RIESGO ALTO</string>
+    <string name="ejemplo_epidemia_2">Epidemia de Fiebre amarilla en Zaragoza: RIESGO MEDIO</string>
+    <string name="ejemplo_epidemia_3">Posibles contagios de gripe A en Barcelona: RIESGO BAJO</string>
+    <string name="ejemplo_epidemia_4">Terminada y erradicalizada la epidemia de Ébola en toda Europa</string>
+    <string name="etiqueta_titulo_soporte">Informacion</string>
+    <string name="etiqueta_titulo_desconexion">DESCONEXION</string>
+<string name="text_nosotros">
+    Esta aplicación forma parte de un proyecto cuyo objetivo es la detección de enfermedades.
+    Se trata de una iniciativa llevada a cabo por tres alumnos de la universidad Complutense de Madrid en su trabajo fin de grado,
+    concretamente el que corresponde a ingeniería informática.
+</string>
+    <string name="text_nosotros_autores1">Diego Díaz Bailón</string>
+    <string name="text_nosotros_autores2">Manuel Martínez Sánchez</string>
+    <string name="text_nosotros_autores3">Pablo Panero</string>
+    <string name="etiqueta_titulo_soporte2">Equipo de proyecto</string>
+
+</resources>
