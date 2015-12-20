@@ -19,4 +19,4 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/menu_drawer" />
 
-</android.support.v4.widget.DrawerLayout><!-- From: file:/D:/My%20downloads/medical_alarm_app-diego_prueba/android_app/app/src/main/res/layout/activity_main.xml -->
+</android.support.v4.widget.DrawerLayout><!-- From: file:/C:/Users/Manuel/AndroidStudioProjects/medical_alarm_app/android_app/app/src/main/res/layout/activity_main.xml -->
