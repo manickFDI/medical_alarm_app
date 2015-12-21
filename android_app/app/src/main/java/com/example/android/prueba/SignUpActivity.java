@@ -1,6 +1,8 @@
 package com.example.android.prueba;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +16,8 @@ import android.widget.EditText;
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
+
+    SharedPreferences prefs;
 
     private EditText _nameText;
     private EditText _dniText;
@@ -65,9 +69,9 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.setMessage("Creando cuenta...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String name = _nameText.getText().toString();
+        final String email = _emailText.getText().toString();
+        final String password = _passwordText.getText().toString();
 
         // TODO: Implement your own signup logic here.
 
@@ -76,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        onSignupSuccess();
+                        onSignupSuccess(name, email, password);
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
@@ -84,9 +88,17 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void onSignupSuccess() {
+    public void onSignupSuccess(String name, String email, String pass) {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
+
+        prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("Nombre", name);
+        editor.putString("Email", email);
+        editor.putString("Password", pass);
+        editor.commit();
+
         finish();
     }
 

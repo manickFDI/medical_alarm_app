@@ -1,7 +1,9 @@
 package com.example.android.prueba;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +21,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String EMAIL = "manuma02@ucm.es";
     private static final String PASSWORD = "1234";
+
+    SharedPreferences prefs;
 
     private EditText _emailText;
     private EditText _passwordText;
@@ -114,29 +118,31 @@ public class LoginActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
+        prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+
+        String loaded_email = prefs.getString("Email", "Defecto");
+        String loaded_pass = prefs.getString("Password", "Defecto");
+
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            if(email.compareTo(EMAIL) != 0) {
-                _emailText.setError("Dirección de correo incorrecta");
-            } else {
-                _emailText.setError("Dirección de corrreo inválida");
-            }
+            _emailText.setError("Dirección de corrreo inválida");
             valid = false;
         } else {
             _emailText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            if(password.compareTo(PASSWORD) != 0) {
-                _passwordText.setError("Contraseña incorrecta");
-            } else {
-                _passwordText.setError("Contraseña inválida: entre 4 y 10 caracteres alfanuméricos");
-            }
+            _passwordText.setError("Contraseña inválida: entre 4 y 10 caracteres alfanuméricos");
             valid = false;
         } else {
             _passwordText.setError(null);
+        }
+
+        if((loaded_email.compareTo(email) != 0) || (loaded_pass.compareTo(password) != 0)) {
+            _passwordText.setError("Contraseña o email incorrectos");
+            valid = false;
         }
 
         return valid;
