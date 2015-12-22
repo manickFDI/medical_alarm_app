@@ -1,6 +1,9 @@
 package com.example.android.prueba;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,9 +32,23 @@ public class MainActivity extends AppCompatActivity implements Fragment_cardInfo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //crear login
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        //progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Iniciando...");
+        progressDialog.show();
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 3000);
+
+        SharedPreferences prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        if(!prefs.contains("Email")) {
+            //crear login
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
 
         agregarToolbar();//encapsulación
 
