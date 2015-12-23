@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -36,6 +37,7 @@ public class SensorService extends Service {
     private ServiceHandler mServiceHandler;
     private Lock valuesLock;
     private SensorResult currentValues;
+    private IBinder mBinder;
 
     @Override
     public void onCreate() {
@@ -43,6 +45,7 @@ public class SensorService extends Service {
         // separate thread because the service normally runs in the process's
         // main thread, which we don't want to block.  We also make it
         // background priority so CPU-intensive work will not disrupt our UI.
+        mBinder = new LocalBinder();
         valuesLock = new Lock();
         currentValues = new SensorResult();
         HandlerThread thread = new HandlerThread("ServiceStartArguments",
@@ -68,36 +71,14 @@ public class SensorService extends Service {
         return START_STICKY;
     }
 
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
 
     @Override
     public void onDestroy() {
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Return the communication channel to the service.  May return null if
-     * clients can not bind to the service.  The returned
-     * {@link IBinder} is usually for a complex interface
-     * that has been <a href="{@docRoot}guide/components/aidl.html">described using
-     * aidl</a>.
-     * <p/>
-     * <p><em>Note that unlike other application components, calls on to the
-     * IBinder interface returned here may not happen on the main thread
-     * of the process</em>.  More information about the main thread can be found in
-     * <a href="{@docRoot}guide/topics/fundamentals/processes-and-threads.html">Processes and
-     * Threads</a>.</p>
-     *
-     * @param intent The Intent that was used to bind to this service,
-     *               as given to {@link Context#bindService
-     *               Context.bindService}.  Note that any extras that were included with
-     *               the Intent at that point will <em>not</em> be seen here.
-     * @return Return an IBinder through which clients can call on to the
-     * service.
-     */
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
     public SensorResult getCurrentValues(){
@@ -124,10 +105,23 @@ public class SensorService extends Service {
         return aux;
     }
 
+    public void start(){
+        if(!mServiceHandler.isStarted()) {
+            this.mServiceHandler.startHandlerWork();
+        }
+    }
+
+    public void stop(){
+        if(mServiceHandler.isStarted()) {
+            this.mServiceHandler.stopHandlerWork();
+        }
+    }
+
     // Handler that receives messages from the thread
     private final class ServiceHandler extends Handler implements com.google.android.gms.location.LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
         private static final String SENSOR_TAG = "SENSORS";
+        private boolean started;
         private GoogleApiClient mGoogleApiClient;
         private LocationRequest mLocationRequest;
         private int mNumUpdates;
@@ -142,8 +136,10 @@ public class SensorService extends Service {
         public ServiceHandler(Looper looper) {
             super(looper);
         }
+
         @Override
         public void handleMessage(Message msg) {
+            started = false;
             mNumUpdates = 0;
             buildGoogleApiClient();
             mGoogleApiClient.connect();
@@ -158,19 +154,25 @@ public class SensorService extends Service {
             startHandlerWork();
         }
 
-        private void startHandlerWork() {
+        public boolean isStarted(){
+            return this.started;
+        }
+
+        public void startHandlerWork() {
             if(!mGoogleApiClient.isConnected()){
                 mGoogleApiClient.connect();
             }
-            mMagnetometer.registerSensor();
-            mAccelerometer.registerSensor();
-            mLight.registerSensor();
             if (!mRequestUpdates) {
+                mMagnetometer.registerSensor();
+                mAccelerometer.registerSensor();
+                mLight.registerSensor();
                 startLocationUpdates();
             }
+            started = true;
+
         }
 
-        private void stopHandlerWork() {
+        public void stopHandlerWork() {
             mMagnetometer.unregisterSensor();
             mAccelerometer.unregisterSensor();
             mLight.unregisterSensor();
@@ -178,6 +180,7 @@ public class SensorService extends Service {
             if(mGoogleApiClient.isConnected()){
                 mGoogleApiClient.disconnect();
             }
+            started = false;
         }
 
         protected synchronized void buildGoogleApiClient() {
@@ -277,6 +280,12 @@ public class SensorService extends Service {
 
         public int getNumUpdates() {
             return mNumUpdates;
+        }
+    }
+
+    public class LocalBinder extends Binder {
+        public SensorService getSensorServiceInstance() {
+            return SensorService.this;
         }
     }
 }
