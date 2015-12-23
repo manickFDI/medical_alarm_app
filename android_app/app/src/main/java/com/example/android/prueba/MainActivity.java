@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.android.prueba.sensors.SensorService;
+
 public class MainActivity extends AppCompatActivity implements Fragment_cardInfo.OnFragmentInteractionListener{
 
     private DrawerLayout drawerLayout;
@@ -73,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements Fragment_cardInfo
         lista.setAdapter(adapter);*/
 
         //PABLO
-        //Intent intentSensor = new Intent(this, SensorService.class);
-        //startService(intentSensor);
+        if(getSharedPreferences("Preferencias", Context.MODE_PRIVATE).getBoolean("sensors_status", true)){
+            Intent intentSensor = new Intent(this, SensorService.class);
+            startService(intentSensor);
+        }
 
         // PRUEBA POST
         //Intent intent = new Intent(this, ApiService.class);

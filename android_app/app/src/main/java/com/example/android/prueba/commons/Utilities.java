@@ -1,6 +1,10 @@
 package com.example.android.prueba.commons;
 
+import android.app.ActivityManager;
+import android.content.Context;
+
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Manuel on 13/12/2015.
@@ -20,4 +24,5 @@ public class Utilities {
 
         return fecha;
     }
+
 }

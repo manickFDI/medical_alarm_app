@@ -116,6 +116,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean validate() {
+        return true;
+        /*
         boolean valid = true;
 
         prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
@@ -146,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+        */
     }
 
     private void initFields(){

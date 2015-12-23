@@ -1,7 +1,6 @@
 package com.example.android.prueba.sensors;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -13,7 +12,6 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -33,6 +31,7 @@ import java.util.Date;
  */
 public class SensorService extends Service {
 
+    protected static final String SENSOR_TAG = "SENSORS";
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
     private Lock valuesLock;
@@ -109,18 +108,23 @@ public class SensorService extends Service {
         if(!mServiceHandler.isStarted()) {
             this.mServiceHandler.startHandlerWork();
         }
+        else{
+            Log.d(SENSOR_TAG, "Sensors were already started");
+        }
     }
 
     public void stop(){
         if(mServiceHandler.isStarted()) {
             this.mServiceHandler.stopHandlerWork();
         }
+        else{
+            Log.d(SENSOR_TAG, "Sensors were already stopped");
+        }
     }
 
     // Handler that receives messages from the thread
     private final class ServiceHandler extends Handler implements com.google.android.gms.location.LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-        private static final String SENSOR_TAG = "SENSORS";
         private boolean started;
         private GoogleApiClient mGoogleApiClient;
         private LocationRequest mLocationRequest;
@@ -133,6 +137,7 @@ public class SensorService extends Service {
         private Light mLight;
         private Battery mBattery;
         private boolean mRequestUpdates;
+
         public ServiceHandler(Looper looper) {
             super(looper);
         }
@@ -169,7 +174,7 @@ public class SensorService extends Service {
                 startLocationUpdates();
             }
             started = true;
-
+            Log.d(SENSOR_TAG, "Sensors started");
         }
 
         public void stopHandlerWork() {
@@ -181,6 +186,7 @@ public class SensorService extends Service {
                 mGoogleApiClient.disconnect();
             }
             started = false;
+            Log.d(SENSOR_TAG, "Sensors stopped");
         }
 
         protected synchronized void buildGoogleApiClient() {
@@ -218,7 +224,7 @@ public class SensorService extends Service {
                 Log.d(SENSOR_TAG, "new location update: " + mNumUpdates);
                 mCurrentLocation = location;
                 mCurrentLocationTime = DateFormat.getTimeInstance().format(new Date());
-                if(mNumUpdates == 2){
+                if(mNumUpdates == 20){
                     stopHandlerWork();
                     stopSelf();
                 }
@@ -239,7 +245,7 @@ public class SensorService extends Service {
                 bundle.putInt("light_accuracy", this.getCurrentValues().getLightAccuracy());
                 bundle.putString("battery", this.getCurrentValues().getBatVal().toString());
                 intent.putExtras(bundle);
-                startService(intent);
+                //startService(intent);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

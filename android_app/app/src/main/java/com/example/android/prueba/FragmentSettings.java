@@ -1,5 +1,6 @@
 package com.example.android.prueba;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +31,6 @@ public class FragmentSettings extends PreferenceFragment{
 
     public FragmentSettings() {
         mBounded = false;
-
         mConnection = new ServiceConnection() {
 
             public void onServiceDisconnected(ComponentName name) {
@@ -41,8 +41,7 @@ public class FragmentSettings extends PreferenceFragment{
             public void onServiceConnected(ComponentName name, IBinder service) {
                 mBounded = true;
                 Log.d(SETTINGS, "service connected");
-                SensorService.LocalBinder mLocalBinder = (SensorService.LocalBinder)service;
-                mSensorService = mLocalBinder.getSensorServiceInstance();
+                mSensorService = ((SensorService.LocalBinder)service).getSensorServiceInstance();
             }
         };
     }
@@ -68,29 +67,41 @@ public class FragmentSettings extends PreferenceFragment{
             @Override
             public boolean onPreferenceChange(Preference preference,
                                               Object newValue) {
+
+                boolean sensorStatus = prefs.getBoolean("sensors_status", true);
                 boolean newState = !((SwitchPreference) preference).isChecked();
                 prefsEditor = prefs.edit();
                 prefsEditor.putBoolean("sensors_status", newState);
                 prefsEditor.commit();
 
-                Intent intent = new Intent(getActivity(), SensorService.class);
+                if(!sensorStatus == newState) {
 
-                getActivity().bindService(intent, mConnection, getActivity().BIND_AUTO_CREATE);
-                if(mBounded) {
-                    if(newState){
-                        mSensorService.start();
+                    Intent intent = new Intent(getActivity(), SensorService.class);
+
+                    if(getActivity().bindService(intent, mConnection, Activity.BIND_AUTO_CREATE)) { //ALWAYS TRUE! WRONG!
+                        if (mBounded) {
+                            if (newState) {
+                                mSensorService.start();
+                            } else {
+                                mSensorService.stop();
+                            }
+                        } else if(!sensorStatus){ //It was off so we need to start it
+                            Intent intentSensor = new Intent(getActivity(), SensorService.class);
+                            getActivity().startService(intentSensor);
+                        } else {
+                            Log.d(SETTINGS, "Failed to bind SensorService [2]");
+                        }
+                        getActivity().unbindService(mConnection);
                     }
-                    else{
-                        mSensorService.stop();
+                    else if (newState) { //It cannot bind because its not running, starting form off
+                        Intent intentSensor = new Intent(getActivity(), SensorService.class);
+                        getActivity().startService(intentSensor);
+                        //mSensorService.start();
                     }
-                    getActivity().unbindService(mConnection);
+                    else {
+                        Log.d(SETTINGS, "Failed to bind SensorService [1]");
+                    }
                 }
-                else{
-                    Log.d(SETTINGS, "Failed to bidn SensorService");
-                }
-
-
-
                 return true;
             }
 
