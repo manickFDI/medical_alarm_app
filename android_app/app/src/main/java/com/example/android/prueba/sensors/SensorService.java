@@ -290,7 +290,7 @@ public class SensorService extends Service {
     }
 
     public class LocalBinder extends Binder {
-        public SensorService getSensorServiceInstance() {
+        public SensorService getService() {
             return SensorService.this;
         }
     }

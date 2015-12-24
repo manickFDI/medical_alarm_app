@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_cardInfo
                 }, 3000);
 
         SharedPreferences prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+
         if(!prefs.contains("Email")) {
             //crear login
             Intent intent = new Intent(this, LoginActivity.class);
@@ -75,10 +76,14 @@ public class MainActivity extends AppCompatActivity implements Fragment_cardInfo
         lista.setAdapter(adapter);*/
 
         //PABLO
-        if(getSharedPreferences("Preferencias", Context.MODE_PRIVATE).getBoolean("sensors_status", true)){
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        boolean initialized = prefs.getBoolean("sensors_status", false);
+        if(initialized){
             Intent intentSensor = new Intent(this, SensorService.class);
             startService(intentSensor);
         }
+        prefsEditor.putBoolean("sensors_initialized", initialized);
+        prefsEditor.commit();
 
         // PRUEBA POST
         //Intent intent = new Intent(this, ApiService.class);

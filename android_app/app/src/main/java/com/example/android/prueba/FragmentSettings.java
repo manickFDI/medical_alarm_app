@@ -35,13 +35,14 @@ public class FragmentSettings extends PreferenceFragment{
 
             public void onServiceDisconnected(ComponentName name) {
                 mBounded = false;
+                mSensorService = null;
                 Log.d(SETTINGS, "service disconnected");
             }
 
             public void onServiceConnected(ComponentName name, IBinder service) {
                 mBounded = true;
+                mSensorService = ((SensorService.LocalBinder)service).getService();
                 Log.d(SETTINGS, "service connected");
-                mSensorService = ((SensorService.LocalBinder)service).getSensorServiceInstance();
             }
         };
     }
@@ -62,51 +63,60 @@ public class FragmentSettings extends PreferenceFragment{
         initFields();
         prefs = this.getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
 
+        Intent intent = new Intent(getActivity(), SensorService.class);
+        getActivity().bindService(intent, mConnection, Activity.BIND_AUTO_CREATE);
+
         sensorsStatus.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
             @Override
             public boolean onPreferenceChange(Preference preference,
                                               Object newValue) {
 
-                boolean sensorStatus = prefs.getBoolean("sensors_status", true);
+                boolean sensorStatus = prefs.getBoolean("sensors_initialized", true);
                 boolean newState = !((SwitchPreference) preference).isChecked();
                 prefsEditor = prefs.edit();
                 prefsEditor.putBoolean("sensors_status", newState);
                 prefsEditor.commit();
 
-                if(!sensorStatus == newState) {
-
-                    Intent intent = new Intent(getActivity(), SensorService.class);
-
-                    if(getActivity().bindService(intent, mConnection, Activity.BIND_AUTO_CREATE)) { //ALWAYS TRUE! WRONG!
-                        if (mBounded) {
-                            if (newState) {
-                                mSensorService.start();
-                            } else {
-                                mSensorService.stop();
-                            }
-                        } else if(!sensorStatus){ //It was off so we need to start it
-                            Intent intentSensor = new Intent(getActivity(), SensorService.class);
-                            getActivity().startService(intentSensor);
+                if(sensorStatus) {
+                    if (mBounded) {
+                        if (newState) {
+                            mSensorService.start();
                         } else {
-                            Log.d(SETTINGS, "Failed to bind SensorService [2]");
+                            mSensorService.stop();
                         }
-                        getActivity().unbindService(mConnection);
-                    }
-                    else if (newState) { //It cannot bind because its not running, starting form off
-                        Intent intentSensor = new Intent(getActivity(), SensorService.class);
-                        getActivity().startService(intentSensor);
-                        //mSensorService.start();
-                    }
-                    else {
-                        Log.d(SETTINGS, "Failed to bind SensorService [1]");
+                    } else {
+                        Log.d(SETTINGS, "Failed to bind SensorService [2]");
                     }
                 }
+                else if (newState) { //It cannot bind because its not running, starting form off
+                    Intent intentSensor = new Intent(getActivity(), SensorService.class);
+                    getActivity().startService(intentSensor);
+                    prefsEditor.putBoolean("sensors_initialized", true);
+                    prefsEditor.commit();
+                    //mSensorService.start();
+                }
+                else {
+                    Log.d(SETTINGS, "Failed to bind SensorService [1]");
+                }
+
                 return true;
             }
 
         });
 
+    }
+
+    @Override
+    public void onStop(){
+        if(mBounded)
+            getActivity().unbindService(mConnection);
+    }
+
+    @Override
+    public void onDestroy(){
+        if(mBounded)
+            getActivity().unbindService(mConnection);
     }
 
     private void initFields() {
