@@ -1,0 +1,21 @@
+# install mongoDB
+# run mongod service (specify database data path, by default /data/db/)
+# start mongo shell
+
+> use malarm;
+> db.createCollection("locations", {autoIndexID : true});
+[> show collections;]
+
+Doc schema:
+
+{
+   _id: ObjectId(),
+   timestamp: <>, 
+   latitude: <>,
+   longitude: <>,
+   altitude: <>,
+   magnetometer: <>,
+   accelerometer: <>,
+   light: <>,
+   battery: <>
+}
