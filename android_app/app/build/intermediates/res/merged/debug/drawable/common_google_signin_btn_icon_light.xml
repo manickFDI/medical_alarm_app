@@ -12,4 +12,4 @@
     <item
         android:drawable="@drawable/common_google_signin_btn_icon_light_normal" />
 </selector>
-<!-- From: file:/D:/My%20downloads/medical_alarm_app-diego_prueba/android_app/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/res/drawable/common_google_signin_btn_icon_light.xml -->
+<!-- From: file:/D:/GitHub/medical_alarm_app/android_app/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.3.0/res/drawable/common_google_signin_btn_icon_light.xml -->

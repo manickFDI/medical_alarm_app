@@ -1,15 +1,18 @@
 package com.example.android.prueba;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.prueba.apiConnections.ApiService;
 import com.example.android.prueba.commons.Utilities;
 
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ import java.util.List;
 public class FragmentInfo extends Fragment {
 
     private RecyclerView recycler;
-    private RecyclerView.Adapter adapter;
+    private CardAdapter adapter;
     private RecyclerView.LayoutManager lManager;
     private TextView fecha;
     private SwipeRefreshLayout refreshLayout;
@@ -109,7 +112,24 @@ public class FragmentInfo extends Fragment {
 
         // Crear un nuevo adaptador
         adapter = new CardAdapter(items);
+
+        adapter.setOnItemClickListener(new CardAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.d("TAG", "onItemClick position: " + position);
+
+                //Lanzar startActivity con un intent que sea el de mostrar info detallada
+                CardInfo card = adapter.getCardByPosition(position);
+                Intent intent = new Intent(getActivity(), Fragment_cardInfo.class);
+                //Bundle bundle = new Bundle();
+                //bundle.putDouble("latitude", this.getCurrentValues().getLocLat());
+                //intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         recycler.setAdapter(adapter);
+
 
 
         /*// Obtener el refreshLayout

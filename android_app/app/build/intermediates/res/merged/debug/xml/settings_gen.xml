@@ -21,4 +21,4 @@
             android:defaultValue="true"
             android:summary="La aplicación no gastará datos del móvil y sólo enviará información estando activado el wifi"/>
     </PreferenceCategory>
-</PreferenceScreen><!-- From: file:/D:/My%20downloads/medical_alarm_app-diego_prueba/android_app/app/src/main/res/xml/settings_gen.xml -->
+</PreferenceScreen><!-- From: file:/D:/GitHub/medical_alarm_app/android_app/app/src/main/res/xml/settings_gen.xml -->

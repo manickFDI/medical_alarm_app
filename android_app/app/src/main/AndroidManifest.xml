@@ -35,6 +35,11 @@
             android:label="@string/title_activity_settings">
         </activity>
 
+        <activity
+            android:name=".Fragment_cardInfo"
+            android:label="@string/title_activity_cardInfo">
+        </activity>
+
     </application>
 
 </manifest>

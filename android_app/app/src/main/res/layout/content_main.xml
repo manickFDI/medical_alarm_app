@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <!-- Contiene la appBar y el toolbar. Dentro hay un RelativeLayout vacío para rellenar con fragments -->
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

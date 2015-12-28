@@ -8,10 +8,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -19,7 +21,7 @@ import android.widget.ListView;
 
 import com.example.android.prueba.sensors.SensorService;
 
-public class MainActivity extends AppCompatActivity implements Fragment_cardInfo.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
@@ -49,6 +51,15 @@ public class MainActivity extends AppCompatActivity implements Fragment_cardInfo
             seleccionarItem(navigationView.getMenu().getItem(0));
         }
 
+
+        /*Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            int index = extras.getInt("tab_index");
+            setContentView(R.layout.fragment_paginado);
+            ViewPager vp = (ViewPager) findViewById(R.id.pager);
+            vp.setCurrentItem(index);
+        }*/
+
         /*String[] cosasPorHacer = new String[] { "Aprender a programar en Android",
                 "Hacer una aplicación famosa","Vender la aplicación","Esperar a que llegue el dinero"};
 
@@ -57,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_cardInfo
         lista.setAdapter(adapter);*/
 
         //PABLO
-        Intent intent = new Intent(this, SensorService.class);
-        startService(intent);
+        //Intent intent = new Intent(this, SensorService.class);
+        //startService(intent);
 
         // PRUEBA POST
         //Intent intent = new Intent(this, ApiService.class);
@@ -146,8 +157,5 @@ public class MainActivity extends AppCompatActivity implements Fragment_cardInfo
         setTitle(itemDrawer.getTitle());
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
 }

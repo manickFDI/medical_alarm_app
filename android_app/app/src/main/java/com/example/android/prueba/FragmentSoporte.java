@@ -87,12 +87,13 @@ public class FragmentSoporte extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0: //preguntas frecuentes
-                        Fragment_cardInfo fragment = new Fragment_cardInfo();
+                        /*Fragment_cardInfo fragment = new Fragment_cardInfo();
                         FragmentManager manager = getFragmentManager();
                         manager
                                 .beginTransaction()
                                 .replace(R.id.lista_soporte, fragment)
-                                .commit();
+                                .commit();*/
+                        Intent intent = new Intent(getContext(), Fragment_cardInfo.class);
                         Toast toast = Toast.makeText(getActivity(), "Toast por defecto -> No implementado", Toast.LENGTH_SHORT);
                         //toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();

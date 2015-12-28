@@ -42,4 +42,6 @@
     <string name="text_nosotros_autores3">Pablo Panero</string>
     <string name="etiqueta_titulo_soporte2">Equipo de proyecto</string>
 
+    <string name="title_activity_cardInfo">Noticia</string>
+
 </resources>

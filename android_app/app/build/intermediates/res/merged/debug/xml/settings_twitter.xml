@@ -20,4 +20,4 @@
             android:inputType="textWebPassword"
             android:singleLine="true" />
     </PreferenceCategory>
-</PreferenceScreen><!-- From: file:/D:/My%20downloads/medical_alarm_app-diego_prueba/android_app/app/src/main/res/xml/settings_twitter.xml -->
+</PreferenceScreen><!-- From: file:/D:/GitHub/medical_alarm_app/android_app/app/src/main/res/xml/settings_twitter.xml -->

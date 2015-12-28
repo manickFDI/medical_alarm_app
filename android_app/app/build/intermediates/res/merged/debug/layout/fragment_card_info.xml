@@ -1,14 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.prueba.Fragment_cardInfo">
+    android:id="@+id/fragmentCardInfo">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
-<!-- From: file:/D:/My%20downloads/medical_alarm_app-diego_prueba/android_app/app/src/main/res/layout/fragment_card_info.xml -->
+</RelativeLayout>
+<!-- From: file:/D:/GitHub/medical_alarm_app/android_app/app/src/main/res/layout/fragment_card_info.xml -->

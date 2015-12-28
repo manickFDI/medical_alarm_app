@@ -1,6 +1,11 @@
 package com.example.android.prueba;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +24,21 @@ import java.util.List;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
     private List<CardInfo> items;
+    //private FragmentManager manager;
+
+    private static ClickListener clickListener; //ClickListener es una interfaz creada al final de esta clase
 
     public CardAdapter(List<CardInfo> items) {
         this.items = items;
     }
+
+    /*
+    public CardAdapter(List<CardInfo> items, FragmentManager m) {
+        this.items = items;
+        this.manager = m;
+    }
+    */
+
 
     @Override
     public int getItemCount() {
@@ -41,6 +57,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         viewHolder.gravedad.setText("Riesgo: " + String.valueOf(items.get(i).getGravedad()));
         viewHolder.fecha.setText(items.get(i).getFecha());
         viewHolder.imagen.setImageResource(items.get(i).getIdImagen());
+        //viewHolder.setFragmentManager(this.manager);
     }
 
     /*
@@ -50,6 +67,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         items.remove(position);
         notifyDataSetChanged();
     }
+
+    public CardInfo getCardByPosition(int position) {
+        return items.get(position);
+    }
+
 
     /*
     Clear all the list
@@ -66,6 +88,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         public TextView fecha;
         public ImageView imagen;
         public ImageButton icon;
+        //private FragmentManager manager;
 
         public CardViewHolder(View v) {
             super(v);
@@ -80,12 +103,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*Fragment_cardInfo fragment = new Fragment_cardInfo();
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager
-                            .beginTransaction()
-                            .replace(R.id.swipeRefresh, this)
-                            .commit();*/
+                    //Fragment_cardInfo fragment = new Fragment_cardInfo();
+                    //FragmentManager fragmentManager = getFragmentManager();
+
+                    /*
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.contenedor_principal, Fragment_cardInfo.newInstance());
+                    transaction.addToBackStack("cardAdapter");
+                    transaction.commit();
+                    */
+
+                    clickListener.onItemClick(getAdapterPosition(), v);
+
                     Toast toast = Toast.makeText(v.getContext(), gravedad.getText(), Toast.LENGTH_SHORT);
                     //toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
@@ -106,5 +135,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             //toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+
+        /*
+        public void setFragmentManager(FragmentManager m) {
+            this.manager = m;
+        }
+        */
+    }
+
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        CardAdapter.clickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
     }
 }

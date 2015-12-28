@@ -7,4 +7,4 @@
   android:background="@null"
   android:clickable="false"
   android:focusable="false"
-  xmlns:app="http://schemas.android.com/apk/res-auto"/><!-- From: file:/build/material_preferences_library/src/main/res/layout/mpl__switch_preference.xml --><!-- From: file:/D:/My%20downloads/medical_alarm_app-diego_prueba/android_app/app/build/intermediates/exploded-aar/com.github.AndroidDeveloperLB/MaterialPreferenceLibrary/5/res/layout/mpl__switch_preference.xml -->
+  xmlns:app="http://schemas.android.com/apk/res-auto"/><!-- From: file:/build/material_preferences_library/src/main/res/layout/mpl__switch_preference.xml --><!-- From: file:/D:/GitHub/medical_alarm_app/android_app/app/build/intermediates/exploded-aar/com.github.AndroidDeveloperLB/MaterialPreferenceLibrary/5/res/layout/mpl__switch_preference.xml -->
