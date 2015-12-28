@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="D:\GitHub\medical_alarm_app\android_app\app\src\androidTest\res"/><source path="D:\GitHub\medical_alarm_app\android_app\app\build\generated\res\rs\androidTest\debug"/><source path="D:\GitHub\medical_alarm_app\android_app\app\build\generated\res\resValues\androidTest\debug"/></dataSet><mergedItems/></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="/Users/Light/Workspace/tfg/medical_alarm_app/android_app/app/src/androidTest/res"/><source path="/Users/Light/Workspace/tfg/medical_alarm_app/android_app/app/build/generated/res/rs/androidTest/debug"/><source path="/Users/Light/Workspace/tfg/medical_alarm_app/android_app/app/build/generated/res/resValues/androidTest/debug"/></dataSet><mergedItems/></merger>
+>>>>>>> cef7dd209547de59bce44099f43a5deb72958594

@@ -1,6 +1,9 @@
 package com.example.android.prueba;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -28,13 +31,29 @@ public class MainActivity extends AppCompatActivity {
     private ListView lista;
     private ArrayAdapter<String> adapter;
 
-    //PABLO
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        //progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Iniciando...");
+        progressDialog.show();
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 3000);
+
+        SharedPreferences prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+
+        if(!prefs.contains("Email")) {
+            //crear login
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
 
         agregarToolbar();//encapsulación
 
@@ -70,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
         //PABLO
         //Intent intent = new Intent(this, SensorService.class);
         //startService(intent);
+
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        boolean initialized = prefs.getBoolean("sensors_status", false);
+        if(initialized){
+            Intent intentSensor = new Intent(this, SensorService.class);
+            startService(intentSensor);
+        }
+        prefsEditor.putBoolean("sensors_initialized", initialized);
+        prefsEditor.commit();
 
         // PRUEBA POST
         //Intent intent = new Intent(this, ApiService.class);

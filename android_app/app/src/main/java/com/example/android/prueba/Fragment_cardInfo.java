@@ -62,9 +62,11 @@ public class Fragment_cardInfo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("tab_index", 2);//you can put 1,2 or the index you want to
-            startActivity(intent);
+            Log.d("TAG", "Pulsado boton Atras");
+            //Intent intent = new Intent(this, MainActivity.class);
+            //intent.putExtra("tab_index", 2);//you can put 1,2 or the index you want to
+            //startActivity(intent);
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
