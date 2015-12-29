@@ -36,7 +36,7 @@
         </activity>
 
         <activity
-            android:name=".Fragment_cardInfo"
+            android:name=".FragmentCardInfo"
             android:label="@string/title_activity_cardInfo">
         </activity>
 

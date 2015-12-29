@@ -1,27 +1,28 @@
 package com.example.android.prueba;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
-public class Fragment_cardInfo extends AppCompatActivity {
+public class FragmentCardInfo extends AppCompatActivity {
 
-    public Fragment_cardInfo() {
+    private TextView txtTitleNew;
+    private TextView txtSeverity;
+    private TextView txtDate;
+
+    public FragmentCardInfo() {
         // Required empty public constructor
     }
 
-    public static Fragment_cardInfo newInstance() {
-        Fragment_cardInfo fragment = new Fragment_cardInfo();
+    public static FragmentCardInfo newInstance() {
+        FragmentCardInfo fragment = new FragmentCardInfo();
         return fragment;
     }
 
@@ -31,18 +32,30 @@ public class Fragment_cardInfo extends AppCompatActivity {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_cardInfo.
+     * @return A new instance of fragment FragmentCardInfo.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_cardInfo newInstance(String param1, String param2) {
-        Fragment_cardInfo fragment = new Fragment_cardInfo();
+    public static FragmentCardInfo newInstance(String param1, String param2) {
+        FragmentCardInfo fragment = new FragmentCardInfo();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_card_info);
         setupActionBar();
+
+        this.txtTitleNew = (TextView)findViewById(R.id.new_title);
+        this.txtSeverity = (TextView)findViewById(R.id.new_severity);
+        this.txtDate = (TextView)findViewById(R.id.new_date);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            this.txtTitleNew.setText(extras.getString("text"));
+            this.txtSeverity.setText("Riesgo: " + extras.getString("severity"));
+            this.txtDate.setText(extras.getString("date"));
+        }
     }
 
 

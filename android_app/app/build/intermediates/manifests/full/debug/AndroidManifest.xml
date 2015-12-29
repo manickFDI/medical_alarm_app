@@ -55,7 +55,7 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.example.android.prueba.Fragment_cardInfo"
+            android:name="com.example.android.prueba.FragmentCardInfo"
             android:label="@string/title_activity_cardInfo" >
         </activity>
         <activity

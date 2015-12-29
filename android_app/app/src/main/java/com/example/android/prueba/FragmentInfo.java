@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.prueba.apiConnections.ApiService;
 import com.example.android.prueba.commons.Utilities;
 
 import java.util.ArrayList;
@@ -117,13 +116,14 @@ public class FragmentInfo extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 Log.d("TAG", "onItemClick position: " + position);
-
                 //Lanzar startActivity con un intent que sea el de mostrar info detallada
                 CardInfo card = adapter.getCardByPosition(position);
-                Intent intent = new Intent(getActivity(), Fragment_cardInfo.class);
-                //Bundle bundle = new Bundle();
-                //bundle.putDouble("latitude", this.getCurrentValues().getLocLat());
-                //intent.putExtras(bundle);
+                Intent intent = new Intent(getActivity(), FragmentCardInfo.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("text", card.getTexto());
+                bundle.putString("severity", card.getGravedad());
+                bundle.putString("date", card.getFecha());
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

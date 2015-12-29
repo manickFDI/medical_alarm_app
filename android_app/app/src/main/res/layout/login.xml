@@ -25,7 +25,6 @@
             android:text="Medical Alarm"
             android:textAlignment="center"
             android:textSize="16dp"
-            android:textStyle="bold"
             android:textColor="@color/window_background"
             android:layout_marginBottom="8dp"/>
 

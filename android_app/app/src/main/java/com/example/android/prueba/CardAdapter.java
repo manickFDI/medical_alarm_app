@@ -103,21 +103,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Fragment_cardInfo fragment = new Fragment_cardInfo();
+                    //FragmentCardInfo fragment = new FragmentCardInfo();
                     //FragmentManager fragmentManager = getFragmentManager();
 
                     /*
                     FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.replace(R.id.contenedor_principal, Fragment_cardInfo.newInstance());
+                    transaction.replace(R.id.contenedor_principal, FragmentCardInfo.newInstance());
                     transaction.addToBackStack("cardAdapter");
                     transaction.commit();
                     */
 
                     clickListener.onItemClick(getAdapterPosition(), v);
 
-                    Toast toast = Toast.makeText(v.getContext(), gravedad.getText(), Toast.LENGTH_SHORT);
+                    //Toast toast = Toast.makeText(v.getContext(), gravedad.getText(), Toast.LENGTH_SHORT);
                     //toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                    //toast.show();
 
                 }
             });
