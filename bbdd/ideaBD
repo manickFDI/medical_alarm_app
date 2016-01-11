@@ -1,0 +1,5 @@
+pensamientos base de datos: tenemos una base de datos relacional con una tabla con los usuarios y otra con las notificaciones.
+
+Hemos pensado en añadir otra tabla con las ciudades/municipios donde haya contagio para que la forma de actualizar la app sea mas sencilla haciendo una query.
+
+Esta tabla tendria la localizacion y la enfermedad.
