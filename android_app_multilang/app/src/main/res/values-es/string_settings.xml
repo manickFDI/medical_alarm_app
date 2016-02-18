@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Nombre Actividad Ajustes-->
+    <string name="title_activity_settings">Ajustes</string>
+
+    <!-- Titulos de Grupos-->
+    <string name="settings_gen">Ajustes generales</string>
+    <string name="settings_Twitter">Cuenta de Twitter</string>
+    <string name="settings_Google">Cuenta de Google</string>
+
+    <!-- GENERALES -->
+    <!-- Preferencia GPS -->
+    <string name="setting_GPS">Activar Geolocalización GPS</string>
+    <string name="setting_GPS_sumario">La función de localización del GPS está activa</string>
+
+    <!-- Preferencias Cuenta Twitter -->
+    <string name="settings_usuario_tituloT">Usuario</string>
+    <string name="settings_usuario_resumenT">Tu nombre de usuario en Twitter</string>
+
+    <string name="settings_contraseña_tituloT">Contraseña</string>
+    <string name="settings_contraseña_resumenT">Tu Contraseña de Twitter</string>
+
+    <!-- Preferencias Cuenta Google -->
+    <string name="settings_usuario_tituloG">Usuario</string>
+    <string name="settings_usuario_resumenG">Tu nombre de usuario en Google</string>
+
+    <string name="settings_contraseña_tituloG">Contraseña</string>
+    <string name="settings_contraseña_resumenG">Tu Contraseña de Google</string>
+    <string name="pref_ringtone_silent">Silencio</string>
+    <string name="notificaciones">Activar notificaciones</string>
+    <string name="notificaciones_sumario">Se reciben notificaciones periódicas de la aplicación</string>
+    <string name="wifi">Uso exclusivo con Wifi</string>
+    <string name="wifi_sumario">La aplicación no gastará datos del móvil y sólo enviará información estando activado el wifi</string>
+    <string name="idioma">Idioma</string>
+    <string name="idioma_sumario">Seleccione el idioma de la aplicación</string>
+
+</resources>

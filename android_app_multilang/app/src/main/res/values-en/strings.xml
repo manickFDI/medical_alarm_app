@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">"Medical Alarm"</string>
+
+    <string name="ajustes">Settings</string>
+    <string name="buscar">Search</string>
+
+    <string name="inicio">Start</string>
+    <string name="cuenta">My Account</string>
+    <string name="categorias">Categories</string>
+    <string name="configuracion">Configuration</string>
+    <string name="sobre_nosotros">About us</string>
+    <string name="soporte">Support</string>
+
+    <string name="titulo_tab_perfil">PROFILE</string>
+    <string name="titulo_tab_info">NEWS</string>
+    <string name="titulo_tab_estado">STATE</string>
+
+    <string name="texto_cambiar_contrasena">Change your password</string>
+    <string name="etiqueta_contrasena">Password</string>
+    <string name="etiqueta_contagio_persona">CONTAGION RISK FOR THE INDIVIDUAL</string>
+    <string name="etiqueta_contagio_zona">CONTAGION RISK IN THE AREA</string>
+    <string name="etiqueta_contagio_persona_detallado">Your health is not at risk for any reason related to a possible contagion</string>
+    <string name="etiqueta_contagio_zona_detallado">Your municipality is free of infected individuals. No disease detected</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="medical">Medical Alarm</string>
+    <string name="no_contagio_individuo">NO RISK OF INFECTION</string>
+    <string name="no_contagio_zona">FREE ZONE INFECTIONS</string>
+    <string name="etiqueta_datos_actuales">CURRENT DATA</string>
+    <string name="localizacion">Madrid, 23 ºC</string>
+    <string name="etiqueta_info_usuario">Personal data</string>
+    <string name="ejemplo_epidemia_1">Ebola epidemic in Madrid: HIGH RISK</string>
+    <string name="ejemplo_epidemia_2">Yellow fever epidemic in Zaragoza: Medium Risk</string>
+    <string name="ejemplo_epidemia_3">Possible infection of FLU A in Barcelona: LOW RISK</string>
+    <string name="ejemplo_epidemia_4">Ebola epidemic eradicated throughout Europe</string>
+    <string name="etiqueta_titulo_soporte">Information</string>
+    <string name="etiqueta_titulo_desconexion">Disconnect</string>
+    <string name="etiqueta_aviso_desconexion">You leave the session losing its location and leaving our services</string>
+<string name="text_nosotros">
+    This application is part of a project aimed at detecting diseases.
+    It is an initiative undertaken by three students from the Complutense University of Madrid as their TFG project, corresponding to computer engineering.
+</string>
+    <string name="text_nosotros_autores1">Diego Díaz Bailón</string>
+    <string name="text_nosotros_autores2">Manuel Martínez Sánchez</string>
+    <string name="text_nosotros_autores3">Pablo Panero</string>
+    <string name="etiqueta_titulo_soporte2">Project team</string>
+
+    <string name="title_activity_cardInfo">News</string>
+
+    <string name="login_entrar">Enter</string>
+    <string name="login_crear_cuenta_info">You do not have an account? create one!</string>
+    <string name="login_crear_cuenta_button">Create account</string>
+
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Items para el menu del navigation drawer -->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item_miCuenta"
+            android:checked="true"
+            android:icon="@drawable/inicio"
+            android:title="@string/cuenta" />
+        <item
+            android:id="@+id/item_ajustes"
+            android:icon="@drawable/configuracion"
+            android:title="@string/ajustes" />
+        <item
+            android:id="@+id/item_sobreNosotros"
+            android:icon="@drawable/ic_bookmark_grey600_24dp"
+            android:title="@string/sobre_nosotros" />
+        <item
+            android:id="@+id/item_soporte"
+            android:icon="@drawable/ic_help_circle_grey600_24dp"
+            android:title="@string/soporte" />
+        <item
+            android:id="@+id/item_desconexion"
+            android:icon="@drawable/ic_alert_grey600_24dp"
+            android:title="@string/etiqueta_titulo_desconexion" />
+    </group>
+
+</menu>
+
+
