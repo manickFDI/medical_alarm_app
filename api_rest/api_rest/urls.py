@@ -19,7 +19,7 @@ from django.contrib import admin
 from rest_framework import routers
 from users.views import UserViewSet, SensorValuesViewSet
 
-# Creamos el router y registramos nuestras vistas con él
+#Creamos el router y registramos nuestras vistas con el
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'sensorValues', SensorValuesViewSet)

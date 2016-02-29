@@ -11,4 +11,4 @@
         android:icon="@drawable/ic_biohazard_white_24dp"
         android:orderInCategory="100"
         app:showAsAction="withText" />
-</menu><!-- From: file:/D:/GitHub/medical_alarm_app/android_app/app/src/main/res/menu/menu_main.xml -->
+</menu><!-- From: file:/C:/Users/Manuel/AndroidStudioProjects/medical_alarm_app/android_app/app/src/main/res/menu/menu_main.xml -->

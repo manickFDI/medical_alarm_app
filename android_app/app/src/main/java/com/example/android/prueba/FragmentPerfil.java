@@ -31,7 +31,7 @@ public class FragmentPerfil extends Fragment {
     private User user;
 
     public FragmentPerfil() {
-        //new LoadUserInfo().execute(); // solicita al API los datos del usuario
+        new LoadUserInfo().execute(); // solicita al API los datos del usuario
     }
 
     @Override
@@ -43,8 +43,8 @@ public class FragmentPerfil extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.fragment_perfil, container, false);
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
-        //this.prepareUI(view); // instanciamos los elementos de la vista...
-        //this.printUserInfo(); // ... y los rellenamos con la informacion del usuario
+        this.prepareUI(view); // instanciamos los elementos de la vista...
+        this.printUserInfo(); // ... y los rellenamos con la informacion del usuario
         return view;
     }
 
@@ -80,8 +80,8 @@ public class FragmentPerfil extends Fragment {
      */
     private class LoadUserInfo extends AsyncTask<Void, Void, String> {
 
-        private static final String MY_IP = "10.0.2.2";
-        private static final String URL = "http://" + MY_IP + ":8000/users/1/"; //OJO!! No usar la 127.0.0.1
+        private static final String MY_IP = "192.168.1.60";
+        private static final String URL = "http://" + MY_IP + ":8000/users/3/"; //OJO!! No usar la 127.0.0.1
 
         /**
          * This function realizes the request (GET) with the correct URL
@@ -94,7 +94,7 @@ public class FragmentPerfil extends Fragment {
                 Log.d("TAG", "Peticion al API...");
                 return HttpRequest.get(URL).accept("application/json").body();
             } catch (HttpRequest.HttpRequestException e) {
-                //Log.d("TAG", "Error al realizar la peticion al API);
+                Log.d("TAG", "Error al realizar la peticion al API");
                 return null;
             }
         }

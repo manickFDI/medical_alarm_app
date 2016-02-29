@@ -3,12 +3,23 @@ package com.example.android.prueba;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.android.prueba.models.User;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by Manuel on 20/12/2015.
@@ -17,9 +28,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
 
+    //private static final String MY_IP = "192.168.1.60"; //OJO!! No usar la 127.0.0.1
+
+    //private static final String MY_URL = "http://" + MY_IP + ":8000/users/"; //OJO!! No usar la 127.0.0.1
+
     SharedPreferences prefs;
 
     private EditText _nameText;
+    private EditText _surnamesText;
     private EditText _dniText;
     private EditText _fechaText;
     private EditText _emailText;
@@ -35,12 +51,12 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
 
-        initFields();
+        initFields(); //inicializamos los campos y cogemos los datos del usuario
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                signup();//registro
             }
         });
 
@@ -80,11 +96,27 @@ public class SignUpActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        onSignupSuccess(name, email, password);
+                        onSignupSuccess(name, email, password); //guardamos el nuevo usuario en preferencias
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
+
+        //guardamos el nuevo usuario en la bbdd
+        User nuevoUsuario = new User();
+        nuevoUsuario.setUser_id("5");
+        nuevoUsuario.setName(_nameText.getText().toString());
+        nuevoUsuario.setSurnames(_surnamesText.getText().toString());
+        nuevoUsuario.setDni(_dniText.getText().toString());
+        nuevoUsuario.setBirthdate(_fechaText.getText().toString());
+        nuevoUsuario.setEmail(_emailText.getText().toString());
+        nuevoUsuario.setHeight(Integer.parseInt(_alturaText.getText().toString()));
+        nuevoUsuario.setWeight(Integer.parseInt(_pesoText.getText().toString()));
+        nuevoUsuario.setPassword(_passwordText.getText().toString());
+
+        Log.d("TAG", "RUNNING Post...");
+        new PostUser().execute(nuevoUsuario);
+        Log.d("TAG", "FINISH Post...");
     }
 
 
@@ -144,6 +176,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void initFields() {
         _nameText = (EditText) findViewById(R.id.input_name);
+        _surnamesText = (EditText) findViewById(R.id.input_surname);
         _dniText = (EditText) findViewById(R.id.input_dni);
         _fechaText = (EditText) findViewById(R.id.input_fechaNac);
         _emailText = (EditText) findViewById(R.id.input_email);
@@ -154,5 +187,74 @@ public class SignUpActivity extends AppCompatActivity {
         _signupButton = (Button) findViewById(R.id.btn_signup);
         _loginButton = (Button) findViewById(R.id.btn_login);
 
+    }
+
+    private static Uri.Builder buildUriUser(User user) {
+        Uri.Builder builder = new Uri.Builder();
+        // builder.appendQueryParameter("id", "5");
+        builder.appendQueryParameter("user_id", user.getUser_id());
+        builder.appendQueryParameter("name", user.getName());
+        builder.appendQueryParameter("surnames", user.getSurnames());
+        builder.appendQueryParameter("dni", user.getDni());
+        builder.appendQueryParameter("birthdate", user.getBirthdate());
+        builder.appendQueryParameter("email", user.getEmail());
+        builder.appendQueryParameter("height", Integer.toString(user.getHeight()));
+        builder.appendQueryParameter("weight", Integer.toString(user.getWeight()));
+        builder.appendQueryParameter("password", user.getPassword());
+
+        return builder;
+    }
+
+    /**
+     * Class responsible for making the request to the ApiRest and print the user information
+     */
+    private class PostUser extends AsyncTask<User, Void, Void> {
+
+        private static final String MY_IP = "10.0.2.2";
+        private static final String MY_URL = "http://" + MY_IP + ":8000/users/"; //OJO!! No usar la 127.0.0.1
+
+        /**
+         * This function realizes the request (GET) with the correct URL
+         * @param params
+         * @return the response (the json with the user information)
+         */
+        @Override
+        protected Void doInBackground(User... params) {
+            URL url;
+            try {
+                url = new URL(MY_URL);
+                //HttpsURLConnection conn = (HttpsURLConnection) url.openConnection(); OJO!! descomentar cuando usemos Https
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true); // 'true' para POST y PUT
+                Log.d("TAG", "Conexion...");
+                Uri.Builder builder = buildUriUser(params[0]); // añade los parametros de la query
+                String query = builder.build().getEncodedQuery();   // creamos la query
+                //String query = "user_id=5&name=manu&surnames=marsan&dni=11&birthdate=07-05-1992&email=prueba@ucm.es&height=11&weight=22&password=aaaa";
+                OutputStream os = conn.getOutputStream();
+
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+                Log.d("TAG", "Query:" + query);
+                Log.d("TAG", "...connecting...");
+                conn.connect();
+                int responseCode = conn.getResponseCode(); // es aqui donde realmente se realiza el POST
+                Log.d("TAG", "ResponseCode = " + responseCode);
+                if (responseCode < HttpURLConnection.HTTP_BAD_REQUEST) { //HTTP_BAD_REQUEST = 400
+                    //inputStream = conn.getInputStream();
+                    Log.d("TAG", "Successful connection");
+                } else {
+                    //inputStream = conn.getErrorStream();
+                    Log.d("TAG", "Failed connection");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }
