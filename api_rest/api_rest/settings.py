@@ -25,7 +25,7 @@ SECRET_KEY = 'x7hziv9(=rtbnz#w2)xp%!i8ih@8pr-)eln+5e2nt_(wp3xw(k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 
 # Application definition
@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
     'NAME': os.path.join(BASE_DIR, 'mydb.sql'), # Or path to database file if using sqlite3.
-    'USER': 'root', # Not used with sqlite3.
-    'PASSWORD': 'hyd1992', # Not used with sqlite3.
+    'USER': '', # Not used with sqlite3.
+    'PASSWORD': '', # Not used with sqlite3.
     'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
     'PORT': '3306', # Set to empty string for default. Not used with sqlite3.
         #'ENGINE': 'django.db.backends.sqlite3',

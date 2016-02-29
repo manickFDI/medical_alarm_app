@@ -6,7 +6,7 @@ class User(models.Model):
 	name = models.CharField(max_length=15)
 	surnames = models.CharField(max_length=25)
 	dni = models.CharField(max_length=9)
-	birthdate = models.DateField()
+	birthdate = models.CharField(max_length=25) #problemas de fechas
 	email = models.EmailField()
 	height = models.PositiveSmallIntegerField() # 0 to 32767
 	weight = models.PositiveSmallIntegerField() # 0 to 32767
