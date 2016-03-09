@@ -5,6 +5,7 @@
 .DS_Store
 /build
 /captures
+android_app/app/
 android_app/.idea/
 android_app/app/
 bbdd/mysql/malarm_mysql_model.mwb.bak
