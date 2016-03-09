@@ -26,6 +26,7 @@ def showUsers():
     users = ""
     for row in rows:
         users = users + " " + row[0]
+    mysql.close()
     return users
 
 
