@@ -161,7 +161,7 @@ header {
 }
 
 #menu-top a {
-    color: #000;
+    /*color: #000;*/
     text-decoration: none;
     font-weight: 500;
     padding: 10px 10px 10px 10px;
@@ -170,6 +170,7 @@ header {
 
 .menu-top-active {
     background-color: #03A9F4;
+    color: #fff;
 }
 
 .menu-section .nav > li > a:hover,.menu-section .nav > li > a:focus {
@@ -282,7 +283,7 @@ footer {
 
     .notice-board li a, li a:hover {
         text-decoration: none;
-        color: #000;
+        color: #fff;
     }
 
 /* SOCIAL BUTTONS */
