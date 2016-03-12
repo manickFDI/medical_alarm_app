@@ -5654,6 +5654,7 @@ a.list-group-item-danger.active:focus {
 .well {
   min-height: 20px;
   padding: 19px;
+  margin-top: 15px;
   margin-bottom: 20px;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
@@ -6353,6 +6354,19 @@ button.close {
 .affix {
   position: fixed;
 }
+
+/*AÑADIDOS PERSONALMENTE*/
+
+.btn-send {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  margin-left: 200px;
+}
+
+/*FIN AÑADIDOS*/
+
+
 @-ms-viewport {
   width: device-width;
 }

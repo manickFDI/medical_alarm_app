@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>d3pie</title>
+		<!-- Load d3.js and c3.js -->
+		<script src="d3/d3.min.js" charset="utf-8"></script>
+		<script src="c3/c3.js"></script>
+		<script src="topojson/topojson.js"></script>
+		<script src="datamap/datamap-world.js"></script>
+		<!-- Load c3.css -->
+		<link href="c3/c3.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+	<div id="basic_choropleth" style="height: 500px; width: 600px;"></div>
+
+	<script>
+		var dataT = {
+		  "USA": {"fillKey": "countryWithVotes", "votes": "8"},
+		  "KOR": {"fillKey": "countryWithVotes", "votes": "5"},
+		  "ITA": {"fillKey": "countryWithVotes", "votes": "3"},
+		}
+
+		var map = new Datamap({
+			element: document.getElementById("basic_choropleth"),
+			projection: 'mercator',
+			fills: {
+				defaultFill: "#ABDDA4",
+				countryWithVotes: "#155612"
+			},
+			data: dataT,
+      geographyConfig: {
+          popupTemplate: function(geo, data) {
+							// With Votes
+							if (data != null) {
+								return ['<div class="hoverinfo"><strong>',
+													geo.properties.name + ' Votes',
+												': ' + data.votes,
+												'</strong></div>'].join('');
+							} else { // No Votes
+								return ['<div class="hoverinfo"><strong>',
+													geo.properties.name + ' Votes',
+												': 0',
+												'</strong></div>'].join('');
+							}
+          }
+      }
+		});
+
+	</script>
+	</body>
+</html>

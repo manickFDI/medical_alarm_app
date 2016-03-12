@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>d3pie</title>
+		<!-- Load d3.js and c3.js -->
+		<script src="d3/d3.min.js" charset="utf-8"></script>
+		<script src="c3/c3.js"></script>
+		<script src="topojson/topojson.js"></script>
+		<script src="datamap/datamap-world.js"></script>
+		<!-- Load c3.css -->
+		<link href="c3/c3.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+	<h1>
+		Choropleth
+	</h1>
+
+	<hr size="1" />
+	<div id="basic_choropleth"></div
+
+	<h1>
+		Pie Example
+	</h1>
+
+	<hr size="1" />
+
+	<div id="pie"></div>
+
+	<h1>
+		Bar Example
+	</h1>
+
+	<hr size="1" />
+
+	<div id="bar"></div>
+
+	<h1>
+		Line Example
+	</h1>
+
+	<hr size="1" />
+
+	<div id="line"></div>
+
+	<script>
+		function generate() {
+
+		}
+		var storedData = [
+		    {"Java": 2, "Python": 3},
+		];
+
+
+		var basic_choropleth = new Datamap({
+			element: document.getElementById("basic_choropleth"),
+			projection: 'mercator',
+			fills: {
+				defaultFill: "#ABDDA4",
+				authorHasTraveledTo: "#fa0fa0"
+			},
+			data: {
+				USA: { fillKey: "authorHasTraveledTo" },
+				JPN: { fillKey: "authorHasTraveledTo" },
+				ITA: { fillKey: "authorHasTraveledTo" },
+				CRI: { fillKey: "authorHasTraveledTo" },
+				KOR: { fillKey: "authorHasTraveledTo" },
+				DEU: { fillKey: "authorHasTraveledTo" },
+			}
+		});
+
+		var colors = d3.scale.category10();
+
+		window.setInterval(function() {
+			basic_choropleth.updateChoropleth({
+				USA: colors(Math.random() * 10),
+				RUS: colors(Math.random() * 100),
+				AUS: { fillKey: 'authorHasTraveledTo' },
+				BRA: colors(Math.random() * 50),
+				CAN: colors(Math.random() * 50),
+				ZAF: colors(Math.random() * 50),
+				IND: colors(Math.random() * 50),
+			});
+		}, 2000);
+
+		var chart = c3.generate({
+			size: {
+				height: 240,
+				width: 480
+			},
+			bindto: '#pie',
+		    data: {
+		    	// Con esto podríamos crear un grafico a mano
+			        //columns: [
+			            //['data1', 30],
+			            //['data2', 120],
+			            //['data3', 187],
+			        //],
+			        //names: {
+			        	//data1: 'Java',
+			        	//data2: 'Ruby',
+			        	//data3: 'Python'
+			        //},
+			    // Con esta opcion vamos a tratar de hacerlo dinámico
+			    json: storedData,
+			    keys: {
+			    	value: ['Java', 'Python', 'Ruby']
+			    },
+		        type : 'pie'
+		        // Descomentar esto para jugar con los colores
+                //colors: {
+				    //data1: '#d3d3d3',
+				    //data2: '#bababa',
+				    //data3: '#79d3c2'
+				//},
+		    }
+		});
+
+		var bar = c3.generate({
+			size: {
+				height: 240,
+				width: 480
+			},
+			bindto: '#bar',
+		    data: {
+		    	// Con esto podríamos crear un grafico a mano
+			        //columns: [
+			            //['data1', 30],
+			            //['data2', 120],
+			            //['data3', 187],
+			        //],
+			        //names: {
+			        	//data1: 'Java',
+			        	//data2: 'Ruby',
+			        	//data3: 'Python'
+			        //},
+			    // Con esta opcion vamos a tratar de hacerlo dinámico
+			    json: storedData,
+			    keys: {
+			    	value: ['Java', 'Python', 'Ruby']
+			    },
+		        type : 'bar'
+		        // Descomentar esto para jugar con los colores
+                //colors: {
+				    //data1: '#d3d3d3',
+				    //data2: '#bababa',
+				    //data3: '#79d3c2'
+				//},
+		    }
+		});
+
+		var line = c3.generate({
+			size: {
+				height: 240,
+				width: 480
+			},
+			bindto: '#line',
+		    data: {
+		        columns: [
+		            ['A', 30, 200, 100, 400, 150, 250],
+		            ['B', 50, 20, 10, 40, 15, 25]
+		        ]
+		    }
+		});
+
+
+
+
+	</script>
+	</body>
+</html>

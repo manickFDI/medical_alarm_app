@@ -476,3 +476,12 @@ thead {
     position:absolute;
 }
 
+.bggreen2   {background-color: #048444;}
+.bgyellow2  {background-color: #FFD800;}
+.bgred2     {background-color: #C20001;}
+.bgblue2    {background-color: #00aced;}
+.sm-box     {width: 12px; display: inline-block; after:content: '.'; after:visibility: hidden; height:12px;}
+
+.leyenda {
+    margin-right: auto;
+}
