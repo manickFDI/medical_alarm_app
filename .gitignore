@@ -7,4 +7,6 @@
 /captures
 android_app/app/*
 android_app/.idea/*
+*/*.pyc
+rest_api/.idea/*
 bbdd/mysql/malarm_mysql_model.mwb.bak
