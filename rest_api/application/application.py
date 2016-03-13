@@ -1,11 +1,10 @@
 import json
 from flask import Flask, request, Response, jsonify
 from flask.ext.restful import Resource, Api
-
-#Own Imports
+# Own Imports
+from database import mongo_connector
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
-
 
 # Constants for hypermedia formats and profiles
 COLLECTIONJSON = "application/vnd.collection+json"
@@ -17,10 +16,14 @@ app = Flask(__name__)
 app.debug = True
 # Set the API's databases. Change the DATABASE_DBTYPE value from app.config to modify the
 # database to be used (for instance for testing)
+# MySQL
 MYSQL_DB_PATH = "../database/schema.sql"
 app.config.update({'MYSQL_DATABASE': MysqlDatabase()})
 mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
+#MongoDB
+app.config['MONGOALCHEMY_DATABASE'] = 'test'
+mongo_connector.init_app(app)
 
 # Start the RESTful API.
 api = Api(app)
@@ -42,28 +45,28 @@ def unknown_error(error):
     return create_error_response(500, "Error", "The system has failed. Please, contact the administrator")
 
 
+"""
+An user corresponds to:
+
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| idUsuario       | int(11)     | NO   | PRI | NULL    |       |
+| nombre          | varchar(45) | NO   |     | NULL    |       |
+| apellidos       | varchar(45) | NO   |     | NULL    |       |
+| email           | varchar(45) | NO   | UNI | NULL    |       |
+| fechaNacimiento | varchar(10) | NO   |     | NULL    |       |
+| sexo            | int(11)     | YES  |     | NULL    |       |
+| peso            | double      | YES  |     | NULL    |       |
+| DNI             | varchar(9)  | NO   | UNI | NULL    |       |
+| secret          | varchar(45) | NO   |     | NULL    |       |
+| salt            | varchar(45) | NO   |     | NULL    |       |
+| estado          | int(11)     | NO   |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+"""
+
+
 class Users(Resource):
-
-    """
-    An user corresponds to:
-
-    +-----------------+-------------+------+-----+---------+-------+
-    | Field           | Type        | Null | Key | Default | Extra |
-    +-----------------+-------------+------+-----+---------+-------+
-    | idUsuario       | int(11)     | NO   | PRI | NULL    |       |
-    | nombre          | varchar(45) | NO   |     | NULL    |       |
-    | apellidos       | varchar(45) | NO   |     | NULL    |       |
-    | email           | varchar(45) | NO   | UNI | NULL    |       |
-    | fechaNacimiento | varchar(10) | NO   |     | NULL    |       |
-    | sexo            | int(11)     | YES  |     | NULL    |       |
-    | peso            | double      | YES  |     | NULL    |       |
-    | DNI             | varchar(9)  | NO   | UNI | NULL    |       |
-    | secret          | varchar(45) | NO   |     | NULL    |       |
-    | salt            | varchar(45) | NO   |     | NULL    |       |
-    | estado          | int(11)     | NO   |     | NULL    |       |
-    +-----------------+-------------+------+-----+---------+-------+
-    """
-
     def post(self):
         """
         Adds a new user in the database.
@@ -112,7 +115,7 @@ class Users(Resource):
         _idNumber = input_data['idnumber']
         _secret = input_data['secret']
 
-        #TODO: use REGEX to verify birthday format
+        # TODO: use REGEX to verify birthday format
 
         if not _name or not _lastName or \
                 not _email or not _birthday or not _idNumber or not _secret:
@@ -137,7 +140,7 @@ class Users(Resource):
                                           Try another one " % _idNumber,
                                          "User")
 
-        #TODO: calculate salt and encrypt password (secret)
+        # TODO: calculate salt and encrypt password (secret)
         _salt = "salta con migo salta"
 
         _id = mysqldb.create_user(_name, _lastName, _email, _birthday, _gender, _weight, _idNumber, _secret, _salt, 0)
@@ -149,7 +152,6 @@ class Users(Resource):
 
 
 class User(Resource):
-
     def post(self, email):
 
         # PARSE THE REQUEST:
@@ -158,7 +160,7 @@ class User(Resource):
             return create_error_response(415, "Unsupported Media Type",
                                          "Use a JSON compatible format",
                                          "User")
-       #Get the password sent through post body
+            # Get the password sent through post body
         input_data = input['user']
         _secret = input_data['secret']
 
@@ -171,7 +173,7 @@ class User(Resource):
                                          % email,
                                          "User")
 
-        #TODO: Check password and salt first: change to POST
+        # TODO: Check password and salt first: change to POST
         # FILTER AND GENERATE RESPONSE
         # Create the envelope:
         envelope = {}
@@ -188,15 +190,84 @@ class User(Resource):
 
         return envelope
 
+
+class Sensors(Resource):
+    def post(self):
+        """
+        Adds a new user in the database.
+        ENTITY BODY INPUT FORMAT:
+        * Media type: Collection+JSON:
+             http://amundsen.com/media-types/collection/
+            * Profile: Sensor
+                {
+                   _id: ObjectId(),
+                   user_id: <>,
+                   timestamp: <>,
+                   latitude: <>,
+                   longitude: <>,
+                   altitude: <>,
+                   magnetometer: <>,
+                   accelerometer: <>,
+                   light: <>,
+                   battery: <>
+                }
+        The body should be a Collection+JSON template.
+        Semantic descriptors used in template: All fields are mandatory, but they can have the value -1 meaning no-value
+
+        OUTPUT:
+        Returns 201 + the url of the new resource in the Location header
+        Return 409 Conflict if there is another user with the same email or ID number
+        Return 400 if the body is not well formed
+        Return 415 if it receives a media type different from application/json
+        """
+        """
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+        # Get the request body and serialize it to object
+        # We should check that the format of the request body is correct. Check
+        # That mandatory attributes are there.
+
+        input_data = input['sensor']
+
+        _userId = input_data['user_id']
+        _timestamp = input_data['timestamp']
+        _latitude = input_data['latitude']
+        _longitude = input_data['longitude']
+        _altitude = input_data['altitude']
+        _magnetometer = input_data['magnetometer']
+        _accelerometer = input_data['accelerometer']
+        _light = input_data['light']
+        _battery = input_data['battery']
+
+        if not _userId or not _timestamp or not _latitude or not _longitude \
+            or not _altitude or not _magnetometer or not _accelerometer or not _light or not _battery:
+            return create_error_response(400, "Wrong request format",
+                                         "Be sure you include all mandatory properties",
+                                         "Sensors")
+
+
+        _id = mongodb.insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _altitude, _magnetometer,
+                                          _accelerometer, _light, _battery)
+
+        # CREATE RESPONSE AND RENDER
+        return Response(status=201,
+                        headers={"Location": api.url_for(Sensors, id=_userId)}
+                        )
+        """
+        return mongo_connector.showUsers()
+
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
 app.url_map.converters['regex'] = RegexConverter
 
-
 # Define the routes
 api.add_resource(Users, '/malarm/api/users/', endpoint='users')
 api.add_resource(User, '/malarm/api/users/<email>/', endpoint='user')
-
+api.add_resource(Sensors, '/malarm/api/sensors/', endpoint='sensors')
 
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY

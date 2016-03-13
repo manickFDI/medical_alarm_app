@@ -1,9 +1,12 @@
-from flask import Flask
+# from flask.ext.mongoalchemy import MongoAlchemy
+
 from flask.ext.pymongo import PyMongo
 
-app = Flask(__name__)
-app.config['MONGO_DBNAME'] = 'test'
-mongo = PyMongo(app)
+
+def init_app(app):
+    global mongo
+    mongo = PyMongo(app)
+    return 0
 
 
 def showUsers():
@@ -12,12 +15,3 @@ def showUsers():
     for item in cur:
         users = users + " " + item['name']
     return users
-
-
-@app.route("/")
-def main():
-    return showUsers()
-
-
-if __name__ == "__main__":
-    app.run()

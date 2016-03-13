@@ -1,11 +1,12 @@
-{'user':{
-		'name':'Manu'
-		'lastname':'Martinez'
-		'email':'manuma'
-		'birthday':'12-12-1222'
-		'gender':'0'
-		'weight':'80'
-		'idnumber':'122234569'
-		'secret':'holaaaaa'
+{"user": {
+		"name":"Manu",
+		"lastname":"Martinez",
+		"email":"manuma",
+		"birthday":"12-12-1222",
+		"gender":"0",
+		"weight":"80",
+		"idnumber":"122234569",
+		"secret":"holaaaaa"
 	}
 }
+
