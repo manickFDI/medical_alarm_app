@@ -34,10 +34,8 @@ class MysqlDatabase(object):
     def contains_user_email(self, email):
         return False
 
-
     def contains_user_id_number(self, idNumber):
         return False
-
 
     def create_user(self, name, lastName, email, birthday, gender, weight, idNumber, secret, salt, state):
 
@@ -50,3 +48,41 @@ class MysqlDatabase(object):
         db.execute(query)
 
         return 0
+
+    def get_user(self,email):
+
+        query = "SELECT * FROM {0} WHERE email = \"{1}\"".format(USERS_TABLENAME, email)
+        rows = db.execute(query)
+
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            return self.create_user_object(row)
+
+    @staticmethod
+    def create_user_object(row):
+        """
+        It takes a database Row and transform it into a python dictionary.
+        Dictionary contains the following keys:
+          - userid: id of the user (int)
+          - nickname: user's nickname
+        Note that all values in the returned dictionary are string unless
+        otherwise stated.
+        :param row: row containing user data from mysql query
+        """
+        id = str(row['idUsuario'])
+        name = row['nombre']
+        lastname = row['apellidos']
+        email = row['email']
+        birthday = row['fechaNacimiento']
+        gender = str(row['sexo'])
+        weight = row['peso']
+        idNumber = row['DNI']
+        state = row['estado']
+        salt = row['salt']
+
+        user = {'user_id': id, 'name': name, 'lastname': lastname,
+                'email': email, 'birthday': birthday, 'gender': gender,
+                'weight': weight, 'idnumber': idNumber, 'state':state, 'salt':salt}
+
+        return user
