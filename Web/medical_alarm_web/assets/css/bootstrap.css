@@ -1271,6 +1271,9 @@ h4,
 h5,
 .h5 {
   font-size: 14px;
+  color: white;
+  margin-top: 40px;
+  margin-left: 15px;
 }
 h6,
 .h6 {
