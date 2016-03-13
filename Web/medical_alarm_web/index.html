@@ -28,49 +28,8 @@
 
 
 <body>
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <strong>Email: </strong>info@yourdomain.com
-                    &nbsp;&nbsp;
-                    <strong>Support: </strong>+90-897-678-44
-                </div>
+    <div id="header"></div>
 
-            </div>
-        </div>
-    </header>
-    <!-- HEADER END-->
-    
-    <div class="navbar navbar-inverse set-radius-zero">
-        <div class="container">
-            <div class="navbar-header">
-                <img src="assets/img/logo1.png" />
-                
-                    <strong>HOSPITAL UNIVERSITARIO 12 DE OCTUBRE</strong>
-                
-            </div>
-        </div>
-    </div>
-    <!-- LOGO HEADER END-->
-    <section class="menu-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse ">
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a class="menu-top-active" href="index.html">Inicio</a></li>
-                            <li><a href="contagio.html">Contagios</a></li>
-                            <li><a href="foco.html">Focos</a></li>
-                            <li><a href="estadisticas.html">Estadísticas</a></li>
-                            <!--<li><a href="perfil.html">Perfil</a></li>-->
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
     <!-- MENU SECTION END-->
     <div class="content-wrapper">
         <div class="container">
@@ -198,16 +157,7 @@
     </div>
 
     <!-- CONTENT-WRAPPER SECTION END-->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    &copy; 2015 YourCompany | By : <a href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a>
-                </div>
-
-            </div>
-        </div>
-    </footer>
+   <div id="footer"></div>
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY SCRIPTS -->
@@ -217,5 +167,13 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=visualization"></script>
     <script src="assets/js/heatmap.js"></script>
     <script src="assets/js/gmaps-heatmap.js"></script>
+
+    <script> 
+        $(function(){
+            $("#header").load("header.html");
+            $("#footer").load("footer.html"); 
+        });
+    </script>
+    
 </body>
 </html>
