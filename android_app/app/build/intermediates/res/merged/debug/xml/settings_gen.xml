@@ -21,4 +21,4 @@
             android:defaultValue="true"
             android:summary="La aplicación no gastará datos del móvil y sólo enviará información estando activado el wifi"/>
     </PreferenceCategory>
-</PreferenceScreen><!-- From: file:/C:/Users/Manuel/AndroidStudioProjects/medical_alarm_app/android_app/app/src/main/res/xml/settings_gen.xml -->
+</PreferenceScreen><!-- From: file:/Users/Light/Workspace/tfg/medical_alarm_app/android_app/app/src/main/res/xml/settings_gen.xml -->
