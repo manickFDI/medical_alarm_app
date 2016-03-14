@@ -22,7 +22,7 @@ app.config.update({'MYSQL_DATABASE': MysqlDatabase()})
 mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
 #MongoDB
-app.config['MONGOALCHEMY_DATABASE'] = 'test'
+app.config['MONGO_DBNAME'] = 'test'
 mongo_connector.init_app(app)
 
 # Start the RESTful API.
