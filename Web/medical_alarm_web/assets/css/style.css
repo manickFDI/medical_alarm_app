@@ -576,8 +576,8 @@ thead {
 
 /* COLOR PESTAÑAS*/
 .tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
-  /*border-bottom: 4px solid #fbcdcf;*/
-  border-bottom: 4px solid #B3E5FC;
+  border-bottom: 4px solid #fbcdcf;
+  /*border-bottom: 4px solid #B3E5FC;*/
 }
 
 .tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
@@ -594,8 +594,8 @@ thead {
 
 /* COLOR PESTAÑAS*/
 .tabbable-line > .nav-tabs > li.active {
-  /*border-bottom: 4px solid #f3565d;*/
-  border-bottom: 4px solid #0288D1;
+  border-bottom: 4px solid #f3565d;
+  /*border-bottom: 4px solid #0288D1;*/
   position: relative;
 }
 
