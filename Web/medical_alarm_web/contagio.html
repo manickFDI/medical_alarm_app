@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -23,6 +23,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 
@@ -30,190 +31,210 @@
     <div id="header"></div>
 
     <!-- MENU SECTION END-->
-    <div class="content-wrapper">
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-head-line">Notificaciones enviadas</h1>
-                    </div>
-            </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-panel">
+                    <div class="tabbable-line">
+                        <ul class="nav nav-tabs ">
+                            <li class="active">
+                                <a href="#tab_general_contagio" data-toggle="tab">Notificaciones enviadas</a>
+                            </li>
+                            <li>
+                                <a href="#tab_alta_contagio" data-toggle="tab">Dar de alta contagio</a>
+                            </li>
+                        </ul>
 
-            <!-- Buscador -->
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>Busque la enfermedad:</h4>
-                    <div id="custom-search-input">
-                        <div class="input-group col-md-12">
-                            <input type="text" class="form-control input-lg" placeholder="Ej: gripe" />
-                            <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" type="button">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            </br></br>
-
-            <!-- Lista de usuarios contagiados -->
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>Usuarios contagiados:</h4>
-                </div>
-            </div>
-
-            </br>
-
-            <div class="span7">   
-                <div class="widget stacked widget-table action-table">
-                    <div class="widget-content">
-
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Nombre y apellidos:</th>
-                                    <th>Estado actual:</th>
-                                    <th>Confirmar revisión:</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Manuel Martinez</td>
-                                    <td>Contagiado</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Diego Diaz</td>
-                                    <td>Curado</td>
-                                    <td class="td-actions">
-                                        <button type="button" class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Pablo Panero Null</td>
-                                    <td>Indef</td>
-                                    <td class="td-actions">
-                                        <button type="button" class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Jesus Vazquez</td>
-                                    <td>Contagiado</td>
-                                    <td class="td-actions">
-                                        <button type="button" class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                
-                    </div> <!-- /widget-content -->
-                </div> <!-- /widget -->
-            </div> <!-- span7 -->
-
-        </div> <!-- container -->
-    </div>
-
-    <div class="content-wrapper">
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-head-line">Dar de alta contagio</h1>
-                    </div>
-            </div>
-
-            <form id="productForm" method="post" class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Tiempo de exposición (minutos):</label>
-                    <div class="col-xs-5">
-                        <input type="text" class="form-control" name="name" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Distancia (centímetros):</label>
-                    <div class="col-xs-5">
-                        <input type="text" class="form-control" name="name" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Enfermedad:</label>
-                    <div class="col-xs-5 selectContainer">
-                        <select class="form-control" name="size">
-                            <option value="">(Seleccione enfermedad)</option>
-                            <option value="">Gripe</option>
-                            <option value="s">Ebola</option>
-                            <option value="m">Tuberculosis</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Fecha:</label>
-                    <div class="container">
-                        <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_general_contagio">
+                                <div class="row">
+                                    <div class="row">
+                                            <div class="col-md-12">
+                                                <h1 class="page-head-line">Notificaciones enviadas</h1>
+                                            </div>
                                     </div>
+
+                                    <!-- Buscador -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4>Busque la enfermedad:</h4>
+                                            <div id="custom-search-input">
+                                                <div class="input-group col-md-12">
+                                                    <input type="text" class="form-control input-lg" placeholder="Ej: gripe" />
+                                                    <span class="input-group-btn">
+                                                    <button class="btn btn-info btn-lg" type="button">
+                                                        <i class="glyphicon glyphicon-search"></i>
+                                                    </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    </br></br>
+
+                                    <!-- Lista de usuarios contagiados -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4>Usuarios contagiados:</h4>
+                                        </div>
+                                    </div>
+
+                                    </br>
+
+                                    <div class="span7">   
+                                        <div class="widget stacked widget-table action-table">
+                                            <div class="widget-content">
+
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nombre y apellidos:</th>
+                                                            <th>Estado actual:</th>
+                                                            <th>Confirmar revisión:</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Manuel Martinez</td>
+                                                            <td>Contagiado</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-success">
+                                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Diego Diaz</td>
+                                                            <td>Curado</td>
+                                                            <td class="td-actions">
+                                                                <button type="button" class="btn btn-success">
+                                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Pablo Panero Null</td>
+                                                            <td>Indef</td>
+                                                            <td class="td-actions">
+                                                                <button type="button" class="btn btn-success">
+                                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jesus Vazquez</td>
+                                                            <td>Contagiado</td>
+                                                            <td class="td-actions">
+                                                                <button type="button" class="btn btn-success">
+                                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                        
+                                            </div> <!-- /widget-content -->
+                                        </div> <!-- /widget -->
+                                    </div> <!-- span7 -->
+                                </div> <!-- row -->
+                            </div> <!-- tab pane -->
+
+
+                            <div class="tab-pane" id="tab_alta_contagio">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1 class="page-head-line">Dar de alta contagio</h1>
+                                        </div>
+                                    </div>
+
+                                    <form id="productForm" method="post" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Tiempo de exposición (minutos):</label>
+                                            <div class="col-xs-5">
+                                                <input type="text" class="form-control" name="name" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Distancia (centímetros):</label>
+                                            <div class="col-xs-5">
+                                                <input type="text" class="form-control" name="name" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Enfermedad:</label>
+                                            <div class="col-xs-5 selectContainer">
+                                                <select class="form-control" name="size">
+                                                    <option value="">(Seleccione enfermedad)</option>
+                                                    <option value="">Gripe</option>
+                                                    <option value="s">Ebola</option>
+                                                    <option value="m">Tuberculosis</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Fecha:</label>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class='col-sm-6'>
+                                                        <div class='input-group date' id='datetimepicker'>
+                                                            <input type='text' class="form-control" />
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <script type="text/javascript">
+                                                        $(function () {
+                                                            $('#datetimepicker').datetimepicker();
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Nivel de gravedad:</label>
+                                            <div class="col-xs-5 selectContainer">
+                                                <select class="form-control" name="size">
+                                                    <option value="">(Seleccione nivel de gravedad)</option>
+                                                    <option value="">Bajo</option>
+                                                    <option value="s">Medio</option>
+                                                    <option value="m">Alto</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Descripción:</label>
+                                            <div class="col-xs-8">
+                                                <textarea name="description" class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-xs-5 col-xs-offset-3">
+                                                <button type="submit" class="btn btn-success">Confirmar -> ¿Desea confirmar? SI-NO</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <script type="text/javascript">
-                                $(function () {
-                                    $('#datetimepicker1').datetimepicker();
-                                });
-                            </script>
-                        </div>
-                    </div>
+                        </div> <!-- tab content -->
+                    </div> <!-- tabbable-line -->
                 </div>
-
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Nivel de gravedad:</label>
-                    <div class="col-xs-5 selectContainer">
-                        <select class="form-control" name="size">
-                            <option value="">(Seleccione nivel de gravedad)</option>
-                            <option value="">Bajo</option>
-                            <option value="s">Medio</option>
-                            <option value="m">Alto</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Descripción:</label>
-                    <div class="col-xs-8">
-                        <textarea name="description" class="form-control" rows="5"></textarea>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div class="col-xs-5 col-xs-offset-3">
-                        <button type="submit" class="btn btn-success">Confirmar -> ¿Desea confirmar? SI-NO</button>
-                    </div>
-                </div>
-            </form>
-        </div> <!-- container -->
+            </div>
+        </div>
     </div>
 
+    </br></br></br>
 
-    <!-- CONTENT-WRAPPER SECTION END-->
+        <!-- CONTENT-WRAPPER SECTION END-->
     <div id="footer"></div>
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
