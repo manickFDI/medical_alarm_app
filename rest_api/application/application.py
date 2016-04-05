@@ -22,7 +22,7 @@ app.config.update({'MYSQL_DATABASE': MysqlDatabase()})
 mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
 # MongoDB
-app.config['MONGO_DBNAME'] = 'test'
+app.config['MONGO_DBNAME'] = 'malarm'
 mongo_connector.init_app(app)
 
 # Start the RESTful API.
@@ -195,8 +195,8 @@ class Sensors(Resource):
 
     def get(self):
         _distance = request.args['distance']
-        _longitude = request.args['longitude']
-        _latitude = request.args['latitude']
+        _longitude = request.args['longitude'].replace("\"", "")
+        _latitude = request.args['latitude'].replace("\"", "")
 
         return mongo_connector.getNearByLocations(_distance, _latitude, _longitude)
 
