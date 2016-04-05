@@ -1,0 +1,13 @@
+Mongo Steps:
+------------
+
+# Start mongodb sever using "/usr/local/mongo/data/" as data storage
+$ mongod --dbpath /usr/local/mongo/data 
+
+# Open mongo shell
+
+> use malarm
+> db.sensors.insert(...) # Insert data manually or use mongoimport
+> db.sensors.createIndex({ location: "2dsphere" })
+# Example query of places within a 10 Km radious of home
+> db.sensors.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ 40.623810, -4.016609 ] }, $maxDistance: 5000 } } })

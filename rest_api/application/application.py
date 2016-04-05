@@ -14,7 +14,7 @@ ACCOUNTING_USER_PROFILE = "http://schema.org/Person"
 # Define the application and the api
 app = Flask(__name__)
 app.debug = True
-# Set the API's databases. Change the DATABASE_DBTYPE value from app.config to modify the
+# Set the API's databases. Change the DATABASE_DBTYPE value  from app.config to modify the
 # database to be used (for instance for testing)
 # MySQL
 MYSQL_DB_PATH = "../database/schema.sql"
