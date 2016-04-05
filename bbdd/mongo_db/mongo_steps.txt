@@ -33,10 +33,10 @@ Doc schema:
    _id: ObjectId(),
    user_id: <>,
    timestamp: <>,
-   location: [ 
-   	latitude: <>,
-   	longitude: <>
-   ]
+   location: {
+    type: "Point",
+    coordinates: [<>,<>]
+   },
    magnetometer: <>,
    accelerometer: <>,
    light: <>,

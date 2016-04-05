@@ -9,9 +9,39 @@ def init_app(app):
     return 0
 
 
-def showUsers():
-    cur = mongo.db.user.find()
-    users = ""
+def insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetometer, _accelerometer, _light, _battery):
+    data = {}
+    location = {}
+    coordinates = [_latitude, _longitude]
+
+    location['type'] = "Point"
+    location['coordinates'] = coordinates
+    data['user_id'] = _userId
+    data['location'] = location
+    data['timestamp'] = _timestamp
+    data['magnetometer'] = _magnetometer
+    data['accelerometer'] = _accelerometer
+    data['light'] = _light
+    data['battery'] = _battery
+
+    cur = mongo.db.sensors.insert(data)
+
+    return _userId
+
+
+def getNearByLocations(_maxDistance, _latitude, _longitude):
+
+    cur = mongo.db.sensors.find("{ location: { $nearSphere: { $geometry: { type: \"Point\", coordinates: [ "
+                                +_latitude +","+_longitude+" ] }, $maxDistance:"+_maxDistance+" } } }")
+
+
+    nearLocations = []
+    i = 0
     for item in cur:
-        users = users + " " + item['name']
-    return users
+        loc = {}
+        loc['timestamp'] = item['timestamp']
+        loc['location'] = item['location']
+        loc['user_id'] = item['user_id']
+        nearLocations[i] = loc
+
+    return nearLocations

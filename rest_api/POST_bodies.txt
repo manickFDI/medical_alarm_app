@@ -1,3 +1,5 @@
+http://127.0.0.1:5000/malarm/api/sensors/?distance=10000&latitude=37.609135&longitude=-0.914201
+
 {"user": {
 		"name":"Manu",
 		"lastname":"Martinez",
@@ -8,5 +10,17 @@
 		"idnumber":"122234569",
 		"secret":"holaaaaa"
 	}
+}
+
+{"sensor":{
+        "user_id": 8640,
+        "latitude": 37.609135,
+        "longitude": -0.914201,
+        "timestamp": 1403133949719,
+        "magnetometer": 53.050397,
+        "accelerometer": -2.6292,
+        "light": 6747.8933,
+        "battery": 2
+    }
 }
 

@@ -21,7 +21,7 @@ MYSQL_DB_PATH = "../database/schema.sql"
 app.config.update({'MYSQL_DATABASE': MysqlDatabase()})
 mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
-#MongoDB
+# MongoDB
 app.config['MONGO_DBNAME'] = 'test'
 mongo_connector.init_app(app)
 
@@ -192,6 +192,14 @@ class User(Resource):
 
 
 class Sensors(Resource):
+
+    def get(self):
+        _distance = request.args['distance']
+        _longitude = request.args['longitude']
+        _latitude = request.args['latitude']
+
+        return mongo_connector.getNearByLocations(_distance, _latitude, _longitude)
+
     def post(self):
         """
         Adds a new user in the database.
@@ -230,35 +238,37 @@ class Sensors(Resource):
         # Get the request body and serialize it to object
         # We should check that the format of the request body is correct. Check
         # That mandatory attributes are there.
-
+        """
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
         input_data = input['sensor']
 
         _userId = input_data['user_id']
         _timestamp = input_data['timestamp']
         _latitude = input_data['latitude']
         _longitude = input_data['longitude']
-        _altitude = input_data['altitude']
         _magnetometer = input_data['magnetometer']
         _accelerometer = input_data['accelerometer']
         _light = input_data['light']
         _battery = input_data['battery']
 
         if not _userId or not _timestamp or not _latitude or not _longitude \
-            or not _altitude or not _magnetometer or not _accelerometer or not _light or not _battery:
+                or not _magnetometer or not _accelerometer or not _light or not _battery:
             return create_error_response(400, "Wrong request format",
                                          "Be sure you include all mandatory properties",
                                          "Sensors")
 
-
-        _id = mongodb.insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _altitude, _magnetometer,
-                                          _accelerometer, _light, _battery)
+        _id = mongo_connector.insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetometer,
+                                                  _accelerometer, _light, _battery)
 
         # CREATE RESPONSE AND RENDER
         return Response(status=201,
                         headers={"Location": api.url_for(Sensors, id=_userId)}
                         )
-        """
-        return mongo_connector.showUsers()
+
 
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
