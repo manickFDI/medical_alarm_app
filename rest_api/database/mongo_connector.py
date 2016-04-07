@@ -32,7 +32,7 @@ def insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetomete
 def getNearByLocations(_maxDistance, _latitude, _longitude):
 
     cur = mongo.db.sensors.find({ "location": { "$nearSphere": { "$geometry": { "type": "Point", "coordinates": [
-                                    float(37.60913), float(-0.914201) ] }, "$maxDistance": int(_maxDistance)} } })
+                                    float(_latitude), float(_longitude) ] }, "$maxDistance": int(_maxDistance)} } })
 
 
     nearLocations = []
