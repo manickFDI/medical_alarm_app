@@ -157,8 +157,12 @@ function getContagios() {
 function addContagioToList(contagio) {
     //poner contagio.enfermedad ...
 
-    var $contagio = $('<li>').html('<span class="sm-box bggreen2" >' + '</span>' +
-        '<span class="leyenda">Enfermedad: Gripe A || Madrid-Centro || Contagios: 12</span>' + '<a onclick="erradicarContagio()" class="btn btn-info btn-xs">Erradicar </a>');
+    var aux_li = "'enf_" + contagio + "'";
+    var aux_btn = "enf_btn_" + contagio;
+
+    var $contagio = '<li id="' + aux_li + '">' + '<span class="sm-box bggreen2" >' + '</span>' +
+        '<span class="leyenda">Enfermedad: Gripe A || Madrid-Centro || Contagios: 12</span>' +
+        '<a class="btn btn-info btn-xs" onclick="erradicarContagio(' + aux_li + ')" id="' + aux_btn + '">Erradicar </a>';
 
     //añadir a la lista cada contagio
     $("#contagiosList").append($contagio);
@@ -183,10 +187,8 @@ function contagios() {
     }
 }
 
-function erradicarContagio() {
-    //var li = document.getElementById("contagiosList").getElementsByTagName("li");
-
-        var li = this.target;
-        alert(li);
-
+function erradicarContagio(id) {
+    var aux = "'" + id + "'"
+    var li = document.getElementById(aux);
+    li.parentNode.removeChild(li);
 }
