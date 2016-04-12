@@ -24,11 +24,66 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    
+    <!-- CORE JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-1.11.1.js"></script>
+    <!-- BOOTSTRAP SCRIPTS  -->
+    <script src="assets/js/bootstrap.js"></script>
+    <!-- FOCO SCRIPTS  -->
+    <script src="assets/js/foco.js"></script>
+    <!-- FOCO SCRIPTS  -->
+    <script src="assets/js/foco.js"></script>
+
 </head>
 
 
 <body>
-    <div id="header"></div>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>ID Médico: </strong>XLS112390
+                    &nbsp;&nbsp;
+                    <strong>Nombre: </strong>Dr. García Pérez
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <!-- HEADER END-->
+    
+    <div class="navbar navbar-inverse set-radius-zero">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="assets/img/logo1.png" />
+                    </div>
+                    <div class="col-md-9">
+                        <h5><strong>HOSPITAL UNIVERSITARIO 12 DE OCTUBRE</strong></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- LOGO HEADER END-->
+    <section class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                            <li><a href="index.html">Inicio</a></li>
+                            <li><a href="contagio.html">Contagios</a></li>
+                            <li><a class="menu-top-active" href="foco.html">Focos</a></li>
+                            <li><a href="estadisticas.html">Estadísticas</a></li>
+                            <!--<li><a href="perfil.html">Perfil</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- MENU SECTION END-->
     <div class="container">
@@ -56,9 +111,9 @@
 
                                 <div class="span7">   
                                     <div class="widget stacked widget-table action-table">
-                                        <div class="widget-content">
+                                        <div class="widget-content" id="divFocusTable">
 
-                                            <table class="table table-striped table-bordered">
+                                            <table class="table table-striped table-bordered" id="focusTable">
                                                 <thead>
                                                     <tr>
                                                         <th>Lugar:</th>
@@ -69,52 +124,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Madrid</td>
-                                                        <td>12</td>
-                                                        <td>11/03/2016</td>
-                                                        <td>Descubierto brote de ebola</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger">
-                                                                <span class="glyphicon glyphicon-remove"></span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Barcelona</td>
-                                                        <td>8</td>
-                                                        <td>21/01/2016</td>
-                                                        <td>Descubierto brote de gripe</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger">
-                                                                <span class="glyphicon glyphicon-remove"></span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>                                
-                                                    <tr>
-                                                        <td>Valencia</td>
-                                                        <td>2</td>
-                                                        <td>29/02/2016</td>
-                                                        <td>Descubierto brote de tuberculosis</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger">
-                                                                <span class="glyphicon glyphicon-remove"></span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>                                
-                                                    <tr>
-                                                        <td>Sevilla</td>
-                                                        <td>4</td>
-                                                        <td>18/02/2016</td>
-                                                        <td>Descubierto brote de gripe</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger">
-                                                                <span class="glyphicon glyphicon-remove"></span>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
+
+                                            <script type="text/javascript">loadFocusTable()</script>
                                     
                                         </div> <!-- /widget-content -->
                                     </div> <!-- /widget -->
@@ -132,14 +145,14 @@
                                     </div>
                                 </div>
 
-                                <form id="productForm" method="post" class="form-horizontal">
+                                <form id="focusForm" method="post" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">DNI persona:</label>
                                         <div class="col-xs-5">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Ej: 12345678L">
+                                                <input type="text" class="form-control" id="inputTxt" placeholder="Ej: 12345678L">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-info" type="button">Añadir a la lista</button>
+                                                    <button class="btn btn-info" type="button" onclick="getUserToFocus()">Añadir a la lista</button>
                                                 </span>
                                             </div>
                                         </div>
@@ -151,7 +164,7 @@
                                         <div class="widget stacked widget-table action-table">
                                             <div class="widget-content">
 
-                                                <table class="table table-striped table-bordered">
+                                                <table class="table table-striped table-bordered" id="tableUsersToFocus">
                                                     <thead>
                                                         <tr>
                                                             <th>DNI:</th>
@@ -159,35 +172,8 @@
                                                             <th></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>12345678-L</td>
-                                                            <td>Manuel Martinez</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-danger">Quitar</button>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>23456789-B</td>
-                                                            <td>Pablo Panero Null</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-danger">Quitar</button>
-                                                            </td>
-                                                        </tr>                                
-                                                        <tr>
-                                                            <td>87654321-J</td>
-                                                            <td>Jesus Vazquez</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-danger">Quitar</button>
-                                                            </td>
-                                                        </tr>                                
-                                                        <tr>
-                                                            <td>98765432-Y</td>
-                                                            <td>Diego Diaz</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-danger">Quitar</button>
-                                                            </td>
-                                                        </tr>
+                                                    <tbody id="tableBody">
+                                                        
                                                     </tbody>
                                                 </table>
                                         
@@ -200,7 +186,7 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">Descripción:</label>
                                         <div class="col-xs-8">
-                                            <textarea name="description" class="form-control" rows="5"></textarea>
+                                            <textarea name="description" class="form-control" id="focusDescription" rows="5" required></textarea>
                                         </div>
                                     </div>
 
@@ -221,21 +207,14 @@
                                             <div class="panel-heading">
                                                 <h3 class="panel-title">Focos encontrados:</h3>
                                             </div>
-                                            <table class="table">
+                                            <table class="table" id="tableFocusFound">
                                                 <thead>
                                                     <tr class="filters">
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Vallecas, Madrid, 28033</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Moncloa, Madrid, 28022</td>
-                                                    </tr>
+                                                <tbody id="tbodyFocusFound">
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -244,7 +223,7 @@
 
                                 </br></br>
 
-                                <div class="map-responsive">
+                                <div class="map-responsive" id="divGoogleMap">
                                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d386950.6511603643!2d-73.70231446529533!3d40.738882125234106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNueva+York!5e0!3m2!1ses-419!2sus!4v1445032011908" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
                                 </div>
                                 
@@ -261,17 +240,16 @@
         <!-- CONTENT-WRAPPER SECTION END-->
     <div id="footer"></div>
     <!-- FOOTER SECTION END-->
-    <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-    <!-- CORE JQUERY SCRIPTS -->
-    <script src="assets/js/jquery-1.11.1.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="assets/js/bootstrap.js"></script>
 
-    <script> 
-        $(function(){
-            $("#header").load("header.html");
-            $("#footer").load("footer.html"); 
+    <script src="assets/js/cargaFooter.js"></script>
+
+    <script>
+        $('#focusForm').submit(function () {
+            //onclick="confirmSubmit()"
+            confirmSubmit();
+            return false;
         });
     </script>
+    
 </body>
 </html>
