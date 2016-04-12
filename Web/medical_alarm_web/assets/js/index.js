@@ -93,7 +93,7 @@ function pedirUsuario(apiurl) {
 }
 
 function cambiarEstado() {
-    $('#estadosList li a').on('click', function(){
+    $('#estadosList li a').addEventListener('click', function(){
 
         var nuevoEstado = $(this).text().toUpperCase()
         var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
@@ -107,6 +107,22 @@ function cambiarEstado() {
         }
     });
 }
+
+
+$('#estadosList li a').on('click', function(){
+
+    var nuevoEstado = $(this).text().toUpperCase()
+    var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
+    if (ret) {
+        var estado = document.getElementById("estado");
+        estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado + "</strong></h6>";
+
+        //query UPDATE
+        var apiurl = ENTRYPOINT + "/" + document.getElementById("email");
+        //actualizarEstado(apiurl, nuevoEstado); //solo el estado o  el usuario entero
+    }
+});
+
 
 function actualizarEstado(apiurl, userData) {
     userData = JSON.stringify(userData);

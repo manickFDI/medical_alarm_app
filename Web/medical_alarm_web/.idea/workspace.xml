@@ -26,7 +26,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="113" selection-start="5269" selection-end="5269" vertical-scroll-proportion="0.2147806" vertical-offset="1803" max-vertical-offset="3859">
+            <state line="218" column="0" selection-start="10931" selection-end="10931" vertical-scroll-proportion="3.8660507" vertical-offset="358" max-vertical-offset="3859">
               <folding />
             </state>
           </provider>
@@ -35,7 +35,7 @@
       <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="128" column="1" selection-start="3413" selection-end="4026" vertical-scroll-proportion="0.0" vertical-offset="1407" max-vertical-offset="3400">
+            <state line="124" column="0" selection-start="3992" selection-end="3992" vertical-scroll-proportion="0.0" vertical-offset="1407" max-vertical-offset="3672">
               <folding />
             </state>
           </provider>
@@ -69,8 +69,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/assets/js/index.js" />
         <option value="$PROJECT_DIR$/assets/js/temporal.js" />
+        <option value="$PROJECT_DIR$/assets/js/index.js" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
@@ -301,23 +301,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="1" selection-start="3413" selection-end="4026" vertical-scroll-proportion="0.0" vertical-offset="1407" max-vertical-offset="3400">
+        <state line="124" column="0" selection-start="3992" selection-end="3992" vertical-scroll-proportion="0.0" vertical-offset="1407" max-vertical-offset="3672">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/temporal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="1" selection-start="1222" selection-end="1222" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
-          <folding>
-            <element signature="e#0#41#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="113" selection-start="5269" selection-end="5269" vertical-scroll-proportion="0.2147806" vertical-offset="1803" max-vertical-offset="3859">
+        <state line="218" column="0" selection-start="10931" selection-end="10931" vertical-scroll-proportion="3.8660507" vertical-offset="358" max-vertical-offset="3859">
           <folding />
         </state>
       </provider>
