@@ -97,9 +97,10 @@ function cambiarEstado() {
 
         var nuevoEstado = $(this).text().toUpperCase()
         var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
-        if (confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?")) {
+        if (ret) {
             var estado = document.getElementById("estado");
             estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado + "</strong></h6>";
+
             //query UPDATE
             var apiurl = ENTRYPOINT + "/" + document.getElementById("email");
             //actualizarEstado(apiurl, nuevoEstado); //solo el estado o  el usuario entero
