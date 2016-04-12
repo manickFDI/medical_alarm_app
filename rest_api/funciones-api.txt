@@ -53,6 +53,7 @@ type: POST
 
 entrada:
 {	
+	"dni":"dni", 
 	"time":"time", 
 	"distance":"distance",
 	"disease":"disease",

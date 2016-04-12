@@ -136,17 +136,22 @@ function removeRowFromTable(tblName, row) {
 function getUserToFocus() {
 	var userDNI = document.getElementById('inputTxt').value; // Cogemos el dni del usuario del input
 	if(userDNI != "") {
-		/*var apiURL = ENTRYPOINT_USERS + userDNI + "/";
+		if(validateDNI(userDNI)) {
+			/*var apiURL = ENTRYPOINT_USERS + userDNI + "/";
 
-		return $.ajax({
-			url: apiURL
-		}).done(function (data, textStatus, jqXHR) {
-			updateUsersToFocusTable(data);
-		}).fail(function (jqXHR, textStatus, errorThrown) {
-			alert("Error al buscar usuario.");
-		});*/
-		
-		updateUsersToFocusTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+			return $.ajax({
+				url: apiURL
+			}).done(function (data, textStatus, jqXHR) {
+				updateUsersToFocusTable(data);
+			}).fail(function (jqXHR, textStatus, errorThrown) {
+				alert("Error al buscar usuario.");
+			});*/
+			
+			updateUsersToFocusTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+		}
+		else {
+			alert("DNI no válido.");
+		}
 	}
 	else {
 		alert("Debe introducir el DNI del usuario.");
@@ -226,6 +231,7 @@ function confirmSubmit() {
 				});*/
 
 				createTableFocusFound(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+				location.href = "#focusFound";
 			}
 		/*}
 		else {
@@ -249,7 +255,7 @@ function createTableFocusFound(data) {
 	for(var i=0; i<numFilas; i++) {
 		var fila = document.createElement("tr");
 		var celda = document.createElement("td");
-		var textoCelda = document.createTextNode(i);
+		var textoCelda = document.createTextNode(i+1);
 		celda.appendChild(textoCelda);
 		var celda2 = document.createElement("td");
 		var textoCelda2 = document.createTextNode("celda en la columna 1");
@@ -259,6 +265,36 @@ function createTableFocusFound(data) {
 		fila.appendChild(celda2);
 		tblBody.appendChild(fila);
 	}
+}
+
+
+/*
+	Comprueba que el dni tenga el formato correcto
+*/
+function validateDNI(dni) {
+    var numero;
+    var letra;
+    var letraSet;
+    var expresion_regular_dni;
+    var ret = false;
+
+    expresion_regular_dni = /^\d{8}[a-zA-Z]$/; //expresion regular formada por 8 digitos y una letra (mayus o minus)
+
+    if(expresion_regular_dni.test (dni) == true){ //test -> comprueba que dni es correcto
+        numero = dni.substr(0,dni.length-1); //nos quedamos con los digitos
+        letra = dni.substr(dni.length-1,1);//nos quedamos con la letra
+
+        numero = numero % 23; //necesario para saber si la letra es valida (proceso)
+
+        letraSet='TRWAGMYFPDXBNJZSQVHLCKET'; //todas las letras posibles (ni Ñ ni I ni O)
+
+        letraSet=letraSet.substring(numero,numero+1);
+
+        if (letraSet==letra.toUpperCase()) {
+            ret = true;
+        }
+    }
+    return ret;
 }
 
 

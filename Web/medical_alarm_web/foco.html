@@ -186,11 +186,12 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">Descripción:</label>
                                         <div class="col-xs-8">
-                                            <textarea name="description" class="form-control" id="focusDescription" rows="5" required></textarea>
+                                            <textarea name="description" class="form-control" id="focusDescription" rows="5" placeholder="Introduzca el texto" required></textarea>
                                         </div>
                                     </div>
 
                                     </br>
+                                    <A name="focusFound"></a>
 
                                     <div class="form-group">
                                         <div class="col-xs-5 col-xs-offset-3">
@@ -241,7 +242,11 @@
     <div id="footer"></div>
     <!-- FOOTER SECTION END-->
 
-    <script src="assets/js/cargaFooter.js"></script>
+    <script> 
+        $(function() {
+            $("#footer").load("footer.html"); 
+        });
+    </script>
 
     <script>
         $('#focusForm').submit(function () {

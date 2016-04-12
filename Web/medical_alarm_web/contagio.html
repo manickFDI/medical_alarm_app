@@ -163,6 +163,13 @@
 
                                     <form id="contagionForm" method="post" class="form-horizontal">
                                         <div class="form-group">
+                                            <label class="col-xs-3 control-label">DNI usuario contagiado:</label>
+                                            <div class="col-xs-5">
+                                                <input class="form-control" id="dni" placeholder="Ej: 12345678L" required />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="col-xs-3 control-label">Tiempo de exposición (minutos):</label>
                                             <div class="col-xs-5">
                                                 <input type="number" class="form-control" id="time" placeholder="Ej: 5" min="0" required />
@@ -255,7 +262,11 @@
     <!-- CONTAGIO SCRIPTS  -->
     <script src="assets/js/contagio.js"></script>
 
-    <script src="assets/js/cargaFooter.js"></script>
+    <script> 
+        $(function() {
+            $("#footer").load("footer.html"); 
+        });
+    </script>
 
     <script type="text/javascript">
         $(function () {

@@ -9,26 +9,41 @@ function getInfectedUsers() {
 	var apiURL = ENTRYPOINT_CONTAGIONS + "getUsersInfected" + "/";
 	var disease = document.getElementById('inputTxt').value; // Cogemos el nombre de la enfermedad del input
 	if(disease != "") {
-		/*var userData = '{ "disease":"' + disease + '"}'; // Creamos el txt con el json
-		userData = JSON.stringify(userData); // Verificamos que el formato es json
+		if(correctInput(disease)) {
+			/*var userData = '{ "disease":"' + disease + '"}'; // Creamos el txt con el json
+			userData = JSON.stringify(userData); // Verificamos que el formato es json
 
-		return $.ajax({
-			url: apiURL,
-			type: "POST",
-			data: userData
-		}).always(function() {
-			$("#usersTable").remove(); // Vaciar la tabla de posibles usuarios contagiados
-		}).done(function (data, textStatus, jqXHR) {
-			updateUsersTable(data); // data contiene
-		}).fail(function (jqXHR, textStatus, errorThrown) {
-			alert("Error al buscar la enfermedad.");
-		});*/
+			return $.ajax({
+				url: apiURL,
+				type: "POST",
+				data: userData
+			}).always(function() {
+				$("#usersTable").remove(); // Vaciar la tabla de posibles usuarios contagiados
+			}).done(function (data, textStatus, jqXHR) {
+				updateUsersTable(data); // data contiene
+			}).fail(function (jqXHR, textStatus, errorThrown) {
+				alert("Error al buscar la enfermedad.");
+			});*/
 
-		updateUsersTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+			updateUsersTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+		}
+		else {
+			alert("Formato de entrada incorrecto.");
+		}
 	}
 	else {
 		alert("Debe introducir el nombre de la enfermedad.");
 	}
+}
+
+
+/*
+	Comprueba que el texto solo contenga letras y espacios para evitar entradas malintencionadas
+*/
+function correctInput(text) {
+    var exp = /^[A-Za-z\-\.\s\xF1\xD1]+$/; //alfabetico con espacios
+
+    return exp.test(text);
 }
 
 
@@ -139,38 +154,75 @@ function removeUserFromTable(row) {
 	Recoge los campos del formulario y realiza el post AJAX para dar de alta el Contagio
 */
 function confirmSubmit() {
-	if(confirm("¿Esta seguro de que quiere dar de alta este contagio?")) {
-		var apiURL = ENTRYPOINT_CONTAGIONS;
-		// Valores del formulario
-		var time = document.getElementById('time').value;
-		var distance = document.getElementById('distance').value;
-		var comboboxDiseases = document.getElementById('disease');
-		var disease = comboboxDiseases.options[comboboxDiseases.selectedIndex].value;
-		var date = $("#datetimepicker").data("DateTimePicker").date(); // lo devuelve en ¿segundos? desde ... ?
-		var comboboxLevel = document.getElementById('level');
-		var level = comboboxLevel.options[comboboxLevel.selectedIndex].value;
-		var description = document.getElementById('description').value;
+	var dni = document.getElementById('dni').value;
+	if(validateDNI(dni)) {
+		if(confirm("¿Esta seguro de que quiere dar de alta este contagio?")) {
+			var apiURL = ENTRYPOINT_CONTAGIONS;
+			// Valores del formulario
+			var time = document.getElementById('time').value;
+			var distance = document.getElementById('distance').value;
+			var comboboxDiseases = document.getElementById('disease');
+			var disease = comboboxDiseases.options[comboboxDiseases.selectedIndex].value;
+			var date = $("#datetimepicker").data("DateTimePicker").date(); // lo devuelve en ¿segundos? desde ... ?
+			var comboboxLevel = document.getElementById('level');
+			var level = comboboxLevel.options[comboboxLevel.selectedIndex].value;
+			var description = document.getElementById('description').value;
 
-		var userData = '{ "time":"' + time + '",' +
-						'"distance":"' + distance + '",' +
-						'"disease":"' + disease + '",' +
-						'"date":"' + date + '",' +
-						'"level":"' + level + '",' +
-						'"description":"' + description + '"' +
-						' }'; // Creamos el txt con el json
-		alert(userData);
-		
-		/*userData = JSON.stringify(userData); // Verificamos que el formato es json
+			var userData = '{ "dni":"' + dni + '",' +
+							'"time":"' + time + '",' +
+							'"distance":"' + distance + '",' +
+							'"disease":"' + disease + '",' +
+							'"date":"' + date + '",' +
+							'"level":"' + level + '",' +
+							'"description":"' + description + '"' +
+							' }'; // Creamos el txt con el json
+			alert(userData);
+			
+			/*userData = JSON.stringify(userData); // Verificamos que el formato es json
 
-		return $.ajax({
-			url: apiURL,
-			type: "POST",
-			data: userData
-		}).done(function (data, textStatus, jqXHR) {
-			alert("Contagio dado de alta correctamente");
-		}).fail(function (jqXHR, textStatus, errorThrown) {
-			alert("Error al buscar usuario.");
-		});*/
+			return $.ajax({
+				url: apiURL,
+				type: "POST",
+				data: userData
+			}).done(function (data, textStatus, jqXHR) {
+				alert("Contagio dado de alta correctamente");
+			}).fail(function (jqXHR, textStatus, errorThrown) {
+				alert("Error al buscar usuario.");
+			});*/
+		}
+	}
+	else {
+		alert("DNI no válido.");
 	}
 
+}
+
+
+/*
+	Comprueba que el dni tenga el formato correcto
+*/
+function validateDNI(dni) {
+    var numero;
+    var letra;
+    var letraSet;
+    var expresion_regular_dni;
+    var ret = false;
+
+    expresion_regular_dni = /^\d{8}[a-zA-Z]$/; //expresion regular formada por 8 digitos y una letra (mayus o minus)
+
+    if(expresion_regular_dni.test (dni) == true){ //test -> comprueba que dni es correcto
+        numero = dni.substr(0,dni.length-1); //nos quedamos con los digitos
+        letra = dni.substr(dni.length-1,1);//nos quedamos con la letra
+
+        numero = numero % 23; //necesario para saber si la letra es valida (proceso)
+
+        letraSet='TRWAGMYFPDXBNJZSQVHLCKET'; //todas las letras posibles (ni Ñ ni I ni O)
+
+        letraSet=letraSet.substring(numero,numero+1);
+
+        if (letraSet==letra.toUpperCase()) {
+            ret = true;
+        }
+    }
+    return ret;
 }
