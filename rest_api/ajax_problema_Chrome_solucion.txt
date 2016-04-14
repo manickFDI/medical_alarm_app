@@ -1,0 +1,22 @@
+PROBLEMA CON GOOGLE CHROME AL HACE PETICION AJAX
+
+**************************************************
+
+
+Cuando intentas hacer una petición ajax usando chrome, te da un error al hacer la petición y 
+se trata de un problema relacionado con "Error Access-Control-Allow-Origin"
+
+Para resolverlo he encontrado varias páginas y soluciones:
+
+-Una habla de poner que el tipo en vez de json sea jsonp que tiene otra estructura interna y no da problemas
+
+-Otra es añadir a la url un parámetro callback=?
+
+-Otra es añadir algo al buscador para que permita este tipo de peticiones. Hay  una extensión de chrome que hace justo esto 
+y es lo que yo he usado para resolverlo.
+
+Aquí dejo los dos enlaces más utiles:
+
+https://betabeers.com/forum/error-access-control-allow-origin-al-hacer-peticiones-ajax-otros-dominios-602/
+
+http://stackoverflow.com/questions/20035101/no-access-control-allow-origin-header-is-present-on-the-requested-resource
