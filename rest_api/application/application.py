@@ -67,6 +67,14 @@ An user corresponds to:
 
 
 class Users(Resource):
+
+    def get(self):
+        _type = request.args['type']
+        if _type is "status":
+            return mysqldb.get_total_user_status()
+        else:
+            return {}
+
     def post(self):
         """
         Adds a new user in the database.
@@ -217,8 +225,50 @@ class User(Resource):
         return envelope
 
 
-class Sensors(Resource):
+class Diseases(Resource):
 
+    def get(self):
+        _type = request.args['type']
+        _top = request.args['top'].replace("\"", "")
+
+        if _type is "d": #For deaths
+            return mysqldb.get_top_deaths(_top)
+        elif _type is "c": #For contagions
+            return mysqldb.get_top_contagions(_top)
+        else:
+            return {}
+
+
+class Disease(Resource):
+    def get(self, name):
+        disease_db = mysqldb.get_disease(name);
+
+        # PERFORM OPERATIONS
+        if not disease_db:
+            return create_error_response(404, "Unknown disease",
+                                         "There is no a disease with name %s"
+                                         % name,
+                                         "Disease")
+        # FILTER AND GENERATE RESPONSE
+        # Create the envelope:
+        envelope = {}
+
+        envelope['iddisease'] = disease_db['disease_id']
+        envelope['name'] = disease_db['name']
+        envelope['eradicated'] = disease_db['eradicated']
+        envelope['numdeaths'] = disease_db['num_deaths']
+        envelope['numcontagions'] = disease_db['num_contagions']
+        envelope['numchildren'] = disease_db['num_children']
+        envelope['numadults'] = disease_db['num_adults']
+        envelope['numelders'] = disease_db['num_elders']
+        envelope['numwomen'] = disease_db['num_women']
+        envelope['nummen'] = disease_db['num_men']
+        envelope['weight'] = disease_db['weight']
+
+        return envelope
+
+
+class Sensors(Resource):
     def get(self):
         _distance = request.args['distance']
         _longitude = request.args['longitude'].replace("\"", "")
@@ -304,6 +354,9 @@ app.url_map.converters['regex'] = RegexConverter
 api.add_resource(Users, '/malarm/api/users/', endpoint='users')
 api.add_resource(User, '/malarm/api/user/<dni>/', endpoint='user')
 api.add_resource(Sensors, '/malarm/api/sensors/', endpoint='sensors')
+api.add_resource(Diseases, '/malarm/api/diseases/', endpoint='diseases')
+api.add_resource(Disease, '/malarm/api/disease/<name>/', endpoint='disease')
+
 
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
