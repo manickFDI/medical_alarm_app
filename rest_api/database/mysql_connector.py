@@ -49,9 +49,9 @@ class MysqlDatabase(object):
 
         return 0
 
-    def get_user(self,email):
+    def get_user(self, dni):
 
-        query = "SELECT * FROM {0} WHERE email = \"{1}\"".format(USERS_TABLENAME, email)
+        query = "SELECT * FROM {0} WHERE dni = \"{1}\"".format(USERS_TABLENAME, dni)
         rows = db.execute(query)
 
         if rows is None or rows.rowcount > 1:

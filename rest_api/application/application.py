@@ -152,7 +152,7 @@ class Users(Resource):
 
 
 class User(Resource):
-    def post(self, email):
+    def post(self, dni):
 
         # PARSE THE REQUEST:
         input = request.get_json(force=True)
@@ -164,16 +164,42 @@ class User(Resource):
         input_data = input['user']
         _secret = input_data['secret']
 
-        user_db = mysqldb.get_user(email)
+        user_db = mysqldb.get_user(dni)
 
         # PERFORM OPERATIONS
         if not user_db:
             return create_error_response(404, "Unknown user",
-                                         "There is no a user with email %s"
-                                         % email,
+                                         "There is no a user with dni %s"
+                                         % dni,
                                          "User")
 
         # TODO: Check password and salt first: change to POST
+        # FILTER AND GENERATE RESPONSE
+        # Create the envelope:
+        envelope = {}
+
+        envelope['idusuario'] = user_db['user_id']
+        envelope['name'] = user_db['name']
+        envelope['lastname'] = user_db['lastname']
+        envelope['email'] = user_db['email']
+        envelope['birthday'] = user_db['birthday']
+        envelope['gender'] = user_db['gender']
+        envelope['weight'] = user_db['weight']
+        envelope['idnumber'] = user_db['idnumber']
+        envelope['state'] = user_db['state']
+
+        return envelope
+
+    def get(self, dni):
+
+        user_db = mysqldb.get_user(dni)
+
+        # PERFORM OPERATIONS
+        if not user_db:
+            return create_error_response(404, "Unknown user",
+                                         "There is no a user with dni %s"
+                                         % dni,
+                                         "User")
         # FILTER AND GENERATE RESPONSE
         # Create the envelope:
         envelope = {}
@@ -276,7 +302,7 @@ app.url_map.converters['regex'] = RegexConverter
 
 # Define the routes
 api.add_resource(Users, '/malarm/api/users/', endpoint='users')
-api.add_resource(User, '/malarm/api/users/<email>/', endpoint='user')
+api.add_resource(User, '/malarm/api/users/<dni>/', endpoint='user')
 api.add_resource(Sensors, '/malarm/api/sensors/', endpoint='sensors')
 
 # Start the application
