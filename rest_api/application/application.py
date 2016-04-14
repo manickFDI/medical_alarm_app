@@ -302,7 +302,7 @@ app.url_map.converters['regex'] = RegexConverter
 
 # Define the routes
 api.add_resource(Users, '/malarm/api/users/', endpoint='users')
-api.add_resource(User, '/malarm/api/users/<dni>/', endpoint='user')
+api.add_resource(User, '/malarm/api/user/<dni>/', endpoint='user')
 api.add_resource(Sensors, '/malarm/api/sensors/', endpoint='sensors')
 
 # Start the application
