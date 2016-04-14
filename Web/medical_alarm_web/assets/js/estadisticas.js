@@ -3,24 +3,34 @@
  */
 var ENTRYPOINT = "/malarm/api/enfermedades/";
 
-function buscarEnfermedad() {
+
+/**
+ * search a disease as a result of the searcher
+ */
+function searchDisease() {
     var enfermedad = document.getElementById("buscadorEnf").value;
-    if(entradaCorrecta(enfermedad)) {
+    if(correctInput(enfermedad)) {
         //alert("Entrada correcta");
         var apiurl = ENTRYPOINT + '/enfermedad/';
-        //solicitarEnfermedad(apiurl);
+        //getDisease_db(apiurl);
         //borrar en la definitiva
-        preparaTabla();
+        prepareTable();
         var ref_titulo = document.getElementById("tituloEnf");
         var ref_tabla = document.getElementById('tabla');
-        completarEnfermedad(ref_titulo, ref_tabla, enfermedad);
+        completeDisease(ref_titulo, ref_tabla, enfermedad);
     }
     else {
         alert("Entrada incorrecta (FORMATO INCORRECTO)");
     }
 }
 
-function entradaCorrecta(enfermedad) {
+
+/**
+ * Verify if a string contains only numbers. This prevent SQL Injection
+ * @param enfermedad
+ * @returns {boolean}
+ */
+function correctInput(enfermedad) {
     var ret = false;
     var exp = /^[A-Za-z\-\.\s\xF1\xD1]+$/; //alfabetico con espacios
 
@@ -31,7 +41,12 @@ function entradaCorrecta(enfermedad) {
 }
 
 
-function solicitarEnfermedad(apiurl) {
+/**
+ * obtain a disease from the db with the name of the disease. It communicate with the rest_API
+ * @param apiurl
+ * @returns {*}
+ */
+function getDisease_db(apiurl) {
     return $.ajax({
         url: apiurl,
         dataType:"json"
@@ -48,7 +63,7 @@ function solicitarEnfermedad(apiurl) {
         var enf = data.collection.items; //debe haber uno
         var enf_data = enf.data;
 
-        completarEnfermedad(titulo, datos, enf_data);
+        completeDisease(titulo, datos, enf_data);
 
     }).fail(function (jqXHR, textStatus, errorThrown){
         if (DEBUG) {
@@ -60,22 +75,39 @@ function solicitarEnfermedad(apiurl) {
 }
 
 
-function completarEnfermedad(ref_titulo, ref_tabla, enfermedad) {
+/**
+ * show the information of the searched disease. It controls the html page
+ * @param ref_titulo
+ * @param ref_tabla
+ * @param enfermedad
+ */
+
+function completeDisease(ref_titulo, ref_tabla, enfermedad) {
     $("#enfermedad").show(500);
     $("#contagiosSexo").show(1000);
     $("#contagiosEdad").show(1000);
-    genera_titulo(ref_titulo, enfermedad);
-    genera_tabla(ref_tabla, enfermedad);
+    generateTitle(ref_titulo, enfermedad);
+    generateTable(ref_tabla, enfermedad);
 }
 
 
-function genera_titulo(ref, enfermedad) {
+/**
+ * generate the title of the main page of the disease in the html
+ * @param ref
+ * @param enfermedad
+ */
+function generateTitle(ref, enfermedad) {
     var tituloFormat =  '<h4 class="page-head-line">DATOS DE LA ENFERMEDAD ' +  '(' + enfermedad + ')</h4>';
     ref.innerHTML = tituloFormat;
 }
 
 
-function genera_tabla(ref, enfermedad) {
+/**
+ * generate the table with the information of the disease searched by the doctor
+ * @param ref
+ * @param enfermedad
+ */
+function generateTable(ref, enfermedad) {
 
     //completar con los datos de la enfermedad
     var tabla = '<table class="table table-striped table-condensed"><thead><th>Nº contagiados</th><th>Nº muertes</th><th>Erradicada</th><th>Peso medio</th></thead>' +
@@ -85,7 +117,10 @@ function genera_tabla(ref, enfermedad) {
 }
 
 
-function preparaTabla() {
+/**
+ * prepare the titles and the divs to complete them with the information of the disease
+ */
+function prepareTable() {
     var ref_enfermedad = document.getElementById("enfermedad");
     var html = '<div class="card-content" id="tituloEnf"></div><div class="card-content" id="datosEnf"><div class="span5" id="tabla"></div></div>';
     ref_enfermedad.innerHTML = html;

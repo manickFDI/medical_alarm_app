@@ -7,9 +7,15 @@ var ENTRYPOINT_CONT = "/malarm/api/contagios/";
 
 var DEBUG = true;
 
-function validarDNI(dni) {
-    var numero;
-    var letra;
+/**
+ * Verify if the param dni has a good format of dni with 8 digits and a letter (correct letter)
+ * @param dni
+ * @returns {boolean}
+ */
+
+function validateDNI(dni) {
+    var number;
+    var letter;
     var letraSet;
     var expresion_regular_dni;
     var ret = false;
@@ -17,24 +23,31 @@ function validarDNI(dni) {
     expresion_regular_dni = /^\d{8}[a-zA-Z]$/; //expresion regular formada por 8 digitos y una letra (mayus o minus)
 
     if(expresion_regular_dni.test (dni) == true){ //test -> comprueba que dni es correcto
-        numero = dni.substr(0,dni.length-1); //nos quedamos con los digitos
-        letra = dni.substr(dni.length-1,1);//nos quedamos con la letra
+        number = dni.substr(0,dni.length-1); //nos quedamos con los digitos
+        letter = dni.substr(dni.length-1,1);//nos quedamos con la letra
 
-        numero = numero % 23; //necesario para saber si la letra es valida (proceso)
+        number = number % 23; //necesario para saber si la letra es valida (proceso)
 
         letraSet='TRWAGMYFPDXBNJZSQVHLCKET'; //todas las letras posibles (ni Ñ ni I ni O)
 
-        letraSet=letraSet.substring(numero,numero+1);
+        letraSet=letraSet.substring(number,number+1);
 
-        if (letraSet==letra.toUpperCase()) {
+        if (letraSet==letter.toUpperCase()) {
             ret = true;
         }
     }
     return ret;
 }
 
+
+/**
+ * Complete the html that belongs to the user writing the information of the user in the specific div
+ * @param div
+ * @param user
+ */
+
 //data accediendo a los campos
-function completarUsuario(div, user) {
+function writeUser(div, user) {
 
     //user.nombre
     //user.dni ...
@@ -52,21 +65,32 @@ function completarUsuario(div, user) {
 }
 
 
-function obtenerUsuario() {
+/**
+ * obtain the user from the searcher. It search by the dni.
+ */
+
+function getUser() {
     var dni = document.getElementById("buscadorUsuario").value;
-    if(validarDNI(dni)) {
+    if(validateDNI(dni)) {
         //alert(dni);
         var apiurl = ENTRYPOINT + '/dni';
-        //pedirUsuario(apiurl);
-        completarUsuario(document.getElementById("infoUsuario"), dni);
-        mostrarBotonesUsuario();
+        //getUser_db(apiurl);
+        writeUser(document.getElementById("infoUsuario"), dni);
+        showButtonsUser();
     }
     else {
         alert("Error al introducir el DNI (FORMATO INCORRECTO)");
     }
 }
 
-function pedirUsuario(apiurl) {
+
+/**
+ * Function that communicate with the rest_API to obtain the information of the user
+ * @param apiurl
+ * @returns {*}
+ */
+
+function getUser_db(apiurl) {
     return $.ajax({
         url: apiurl,
         dataType:"json"
@@ -82,7 +106,7 @@ function pedirUsuario(apiurl) {
         var user = data.collection.items; //debe haber uno
         var user_data = user.data;
 
-        completarUsuario(divUser, user_data);
+        writeUser(divUser, user_data);
 
     }).fail(function (jqXHR, textStatus, errorThrown){
         if (DEBUG) {
@@ -92,23 +116,11 @@ function pedirUsuario(apiurl) {
     });
 }
 
-function cambiarEstado() {
-    $('#estadosList li a').addEventListener('click', function(){
-
-        var nuevoEstado = $(this).text().toUpperCase()
-        var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
-        if (ret) {
-            var estado = document.getElementById("estado");
-            estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado + "</strong></h6>";
-
-            //query UPDATE
-            var apiurl = ENTRYPOINT + "/" + document.getElementById("email");
-            //actualizarEstado(apiurl, nuevoEstado); //solo el estado o  el usuario entero
-        }
-    });
-}
 
 
+/////
+////
+//// problem with th function. Inside onclick appears twice. Without function
 $('#estadosList li a').on('click', function(){
 
     var nuevoEstado = $(this).text().toUpperCase()
@@ -119,12 +131,19 @@ $('#estadosList li a').on('click', function(){
 
         //query UPDATE
         var apiurl = ENTRYPOINT + "/" + document.getElementById("email");
-        //actualizarEstado(apiurl, nuevoEstado); //solo el estado o  el usuario entero
+        //updateEstate(apiurl, nuevoEstado); //solo el estado o  el usuario entero
     }
 });
 
 
-function actualizarEstado(apiurl, userData) {
+/**
+ * function that communicate with the api_REST. It update the state of a user when the doctor changes it
+ * @param apiurl
+ * @param userData
+ * @returns {*}
+ */
+
+function updateEstate(apiurl, userData) {
     userData = JSON.stringify(userData);
     return $.ajax({
         url: apiurl,
@@ -144,7 +163,13 @@ function actualizarEstado(apiurl, userData) {
     });
 }
 
-function getContagios() {
+
+/**
+ * Connect with the api_REST and obtain all the active contagions in the system with the necessary information
+ * @returns {*}
+ */
+
+function getContagions() {
     var apiurl = ENTRYPOINT_CONT;
     return $.ajax({
         url: apiurl,
@@ -171,6 +196,12 @@ function getContagios() {
     });
 }
 
+
+/**
+ * add a new contagion to the list of the html
+ * @param contagio
+ * @returns {string}
+ */
 function addContagioToList(contagio) {
     //poner contagio.enfermedad ...
 
@@ -179,32 +210,53 @@ function addContagioToList(contagio) {
 
     var $contagio = '<li id="' + aux_li + '">' + '<span class="sm-box bggreen2" >' + '</span>' +
         '<span class="leyenda">Enfermedad: Gripe A || Madrid-Centro || Contagios: 12</span>' +
-        '<a class="btn btn-info btn-xs" onclick="erradicarContagio(' + aux_li + ')" id="' + aux_btn + '">Erradicar </a>';
+        '<a class="btn btn-info btn-xs" onclick="deleteContagion(' + aux_li + ')" id="' + aux_btn + '">Erradicar </a>';
 
     //añadir a la lista cada contagio
     $("#contagiosList").append($contagio);
     return $contagio;
 }
 
-function ocultarMensaje() {
+
+/**
+ * hide the template of the email if you cancel the button
+ */
+function hideMessage() {
     $("#messageUser").hide(500);
 }
 
-function mostrarMensaje() {
+
+/**
+ * shows the message to email with a user
+ */
+function showMessage() {
     $("#messageUser").show(1000);
 }
 
-function mostrarBotonesUsuario() {
+
+/**
+ * a partial function that shows the panel with the buttons when a search is done
+ */
+function showButtonsUser() {
     $("#botonesPanelUsuario").show();
 }
 
-function contagios() {
+
+/**
+ * temporal function that complete the table with the contagions
+ */
+function contagions() {
     for (var j=0; j<4;j++){
         addContagioToList(j);
     }
 }
 
-function erradicarContagio(id) {
+
+/**
+ * delete an active contagion from the html
+ * @param id
+ */
+function deleteContagion(id) {
     var aux = "'" + id + "'"
     var li = document.getElementById(aux);
     li.parentNode.removeChild(li);

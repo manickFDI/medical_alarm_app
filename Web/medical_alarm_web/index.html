@@ -91,7 +91,7 @@
                             <div class="input-group col-md-12">
                                 <input type="text" class="form-control input-lg" id="buscadorUsuario" placeholder="DNI / Nº SANITARIO" />
                                 <span class="input-group-btn">
-                                <button class="btn btn-info btn-lg" type="button" onclick="obtenerUsuario()">
+                                <button class="btn btn-info btn-lg" type="button" onclick="getUser()">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </button>
                                 </span>
@@ -127,7 +127,7 @@
                                         <li><a href="#">Fallecido</a></li>
                                     </ul>
                                 </div>
-                                <a class="btn btn-send" onclick="mostrarMensaje()"><span class="glyphicon glyphicon-envelope"></span> Enviar mensaje </a>
+                                <a class="btn btn-send" onclick="showMessage()"><span class="glyphicon glyphicon-envelope"></span> Enviar mensaje </a>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <strong>Contagios Activos en España</strong>
-                                <button type="button" class="btn btn-default" id="btnActualizar" onclick="contagios()">
+                                <button type="button" class="btn btn-default" id="btnActualizar" onclick="contagions()">
                                     <span class="glyphicon glyphicon-refresh"></span> Actualizar
                                 </button>
                             </div>
@@ -190,7 +190,7 @@
                                 <textarea rows="9" class="form-control"></textarea>
                                 <hr />
                                 <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Confirmar </a>&nbsp;
-                                <a class="btn btn-danger" onclick="ocultarMensaje()"><span class="glyphicon glyphicon-remove"></span>  Cancelar </a>
+                                <a class="btn btn-danger" onclick="hideMessage()"><span class="glyphicon glyphicon-remove"></span>  Cancelar </a>
                             </div>
                             <div class="panel-footer text-muted">
                                 <strong>Nota : </strong>Este mensaje será enviado al correo del paciente(sale si se da al boton "enviar mensaje")
