@@ -239,7 +239,7 @@ salida:
 
 * Dado el nombre de una enfermedad necesito la lista de usuarios infectados por esa enfermedad y el id de ese contagio
 
-apiurl: malarm/api/contagions/?disease=ebola
+apiurl: malarm/api/users/contagions/?disease=ebola
 type: GET
 
 salida:
@@ -380,3 +380,216 @@ salida:
             ]
         }
     ]
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+* Devuelve todos los contagios activos en el sistema. OJO --> solo activos, mirar el color
+
+NOTA: entiendo como contagio no activo si el nivel es 0
+
+apiurl: malarm/api/contagions/
+type: GET
+
+entrada: -
+
+salida:
+    [
+        {
+            "contagion_id": "1",
+            "date": "10/02/2016",
+            "description": "lorem impsum",
+            "disease": {
+                "disease_id": "1",
+                "eradicated": "no",
+                "name": "Ebola",
+                "num_adults": "10",
+                "num_children": "4",
+                "num_contagions": "29",
+                "num_deaths": "10",
+                "num_elders": "15",
+                "num_men": "15",
+                "num_women": "14",
+                "weight": "60"
+            },
+            "disease_id": "1",
+            "distance": "2",
+            "doctor_id": "1",
+            "level": "3",
+            "place": "Barcelona",
+            "time": "10"
+        },
+        {
+            "contagion_id": "2",
+            "date": "07/04/2016",
+            "description": "lorem impsum",
+            "disease": {
+                "disease_id": "1",
+                "eradicated": "no",
+                "name": "Ebola",
+                "num_adults": "10",
+                "num_children": "4",
+                "num_contagions": "29",
+                "num_deaths": "10",
+                "num_elders": "15",
+                "num_men": "15",
+                "num_women": "14",
+                "weight": "60"
+            },
+            "disease_id": "1",
+            "distance": "2",
+            "doctor_id": "1",
+            "level": "2",
+            "place": "Madrid",
+            "time": "20"
+        },
+        {
+            "contagion_id": "3",
+            "date": "20/03/2016",
+            "description": "lorem impsum",
+            "disease": {
+                "disease_id": "1",
+                "eradicated": "no",
+                "name": "Ebola",
+                "num_adults": "10",
+                "num_children": "4",
+                "num_contagions": "29",
+                "num_deaths": "10",
+                "num_elders": "15",
+                "num_men": "15",
+                "num_women": "14",
+                "weight": "60"
+            },
+            "disease_id": "1",
+            "distance": "2",
+            "doctor_id": "1",
+            "level": "1",
+            "place": "Cartagena",
+            "time": "2"
+        },
+        {
+            "contagion_id": "4",
+            "date": "11/01/2016",
+            "description": "lorem impsum",
+            "disease": {
+                "disease_id": "2",
+                "eradicated": "no",
+                "name": "Zika",
+                "num_adults": "10",
+                "num_children": "9",
+                "num_contagions": "39",
+                "num_deaths": "20",
+                "num_elders": "20",
+                "num_men": "25",
+                "num_women": "14",
+                "weight": "70"
+            },
+            "disease_id": "2",
+            "distance": "10",
+            "doctor_id": "1",
+            "level": "3",
+            "place": "Madrid",
+            "time": "40"
+        },
+        {
+            "contagion_id": "5",
+            "date": "22/02/2016",
+            "description": "lorem impsum",
+            "disease": {
+                "disease_id": "2",
+                "eradicated": "no",
+                "name": "Zika",
+                "num_adults": "10",
+                "num_children": "9",
+                "num_contagions": "39",
+                "num_deaths": "20",
+                "num_elders": "20",
+                "num_men": "25",
+                "num_women": "14",
+                "weight": "70"
+            },
+            "disease_id": "2",
+            "distance": "10",
+            "doctor_id": "1",
+            "level": "3",
+            "place": "Barcelona",
+            "time": "3"
+        },
+        {
+            "contagion_id": "6",
+            "date": "13/01/2016",
+            "description": "lorem impsum",
+            "disease": {
+                "disease_id": "3",
+                "eradicated": "no",
+                "name": "Dengue",
+                "num_adults": "13",
+                "num_children": "6",
+                "num_contagions": "34",
+                "num_deaths": "15",
+                "num_elders": "15",
+                "num_men": "15",
+                "num_women": "19",
+                "weight": "55"
+            },
+            "disease_id": "3",
+            "distance": "3",
+            "doctor_id": "1",
+            "level": "2",
+            "place": "Cartagena",
+            "time": "5"
+        },
+        {
+            "contagion_id": "7",
+            "date": "24/04/2016",
+            "description": "lorem impsum",
+            "disease": {
+                "disease_id": "3",
+                "eradicated": "no",
+                "name": "Dengue",
+                "num_adults": "13",
+                "num_children": "6",
+                "num_contagions": "34",
+                "num_deaths": "15",
+                "num_elders": "15",
+                "num_men": "15",
+                "num_women": "19",
+                "weight": "55"
+            },
+            "disease_id": "3",
+            "distance": "3",
+            "doctor_id": "1",
+            "level": "2",
+            "place": "Barcelona",
+            "time": "1"
+        }
+    ]
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+* Elimina un contagio de la base de datos.
+
+apiurl: malarm/api/contagion/1/
+type: DELETE
+
+entrada: -
+
+salida: - (204: NO CONTENT)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+* Elimina el foco
+
+apiurl: apiurl: malarm/api/focus/1/
+type: DELETE
+
+entrada: -
+
+salida:  - (204 NO CONTENT)

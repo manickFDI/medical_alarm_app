@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema malarm
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema malarm
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `malarm` DEFAULT CHARACTER SET utf8 ;
+USE `malarm` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`usuario`
+-- Table `malarm`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
+CREATE TABLE IF NOT EXISTS `malarm`.`usuario` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `apellidos` VARCHAR(45) NOT NULL,
@@ -36,9 +36,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`enfermedad`
+-- Table `malarm`.`enfermedad`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`enfermedad` (
+CREATE TABLE IF NOT EXISTS `malarm`.`enfermedad` (
   `idEnfermedad` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `erradicada` TINYINT(1) NULL,
@@ -54,9 +54,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`medico`
+-- Table `malarm`.`medico`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`medico` (
+CREATE TABLE IF NOT EXISTS `malarm`.`medico` (
   `idMedico` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `apellidos` VARCHAR(45) NOT NULL,
@@ -69,9 +69,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`contagio`
+-- Table `malarm`.`contagio`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`contagio` (
+CREATE TABLE IF NOT EXISTS `malarm`.`contagio` (
   `idContagio` INT NOT NULL AUTO_INCREMENT,
   `idEnfermedad` INT NOT NULL,
   `idMedico` INT NOT NULL,
@@ -86,21 +86,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`contagio` (
   INDEX `fk_contagio_medico1_idx` (`idMedico` ASC),
   CONSTRAINT `fk_contagio_enfermedad1`
     FOREIGN KEY (`idEnfermedad`)
-    REFERENCES `mydb`.`enfermedad` (`idEnfermedad`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `malarm`.`enfermedad` (`idEnfermedad`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_contagio_medico1`
     FOREIGN KEY (`idMedico`)
-    REFERENCES `mydb`.`medico` (`idMedico`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`medico` (`idMedico`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`notificacion`
+-- Table `malarm`.`notificacion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`notificacion` (
+CREATE TABLE IF NOT EXISTS `malarm`.`notificacion` (
   `idUsuario` INT NOT NULL,
   `idContagio` INT NOT NULL,
   `fecha` VARCHAR(10) NOT NULL,
@@ -110,21 +110,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`notificacion` (
   INDEX `fk_usuario_has_contagios_usuario_idx` (`idUsuario` ASC),
   CONSTRAINT `fk_usuario_has_contagios_usuario`
     FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`usuario` (`idUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `malarm`.`usuario` (`idUsuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_usuario_has_contagios_contagios1`
     FOREIGN KEY (`idContagio`)
-    REFERENCES `mydb`.`contagio` (`idContagio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`contagio` (`idContagio`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`usuarioContagiado`
+-- Table `malarm`.`usuarioContagiado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`usuarioContagiado` (
+CREATE TABLE IF NOT EXISTS `malarm`.`usuarioContagiado` (
   `idUsuario` INT NOT NULL,
   `idContagio` INT NOT NULL,
   PRIMARY KEY (`idUsuario`, `idContagio`),
@@ -132,21 +132,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`usuarioContagiado` (
   INDEX `fk_usuario_has_contagios_usuario1_idx` (`idUsuario` ASC),
   CONSTRAINT `fk_usuario_has_contagios_usuario1`
     FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`usuario` (`idUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `malarm`.`usuario` (`idUsuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_usuario_has_contagios_contagios2`
     FOREIGN KEY (`idContagio`)
-    REFERENCES `mydb`.`contagio` (`idContagio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`contagio` (`idContagio`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`foco`
+-- Table `malarm`.`foco`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`foco` (
+CREATE TABLE IF NOT EXISTS `malarm`.`foco` (
   `idFoco` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(45) NOT NULL,
   `numPersonas` INT NOT NULL,
@@ -155,16 +155,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`foco` (
   INDEX `fk_foco_medico1_idx` (`idMedico` ASC),
   CONSTRAINT `fk_foco_medico1`
     FOREIGN KEY (`idMedico`)
-    REFERENCES `mydb`.`medico` (`idMedico`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`medico` (`idMedico`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`usuarioEnFoco`
+-- Table `malarm`.`usuarioEnFoco`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`usuarioEnFoco` (
+CREATE TABLE IF NOT EXISTS `malarm`.`usuarioEnFoco` (
   `idUsuario` INT NOT NULL,
   `idFoco` INT NOT NULL,
   PRIMARY KEY (`idUsuario`, `idFoco`),
@@ -172,21 +172,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`usuarioEnFoco` (
   INDEX `fk_usuario_has_foco_usuario1_idx` (`idUsuario` ASC),
   CONSTRAINT `fk_usuario_has_foco_usuario1`
     FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`usuario` (`idUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `malarm`.`usuario` (`idUsuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_usuario_has_foco_foco1`
     FOREIGN KEY (`idFoco`)
-    REFERENCES `mydb`.`foco` (`idFoco`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`foco` (`idFoco`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`lugaresFoco`
+-- Table `malarm`.`lugaresFoco`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`lugaresFoco` (
+CREATE TABLE IF NOT EXISTS `malarm`.`lugaresFoco` (
   `idFoco` INT NOT NULL,
   `lugar` VARCHAR(45) NOT NULL,
   `fecha` VARCHAR(10) NOT NULL,
@@ -194,16 +194,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`lugaresFoco` (
   INDEX `fk_lugaresFoco_foco1_idx` (`idFoco` ASC),
   CONSTRAINT `fk_lugaresFoco_foco1`
     FOREIGN KEY (`idFoco`)
-    REFERENCES `mydb`.`foco` (`idFoco`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`foco` (`idFoco`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`noticia`
+-- Table `malarm`.`noticia`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`noticia` (
+CREATE TABLE IF NOT EXISTS `malarm`.`noticia` (
   `idNoticia` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(45) NOT NULL,
   `idContagio` INT NOT NULL,
@@ -211,16 +211,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`noticia` (
   INDEX `fk_noticia_contagio1_idx` (`idContagio` ASC),
   CONSTRAINT `fk_noticia_contagio1`
     FOREIGN KEY (`idContagio`)
-    REFERENCES `mydb`.`contagio` (`idContagio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`contagio` (`idContagio`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`noticiasPorUsuario`
+-- Table `malarm`.`noticiasPorUsuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`noticiasPorUsuario` (
+CREATE TABLE IF NOT EXISTS `malarm`.`noticiasPorUsuario` (
   `idNoticia` INT NOT NULL,
   `idUsuario` INT NOT NULL,
   PRIMARY KEY (`idNoticia`, `idUsuario`),
@@ -228,14 +228,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`noticiasPorUsuario` (
   INDEX `fk_noticia_has_usuario_noticia1_idx` (`idNoticia` ASC),
   CONSTRAINT `fk_noticia_has_usuario_noticia1`
     FOREIGN KEY (`idNoticia`)
-    REFERENCES `mydb`.`noticia` (`idNoticia`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `malarm`.`noticia` (`idNoticia`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_noticia_has_usuario_usuario1`
     FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`usuario` (`idUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `malarm`.`usuario` (`idUsuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 

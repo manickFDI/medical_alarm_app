@@ -15,7 +15,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/rest_api$application.coverage" NAME="application Coverage Results" MODIFIED="1460718633944" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/application" />
+    <SUITE FILE_PATH="coverage/rest_api$application.coverage" NAME="application Coverage Results" MODIFIED="1460722092975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/application" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -37,43 +37,61 @@
         <entry file="file://$PROJECT_DIR$/database/mysql_connector.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="292" column="0" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
+              <caret line="233" column="0" selection-start-line="233" selection-start-column="0" selection-end-line="233" selection-end-column="0" />
               <folding>
                 <element signature="e#1284#1418#0" expanded="false" />
                 <element signature="e#1511#2637#0" expanded="false" />
                 <element signature="e#2934#3294#0" expanded="false" />
                 <element signature="e#3334#3587#0" expanded="false" />
                 <element signature="e#3649#4208#0" expanded="false" />
-                <element signature="e#4299#4624#0" expanded="false" />
                 <element signature="e#4670#5075#0" expanded="false" />
                 <element signature="e#5125#5593#0" expanded="false" />
                 <element signature="e#5658#6525#0" expanded="false" />
-                <element signature="e#6607#7366#0" expanded="false" />
-                <element signature="e#7428#8312#0" expanded="false" />
-                <element signature="e#8379#9060#0" expanded="false" />
-                <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-                <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-                <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-                <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-                <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-                <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-                <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-                <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-                <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-                <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-                <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-                <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-                <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-                <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+                <element signature="e#6609#6730#0" expanded="false" />
+                <element signature="e#6811#7570#0" expanded="false" />
+                <element signature="e#7613#7987#0" expanded="false" />
+                <element signature="e#8049#8933#0" expanded="false" />
+                <element signature="e#9000#9681#0" expanded="false" />
+                <element signature="e#9787#11415#0" expanded="false" />
+                <element signature="e#11463#12941#0" expanded="false" />
+                <element signature="e#12988#13380#0" expanded="false" />
+                <element signature="e#13446#14858#0" expanded="false" />
+                <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+                <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+                <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+                <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+                <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+                <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+                <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+                <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+                <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+                <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+                <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+                <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
               </folding>
             </state>
           </provider>
@@ -83,7 +101,7 @@
         <entry file="file://$PROJECT_DIR$/application/application.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="330" column="0" selection-start-line="330" selection-start-column="0" selection-end-line="330" selection-end-column="0" />
+              <caret line="360" column="22" selection-start-line="360" selection-start-column="22" selection-end-line="360" selection-end-column="22" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#1307#4978#0" expanded="false" />
@@ -94,6 +112,10 @@
                 <element signature="e#7707#8779#0" expanded="false" />
                 <element signature="e#8811#12090#0" expanded="false" />
                 <element signature="e#12122#12173#0" expanded="false" />
+                <element signature="e#12214#12396#0" expanded="false" />
+                <element signature="e#12432#12493#0" expanded="false" />
+                <element signature="e#12528#13080#0" expanded="false" />
+                <element signature="e#13110#13643#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -102,8 +124,38 @@
       <file leaf-file-name="funciones-api.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/funciones-api.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.161435">
-              <caret line="57" column="12" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.033632286">
+              <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="funciones-api-hechas.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/funciones-api-hechas.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="594" column="27" selection-start-line="594" selection-start-column="27" selection-end-line="594" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Cambios BBDD" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Cambios BBDD">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bbdd_population.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bbdd_population.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.6296296">
+              <caret line="50" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="64" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -134,12 +186,12 @@
         <option value="$PROJECT_DIR$/POST_bodies.txt" />
         <option value="$PROJECT_DIR$/database/mongo_connector.py" />
         <option value="$PROJECT_DIR$/application/user.py" />
-        <option value="$PROJECT_DIR$/Cambios BBDD" />
         <option value="$PROJECT_DIR$/bbdd_population.sql" />
+        <option value="$PROJECT_DIR$/Cambios BBDD" />
+        <option value="$PROJECT_DIR$/funciones-api-hechas.txt" />
         <option value="$PROJECT_DIR$/application/application.py" />
         <option value="$PROJECT_DIR$/database/mysql_connector.py" />
         <option value="$PROJECT_DIR$/funciones-api.txt" />
-        <option value="$PROJECT_DIR$/funciones-api-hechas.txt" />
       </list>
     </option>
   </component>
@@ -988,12 +1040,12 @@
       <workItem from="1460623906312" duration="14000" />
       <workItem from="1460644523725" duration="4099000" />
       <workItem from="1460655709567" duration="139000" />
-      <workItem from="1460707798953" duration="9304000" />
+      <workItem from="1460707798953" duration="12292000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17579000" />
+    <option name="totallyTimeSpent" value="20567000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1074,14 +1126,14 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/database/mysql_connector.py</url>
-          <line>274</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="42" />
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="45" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1110,36 +1162,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1158,6 +1228,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1172,36 +1246,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1220,6 +1312,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1234,36 +1330,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1278,36 +1392,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1322,36 +1454,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1370,6 +1520,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1391,36 +1545,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1439,6 +1611,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1460,36 +1636,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1508,6 +1702,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1529,36 +1727,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1577,6 +1793,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1598,36 +1818,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1646,6 +1884,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1667,36 +1909,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1715,6 +1975,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1729,36 +1993,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1777,6 +2059,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1791,36 +2077,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1839,6 +2143,10 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1853,36 +2161,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1904,36 +2230,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -1955,36 +2299,54 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
         </state>
       </provider>
@@ -2006,44 +2368,55 @@
             <element signature="e#2934#3294#0" expanded="false" />
             <element signature="e#3334#3587#0" expanded="false" />
             <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
             <element signature="e#4670#5075#0" expanded="false" />
             <element signature="e#5125#5593#0" expanded="false" />
             <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33242506">
-          <caret line="227" column="0" selection-start-line="227" selection-start-column="0" selection-end-line="227" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2098,14 +2471,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bbdd_population.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.777779">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="64" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Python/2.7/site-packages/werkzeug/routing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2114,62 +2479,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Cambios BBDD">
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+          <caret line="227" column="0" selection-start-line="227" selection-start-column="0" selection-end-line="227" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/mysql_connector.py">
+    <entry file="file://$PROJECT_DIR$/Cambios BBDD">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="292" column="0" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
-          <folding>
-            <element signature="e#1284#1418#0" expanded="false" />
-            <element signature="e#1511#2637#0" expanded="false" />
-            <element signature="e#2934#3294#0" expanded="false" />
-            <element signature="e#3334#3587#0" expanded="false" />
-            <element signature="e#3649#4208#0" expanded="false" />
-            <element signature="e#4299#4624#0" expanded="false" />
-            <element signature="e#4670#5075#0" expanded="false" />
-            <element signature="e#5125#5593#0" expanded="false" />
-            <element signature="e#5658#6525#0" expanded="false" />
-            <element signature="e#6607#7366#0" expanded="false" />
-            <element signature="e#7428#8312#0" expanded="false" />
-            <element signature="e#8379#9060#0" expanded="false" />
-            <marker date="1460718633000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
-            <marker date="1460718633000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
-            <marker date="1460718633000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
-            <marker date="1460718633000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6630" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6616:6635" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6697" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="6683:6700" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="6683:6715" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9176:9210" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9176:9227" placeholder="SELECT idEnf... " />
-            <marker date="1460718633000" expanded="true" signature="9494:9533" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9494:9536" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9855" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="9832:9869" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="9832:9872" placeholder="SELECT * FRO... " />
-            <marker date="1460718633000" expanded="true" signature="10332:10368" placeholder="SELECT * FRO... missing_value" />
-            <marker date="1460718633000" expanded="true" signature="10332:10371" placeholder="SELECT * FRO... " />
-          </folding>
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbdd_population.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.6296296">
+          <caret line="50" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="64" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/funciones-api-hechas.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="594" column="27" selection-start-line="594" selection-start-column="27" selection-end-line="594" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/application.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="330" column="0" selection-start-line="330" selection-start-column="0" selection-end-line="330" selection-end-column="0" />
+          <caret line="360" column="22" selection-start-line="360" selection-start-column="22" selection-end-line="360" selection-end-column="22" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#1307#4978#0" expanded="false" />
@@ -2180,22 +2525,80 @@
             <element signature="e#7707#8779#0" expanded="false" />
             <element signature="e#8811#12090#0" expanded="false" />
             <element signature="e#12122#12173#0" expanded="false" />
+            <element signature="e#12214#12396#0" expanded="false" />
+            <element signature="e#12432#12493#0" expanded="false" />
+            <element signature="e#12528#13080#0" expanded="false" />
+            <element signature="e#13110#13643#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/funciones-api-hechas.txt">
+    <entry file="file://$PROJECT_DIR$/database/mysql_connector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8744395">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="233" column="0" selection-start-line="233" selection-start-column="0" selection-end-line="233" selection-end-column="0" />
+          <folding>
+            <element signature="e#1284#1418#0" expanded="false" />
+            <element signature="e#1511#2637#0" expanded="false" />
+            <element signature="e#2934#3294#0" expanded="false" />
+            <element signature="e#3334#3587#0" expanded="false" />
+            <element signature="e#3649#4208#0" expanded="false" />
+            <element signature="e#4670#5075#0" expanded="false" />
+            <element signature="e#5125#5593#0" expanded="false" />
+            <element signature="e#5658#6525#0" expanded="false" />
+            <element signature="e#6609#6730#0" expanded="false" />
+            <element signature="e#6811#7570#0" expanded="false" />
+            <element signature="e#7613#7987#0" expanded="false" />
+            <element signature="e#8049#8933#0" expanded="false" />
+            <element signature="e#9000#9681#0" expanded="false" />
+            <element signature="e#9787#11415#0" expanded="false" />
+            <element signature="e#11463#12941#0" expanded="false" />
+            <element signature="e#12988#13380#0" expanded="false" />
+            <element signature="e#13446#14858#0" expanded="false" />
+            <marker date="1460722092000" expanded="true" signature="1520:1573" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="1520:1574" placeholder="SELECT count... usuario" />
+            <marker date="1460722092000" expanded="true" signature="3157:3191" placeholder="INSERT INTO missing_value... " />
+            <marker date="1460722092000" expanded="true" signature="3343:3380" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4308:4411" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4688" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="4679:4744" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="4679:4745" placeholder="SELECT nombr... " />
+            <marker date="1460722092000" expanded="true" signature="5134:5256" placeholder="SELECT nombr... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6834" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6820:6839" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6901" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="6887:6904" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="6887:6919" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7637:7670" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="7735:7766" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="9803:9837" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="9803:9854" placeholder="SELECT idEnf... " />
+            <marker date="1460722092000" expanded="true" signature="10121:10160" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10121:10163" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10482" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10459:10496" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10459:10499" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="10959:10995" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="10959:10998" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11503:11560" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11503:11563" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11948" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="11934:11951" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="11934:11967" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="12405:12445" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="12405:12458" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13012:13048" placeholder="SELECT * FRO... " />
+            <marker date="1460722092000" expanded="true" signature="13012:13049" placeholder="SELECT * FRO... missing_value" />
+            <marker date="1460722092000" expanded="true" signature="13119:13153" placeholder="DELETE FROM " />
+            <marker date="1460722092000" expanded="true" signature="13119:13154" placeholder="DELETE FROM " />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/funciones-api.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.161435">
-          <caret line="57" column="12" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.033632286">
+          <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
           <folding />
         </state>
       </provider>

@@ -322,16 +322,57 @@ class Focuses(Resource):
     def get(self):
         return mysqldb.get_focuses()
 
-class Contagions(Resource):
+
+class UsersContagions(Resource):
 
     def get(self):
         disease = request.args['disease']
 
         if disease is not None:
-            return mysqldb.get_contagions(disease)
+            return mysqldb.get_users_contagions(disease)
         else:
             return []
 
+
+class Contagions(Resource):
+
+    def get(self):
+        return mysqldb.get_active_contagions()
+
+
+class Contagion(Resource):
+
+    def delete(self, id):
+
+        # PEROFRM OPERATIONS
+        # Try to delete the contagion. If it could not be deleted, the database
+        # returns False.
+        if mysqldb.delete_contagion(id):
+            # RENDER RESPONSE
+            return '', 204
+        else:
+            # GENERATE ERROR RESPONSE
+            return create_error_response(404, "Unknown contagion",
+                                         "There is no a contagion with id %s"
+                                         % id,
+                                         "Contagion")
+
+
+class Focus(Resource):
+    def delete(self, id):
+
+        # PEROFRM OPERATIONS
+        # Try to delete the focus. If it could not be deleted, the database
+        # returns False.
+        if mysqldb.delete_focus(id):
+            # RENDER RESPONSE
+            return '', 204
+        else:
+            # GENERATE ERROR RESPONSE
+            return create_error_response(404, "Unknown focus",
+                                         "There is no a focus with id %s"
+                                         % id,
+                                         "Focus")
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
 app.url_map.converters['regex'] = RegexConverter
@@ -342,8 +383,11 @@ api.add_resource(User, '/malarm/api/user/<dni>/', endpoint='user')
 api.add_resource(Sensors, '/malarm/api/sensors/', endpoint='sensors')
 api.add_resource(Diseases, '/malarm/api/diseases/', endpoint='diseases')
 api.add_resource(Disease, '/malarm/api/disease/<name>/', endpoint='disease')
+api.add_resource(Focus, '/malarm/api/focus/<id>/', endpoint='focus')
 api.add_resource(Focuses, '/malarm/api/focuses/', endpoint='focuses')
+api.add_resource(Contagion, '/malarm/api/contagion/<id>/', endpoint='contagion')
 api.add_resource(Contagions, '/malarm/api/contagions/', endpoint='contagions')
+api.add_resource(UsersContagions, '/malarm/api/users/contagions/', endpoint='users_contagions')
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
 if __name__ == '__main__':

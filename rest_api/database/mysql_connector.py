@@ -201,6 +201,12 @@ class MysqlDatabase(object):
 
         return disease
 
+    @staticmethod
+    def get_disease_from_id_and_list(disease_list, id):
+        for disease in disease_list:
+            if disease['disease_id'] == id:
+                return disease
+        return {}
 
     """
     FOCUS RELATED FUNCTIONS
@@ -225,6 +231,17 @@ class MysqlDatabase(object):
                 focus['places'] = places
             focuses.append(focus)
         return focuses
+
+    def delete_focus(self, id):
+
+        existsContagionQuery = "SELECT * FROM {0} WHERE idFoco = {1}".format(FOCUS_TABLENAME, id)
+        deleteContagionQuery = "DELETE FROM {0} WHERE idFoco = {1}".format(FOCUS_TABLENAME,id)
+        rows = db.execute(existsContagionQuery)
+
+        if rows is not None and rows.rowcount > 0:
+            db.execute(deleteContagionQuery)
+            return True
+        return False
 
     @staticmethod
     def create_focus_object(row):
@@ -271,7 +288,7 @@ class MysqlDatabase(object):
     CONTAGIONS RELATED FUNCTIONS
     """
 
-    def get_contagions(self, disease):
+    def get_users_contagions(self, disease):
         diseaseQuery = "SELECT idEnfermedad FROM {0} WHERE nombre = \"{1}\"".format(DISEASE_TABLENAME, disease);
         rows = db.execute(diseaseQuery)
 
@@ -309,6 +326,51 @@ class MysqlDatabase(object):
             contagions.append(contagion)
 
         return contagions
+
+    def get_active_contagions(self):
+
+        # Get diseases
+        diseasesQuery = "SELECT *, (numHombres+numMujeres) as numContagions  FROM {0}".format(DISEASE_TABLENAME)
+        diseaseRows = db.execute(diseasesQuery)
+        if diseaseRows is None or diseaseRows.rowcount < 1:
+            return {}
+        diseasesData = []
+        for diseaseRow in diseaseRows:
+            diseasesData.append(self.create_disease_object(diseaseRow))
+
+        contagions = []
+        #Get contagions
+        contagionsQuery = "SELECT * FROM {0} WHERE nivel > 0".format(CONTAGIONS_TABLENAME)
+        contagionRows = db.execute(contagionsQuery)
+        if contagionRows is None or contagionRows.rowcount < 1:
+            return {}
+        for contagionRow in contagionRows:
+            contagion = self.create_contagion_object(contagionRow)
+            contagion['disease'] = self.get_disease_from_id_and_list(diseasesData, contagion['disease_id'])
+            """
+            userContagionsQuery = "SELECT count(*) as amount FROM {0} WHERE idContagio = ".format(CONTAGIONS_USERS_TABLENAME, contagion['contagion_id'])
+            userContagionRows = db.execute(userContagionsQuery)
+
+            if userContagionRows is None or userContagionRows.rowcount > 1:
+                contagion['num_users'] = "0"
+            else:
+                for userContagionRow in userContagionRows:
+                    contagion['num_users'] = userContagionRow['amount']
+            """
+            contagions.append(contagion)
+
+        return contagions
+
+    def delete_contagion(self, id):
+
+        existsContagionQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id)
+        deleteContagionQuery = "DELETE FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME,id)
+        rows = db.execute(existsContagionQuery)
+
+        if rows is not None and rows.rowcount > 0:
+            db.execute(deleteContagionQuery)
+            return True
+        return False
 
     @staticmethod
     def create_contagion_object(row):
