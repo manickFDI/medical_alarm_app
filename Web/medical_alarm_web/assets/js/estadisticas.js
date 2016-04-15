@@ -127,7 +127,9 @@ function prepareTable() {
 }
 
 
-
+/**
+ * generate the graphics for the web. Use c3.js and d3.js with many types of graphics
+ */
 
 function generate() {}
 

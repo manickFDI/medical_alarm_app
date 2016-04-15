@@ -2,10 +2,12 @@
  * Created by Manuel on 9/04/16.
  */
 
-var ENTRYPOINT = "/malarm/api/users/";
+//var ENTRYPOINT = "http://localhost:5000/malarm/api/user/11868634J&callback=?";
+var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 var ENTRYPOINT_CONT = "/malarm/api/contagios/";
 
 var DEBUG = true;
+var WHITE_SPACE = " ";
 
 /**
  * Verify if the param dni has a good format of dni with 8 digits and a letter (correct letter)
@@ -41,27 +43,29 @@ function validateDNI(dni) {
 
 
 /**
- * Complete the html that belongs to the user writing the information of the user in the specific div
+ * Complete the html that belongs to the user writing the information of the user in the specific div and the buttons of the message
  * @param div
  * @param user
  */
 
-//data accediendo a los campos
 function writeUser(div, user) {
 
-    //user.nombre
-    //user.dni ...
+    var nombre = String(user.name);
+    var apellidos = String(user.lastname);
+    var nombreCompleto = nombre.concat(WHITE_SPACE, apellidos);
 
-    div.innerHTML = "<h3>Manuel Martínez Sánchez</h3>";
+    div.innerHTML = "<h3>" + nombreCompleto + "</h3>";
     div.innerHTML += "<hr />";
-    div.innerHTML += "<h6 id='dni'>DNI/NIE: 11868634-J</h6>";
-    div.innerHTML += "<h6 id='email'>Email: manuma02@ucm.es</h6>";
-    div.innerHTML += "<h6>Edad: 30 años</h6>";
-    div.innerHTML += "<h6>Sexo: masculino</h6>";
-    div.innerHTML += "<h6>Peso: 82 Kg</h6>";
+    div.innerHTML += "<h6 id='dni'>DNI/NIE: " + user.idnumber + "</h6>";
+    div.innerHTML += "<h6 id='email'>Email: " + user.email + "</h6>";
+    div.innerHTML += "<h6>Edad: " + user.birthday + "</h6>";
+    div.innerHTML += "<h6>Sexo: " + user.gender + "</h6>";
+    div.innerHTML += "<h6>Peso: " + user.weight + " Kg</h6>";
     div.innerHTML += "<hr />";
     div.innerHTML += "<h6 id='estado'>Estado: <strong>INDEFINIDO</strong></h6>";
     div.innerHTML += "<hr />";
+
+    showButtonsUser();
 }
 
 
@@ -72,11 +76,9 @@ function writeUser(div, user) {
 function getUser() {
     var dni = document.getElementById("buscadorUsuario").value;
     if(validateDNI(dni)) {
-        //alert(dni);
-        var apiurl = ENTRYPOINT + '/dni';
-        //getUser_db(apiurl);
+        var apiurl = ENTRYPOINT + "user/" + dni;
+        getUser_db(apiurl);
         writeUser(document.getElementById("infoUsuario"), dni);
-        showButtonsUser();
     }
     else {
         alert("Error al introducir el DNI (FORMATO INCORRECTO)");
@@ -94,24 +96,19 @@ function getUser_db(apiurl) {
     return $.ajax({
         url: apiurl,
         dataType:"json"
-    }).always(function (data, textStatus, jqXHR){
-        $("#infoUsuario").empty();
-
-    }).done(function (data, textStatus, jqXHR){
+   }).done(function (data, textStatus, jqXHR){
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
-
         var divUser = document.getElementById("infoUsuario");
-        var user = data.collection.items; //debe haber uno
-        var user_data = user.data;
-
-        writeUser(divUser, user_data);
+        $("#infoUsuario").empty();
+        writeUser(divUser, data);
 
     }).fail(function (jqXHR, textStatus, errorThrown){
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
+        $("#infoUsuario").empty();
         alert ("Error al obtener usuario")
     });
 }
