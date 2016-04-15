@@ -1,0 +1,3 @@
+1- Poner todos los ID como AI
+2- MySQL no distingue entre minusc y mayusc. Mongo si (ojo posibles inconsistencias)
+3- Entiendo que los estados son 0,1,2,3,4 para indefinido, sano, curado, infectado, muerto

@@ -17,6 +17,10 @@ USERS_TABLE_COLUMNS = "nombre, apellidos, email, fechaNacimiento, sexo, peso, DN
 DISEASE_TABLENAME = "enfermedad"
 DISEASE_TABLE_COLUMNS = "idEnfermedad, nombre, erradicada, numMuertes, numNinyos, numAdultos, numAncianos, numMujeres," \
                         "numHombres, peso"
+FOCUS_TABLENAME = "foco"
+FOCUS_TABLE_COLUMNS = "idFoco, descripcion, numPersonas, idMedico"
+FOCUS_PLACES_TABLENAME = "lugaresFoco"
+FOCUS_PLACES_TABLE_COLUMNS = "idFoco, lugar, fecha"
 
 global db
 db = create_engine(SQLALCHEMY_DATABASE_URI)
@@ -39,34 +43,34 @@ class MysqlDatabase(object):
 
     def get_total_user_status(self):
 
-        query = "SELECT count(*) as amount FROM usuario WHERE estado = {1}"
+        query = "SELECT count(*) as amount FROM usuario WHERE estado = "
 
         undef = -1
         healthy = -1
         cured = -1
         infected = -1
         dead = -1
-        rows = db.execute(query.format(0))  # indef
+        rows = db.execute(query+"0")  # indef
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 undef = row['amount']
 
-        rows = db.execute(query.format(1))  # healthy
+        rows = db.execute(query+"1")  # healthy
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 healthy = row['amount']
 
-        rows = db.execute(query.format(2))  # cured
+        rows = db.execute(query+"2")  # cured
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 cured = row['amount']
 
-        rows = db.execute(query.format(3))  # infected
+        rows = db.execute(query+"3")  # infected
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 infected = row['amount']
 
-        rows = db.execute(query.format(4))  # dead
+        rows = db.execute(query+"4")  # dead
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 dead = row['amount']
@@ -165,7 +169,7 @@ class MysqlDatabase(object):
         if rows is None or rows.rowcount == 0:
             return None
         for row in rows:
-            disease = {'name': row['nombre'], 'num_deaths': str(row['numMuertes'])}
+            disease = {'name': row['nombre'], 'num_contagions': str(row['numContagions'])}
             ranking.append(disease)
 
         return ranking
@@ -194,3 +198,68 @@ class MysqlDatabase(object):
                    'weight': weight}
 
         return disease
+
+
+    """
+    FOCUS RELATED FUNCTIONS
+    """
+    def get_focuses(self):
+        query = "SELECT * FROM {0} ".format(FOCUS_TABLENAME)
+        placesQuery = "SELECT * FROM {0} WHERE idFoco = ".format(FOCUS_PLACES_TABLENAME)
+        rows = db.execute(query)
+
+        focuses = []
+        if rows is None or rows.rowcount < 1:
+            return {}
+        for row in rows:
+            focus = self.create_focus_object(row)
+            placesRows = db.execute(placesQuery + focus['focus_id'])
+            if rows is None or placesRows.rowcount < 1:
+                focus['places'] = {}
+            else:
+                places = []
+                for placeRow in placesRows:
+                    places.append(self.create_place_object(placeRow))
+                focus['places'] = places
+            focuses.append(focus)
+        return focuses
+
+    @staticmethod
+    def create_focus_object(row):
+        """
+            +-------------+-------------+------+-----+---------+-------+
+            | Field       | Type        | Null | Key | Default | Extra |
+            +-------------+-------------+------+-----+---------+-------+
+            | idFoco      | int(11)     | NO   | PRI | NULL    |       |
+            | descripcion | varchar(45) | NO   |     | NULL    |       |
+            | numPersonas | int(11)     | NO   |     | NULL    |       |
+            | idMedico    | int(11)     | NO   | MUL | NULL    |       |
+            +-------------+-------------+------+-----+---------+-------+
+        """
+        id = str(row['idFoco'])
+        description = row['descripcion']
+        nPeople = str(row['numPersonas'])
+        idDoctor = str(row['idMedico'])
+
+        focus = {'focus_id': id, 'description': description, 'num_people': nPeople, 'doctor_id': idDoctor}
+
+        return focus
+
+    @staticmethod
+    def create_place_object(placeRow):
+        """
+            +--------+-------------+------+-----+---------+-------+
+            | Field  | Type        | Null | Key | Default | Extra |
+            +--------+-------------+------+-----+---------+-------+
+            | idFoco | int(11)     | NO   | PRI | NULL    |       |
+            | lugar  | varchar(45) | NO   | PRI | NULL    |       |
+            | fecha  | varchar(10) | NO   | PRI | NULL    |       |
+            +--------+-------------+------+-----+---------+-------+
+        """
+        id = str(placeRow['idFoco'])
+        place = placeRow['lugar']
+        date = placeRow['fecha']
+
+        focus = {'focus_id': id, 'place': place, 'date': date}
+
+        return focus

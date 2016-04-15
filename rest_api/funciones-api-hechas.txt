@@ -4,23 +4,23 @@
 
 * Devuelve un usuario (consulta usuario).
 
-apiurl: malarm/api/users/dni
+apiurl: malarm/api/user/122234569
 type: GET
 
 entrada: -
 
 salida:
-{
-	"birthday": "12-12-1222"
-    "email": "manuma"
-    "gender": "0"
-    "idnumber": "122234569"
-    "idusuario": "0"
-    "lastname": "Martinez"
-    "name": "Manu"
-    "state": 0
-    "weight": 80
-}
+    {
+        "birthday": "12-12-1222",
+        "email": "manuma",
+        "gender": "0",
+        "idnumber": "122234569",
+        "idusuario": "0",
+        "lastname": "Martinez",
+        "name": "Manu",
+        "state": 0,
+        "weight": 80.0
+    }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,19 +29,25 @@ salida:
 
 * Devuelve una enfermedad(nombre, contagiados, muertos, erradicada y peso medio).
 
-apiurl: malarm/api/disease/nombre
+apiurl: malarm/api/disease/ebola
 type: GET
 
 entrada: -
 
 salida:
-{
-	"Nombre":
-	"Nº contagios":
-	"Nº muertes":
-	"erradicada": bool
-	"peso":
-}
+    {
+        "eradicated": "no",
+        "iddisease": "1",
+        "name": "Ebola",
+        "numadults": "10",
+        "numchildren": "4",
+        "numcontagions": "29",
+        "numdeaths": "10",
+        "numelders": "15",
+        "nummen": "15",
+        "numwomen": "14",
+        "weight": "60"
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,16 +55,26 @@ salida:
 
 * Devuelve las enfermedades con mayor mortalidad (ranking-5).
 
-apiurl: malarm/api/diseases/?type=d&top=xxxxxx
+apiurl: malarm/api/diseases/?type=d&top=3
 type: GET
 
 entrada: -
 
 salida:
-{
-	"Nombre": "enfermedad"
-	"muertes": "num muertes"
-}
+    [
+        {
+            "name": "Zika",
+            "num_deaths": "20"
+        },
+        {
+            "name": "Dengue",
+            "num_deaths": "15"
+        },
+        {
+            "name": "Tifus",
+            "num_deaths": "12"
+        }
+    ]
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,16 +83,34 @@ salida:
 
 * Devuelve las enfermedades más infecciosas (ranking-5).
 
-apiurl: malarm/api/diseases/?type=c&top=xxxxxx
+apiurl: malarm/api/diseases/?type=c&top=5
 type: GET
 
 entrada: -
 
 salida:
-{
-	"Nombre": "enfermedad"
-	"muertes": "num contagios"
-}
+    [
+        {
+            "name": "Tifus",
+            "num_contagions": "142"
+        },
+        {
+            "name": "Malaria",
+            "num_contagions": "135"
+        },
+        {
+            "name": "Zika",
+            "num_contagions": "39"
+        },
+        {
+            "name": "Dengue",
+            "num_contagions": "34"
+        },
+        {
+            "name": "Ebola",
+            "num_contagions": "29"
+        }
+    ]
 
 
 
@@ -92,12 +126,89 @@ type: GET
 entrada: -
 
 salida:
-{
-	"Indefinido": "num pers"
-	"Sano": "num pers"
-	"Curado": "num pers"
-	"Enfermo": "num pers"
-	"Fallecido": "num pers"
-}
+    {
+        "cured": 0,
+        "dead": 0,
+        "healthy": 0,
+        "infected": 0,
+        "undefined": 1
+    }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+* Devuelve todos los focos actuales
+
+NOTA: Cada foco tiene su array de lugares, el id del foco se repite por completitud, pero podria obviarse en cada lugar
+
+apiurl: malarm/api/focuses/
+
+entrada: -
+
+salida:
+    [
+        {
+            "description": "lorem impsum",
+            "doctor_id": "1",
+            "focus_id": "1",
+            "num_people": "3",
+            "places": [
+                {
+                    "date": "28/02/2016",
+                    "focus_id": "1",
+                    "place": "Barcelona"
+                },
+                {
+                    "date": "28/02/2016",
+                    "focus_id": "1",
+                    "place": "Malaga"
+                },
+                {
+                    "date": "28/02/2016",
+                    "focus_id": "1",
+                    "place": "Vigo"
+                }
+            ]
+        },
+        {
+            "description": "lorem impsum",
+            "doctor_id": "1",
+            "focus_id": "2",
+            "num_people": "90",
+            "places": [
+                {
+                    "date": "28/02/2016",
+                    "focus_id": "2",
+                    "place": "Cartagena"
+                },
+                {
+                    "date": "28/02/2016",
+                    "focus_id": "2",
+                    "place": "Madrid"
+                }
+            ]
+        },
+        {
+            "description": "lorem impsum",
+            "doctor_id": "1",
+            "focus_id": "3",
+            "num_people": "2",
+            "places": [
+                {
+                    "date": "28/02/2016",
+                    "focus_id": "3",
+                    "place": "Barcelona"
+                }
+            ]
+        },
+        {
+            "description": "lorem impsum",
+            "doctor_id": "1",
+            "focus_id": "4",
+            "num_people": "10",
+            "places": {}
+        }
+    ]

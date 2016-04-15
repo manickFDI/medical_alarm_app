@@ -6,11 +6,6 @@ from database import mongo_connector
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
 
-# Constants for hypermedia formats and profiles
-COLLECTIONJSON = "application/vnd.collection+json"
-HAL = "application/hal+json"
-ACCOUNTING_USER_PROFILE = "http://schema.org/Person"
-
 # Define the application and the api
 app = Flask(__name__)
 app.debug = True
@@ -45,32 +40,10 @@ def unknown_error(error):
     return create_error_response(500, "Error", "The system has failed. Please, contact the administrator")
 
 
-"""
-An user corresponds to:
-
-+-----------------+-------------+------+-----+---------+-------+
-| Field           | Type        | Null | Key | Default | Extra |
-+-----------------+-------------+------+-----+---------+-------+
-| idUsuario       | int(11)     | NO   | PRI | NULL    |       |
-| nombre          | varchar(45) | NO   |     | NULL    |       |
-| apellidos       | varchar(45) | NO   |     | NULL    |       |
-| email           | varchar(45) | NO   | UNI | NULL    |       |
-| fechaNacimiento | varchar(10) | NO   |     | NULL    |       |
-| sexo            | int(11)     | YES  |     | NULL    |       |
-| peso            | double      | YES  |     | NULL    |       |
-| DNI             | varchar(9)  | NO   | UNI | NULL    |       |
-| secret          | varchar(45) | NO   |     | NULL    |       |
-| salt            | varchar(45) | NO   |     | NULL    |       |
-| estado          | int(11)     | NO   |     | NULL    |       |
-+-----------------+-------------+------+-----+---------+-------+
-"""
-
-
 class Users(Resource):
-
     def get(self):
         _type = request.args['type']
-        if _type is "status":
+        if _type == "status":
             return mysqldb.get_total_user_status()
         else:
             return {}
@@ -226,14 +199,13 @@ class User(Resource):
 
 
 class Diseases(Resource):
-
     def get(self):
         _type = request.args['type']
         _top = request.args['top'].replace("\"", "")
 
-        if _type is "d": #For deaths
+        if _type == "d":  # For deaths
             return mysqldb.get_top_deaths(_top)
-        elif _type is "c": #For contagions
+        elif _type == "c":  # For contagions
             return mysqldb.get_top_contagions(_top)
         else:
             return {}
@@ -346,6 +318,11 @@ class Sensors(Resource):
                         )
 
 
+class Focuses(Resource):
+    def get(self):
+        return mysqldb.get_focuses()
+
+
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
 app.url_map.converters['regex'] = RegexConverter
@@ -356,7 +333,7 @@ api.add_resource(User, '/malarm/api/user/<dni>/', endpoint='user')
 api.add_resource(Sensors, '/malarm/api/sensors/', endpoint='sensors')
 api.add_resource(Diseases, '/malarm/api/diseases/', endpoint='diseases')
 api.add_resource(Disease, '/malarm/api/disease/<name>/', endpoint='disease')
-
+api.add_resource(Focuses, '/malarm/api/focuses/', endpoint='focuses')
 
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
