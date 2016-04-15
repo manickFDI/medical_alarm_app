@@ -78,7 +78,6 @@ function getUser() {
     if(validateDNI(dni)) {
         var apiurl = ENTRYPOINT + "user/" + dni;
         getUser_db(apiurl);
-        writeUser(document.getElementById("infoUsuario"), dni);
     }
     else {
         alert("Error al introducir el DNI (FORMATO INCORRECTO)");
@@ -109,6 +108,7 @@ function getUser_db(apiurl) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
         $("#infoUsuario").empty();
+        showEmptyUser();
         alert ("Error al obtener usuario")
     });
 }
@@ -213,6 +213,26 @@ function addContagioToList(contagio) {
     $("#contagiosList").append($contagio);
     return $contagio;
 }
+
+
+/**
+ * this function prints the initial state of the user div
+ * It is used when a new search fails
+ */
+function showEmptyUser() {
+
+    var divUser = document.getElementById("infoUsuario");
+
+    var html = '<img id="plantillafondo" src="assets/img/plantilla1.png" alt="Usuario no especificado">' +
+        '<div class="panel-footer text-muted">Aquí se mostrará la información del paciente una vez realizada la búsqueda</div>';
+
+    divUser.innerHTML = html;
+
+    if ( $("#botonesPanelUsuario").length ) {
+        $("#botonesPanelUsuario").hide();
+    }
+}
+
 
 
 /**

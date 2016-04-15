@@ -1,29 +1,11 @@
 /**
  * Created by Manuel on 7/04/16.
  */
-var ENTRYPOINT = "/malarm/api/enfermedades/";
 
+var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 
-/**
- * search a disease as a result of the searcher
- */
-function searchDisease() {
-    var enfermedad = document.getElementById("buscadorEnf").value;
-    if(correctInput(enfermedad)) {
-        //alert("Entrada correcta");
-        var apiurl = ENTRYPOINT + '/enfermedad/';
-        //getDisease_db(apiurl);
-        //borrar en la definitiva
-        prepareTable();
-        var ref_titulo = document.getElementById("tituloEnf");
-        var ref_tabla = document.getElementById('tabla');
-        completeDisease(ref_titulo, ref_tabla, enfermedad);
-    }
-    else {
-        alert("Entrada incorrecta (FORMATO INCORRECTO)");
-    }
-}
-
+var DEBUG = true;
+var WHITE_SPACE = " ";
 
 /**
  * Verify if a string contains only numbers. This prevent SQL Injection
@@ -41,6 +23,23 @@ function correctInput(enfermedad) {
 }
 
 
+
+/**
+ * search a disease as a result of the searcher
+ */
+function searchDisease() {
+    var enfermedad = document.getElementById("buscadorEnf").value;
+    if(correctInput(enfermedad)) {
+        //alert("Entrada correcta");
+        var apiurl = ENTRYPOINT + 'disease/' + enfermedad;
+        getDisease_db(apiurl);
+    }
+    else {
+        alert("Entrada incorrecta (FORMATO INCORRECTO)");
+    }
+}
+
+
 /**
  * obtain a disease from the db with the name of the disease. It communicate with the rest_API
  * @param apiurl
@@ -50,29 +49,58 @@ function getDisease_db(apiurl) {
     return $.ajax({
         url: apiurl,
         dataType:"json"
-    }).always(function (data, textStatus, jqXHR){
-        $("#enfermedad").empty();
-
     }).done(function (data, textStatus, jqXHR){
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
 
-        var titulo = document.getElementById("tituloEnf");
-        var datos = document.getElementById("datosEnf");
-        var enf = data.collection.items; //debe haber uno
-        var enf_data = enf.data;
+        prepareTable();
 
-        completeDisease(titulo, datos, enf_data);
+        var ref_titulo = document.getElementById("tituloEnf");
+        var ref_tabla = document.getElementById("tabla");
+
+        completeDisease(ref_titulo, ref_tabla, data);
 
     }).fail(function (jqXHR, textStatus, errorThrown){
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
-
-        alert ("Error al obtener enfermedad")
+        showEmptyDisease();
+        alert ("Error al obtener enfermedad");
     });
 }
+
+
+
+/**
+ * this function prints the initial state of the disease div
+ * It is used when a new search fails
+ */
+function showEmptyDisease() {
+    var ref_enfermedad = document.getElementById("enfermedad");
+
+    var html = '<img id="plantillafondo2" src="assets/img/logo.jpg" alt="Enfermedad no especificada">' +
+        '<div class="panel-footer text-muted" id="footerFoto">Aquí se mostrarán los datos de la enfermedad solicitada</div>';
+
+    ref_enfermedad.innerHTML = html;
+
+    if ( $("#contagiosSexo").length && $("#contagiosEdad").length ) {
+        $("#contagiosSexo").hide();
+        $("#contagiosEdad").hide();
+    }
+}
+
+
+
+/**
+ * prepare the titles and the divs to complete them with the information of the disease
+ */
+function prepareTable() {
+    var ref_enfermedad = document.getElementById("enfermedad");
+    var html = '<div class="card-content" id="tituloEnf"></div><div class="card-content" id="datosEnf"><div class="span5" id="tabla"></div></div>';
+    ref_enfermedad.innerHTML = html;
+}
+
 
 
 /**
@@ -91,13 +119,14 @@ function completeDisease(ref_titulo, ref_tabla, enfermedad) {
 }
 
 
+
 /**
  * generate the title of the main page of the disease in the html
  * @param ref
  * @param enfermedad
  */
 function generateTitle(ref, enfermedad) {
-    var tituloFormat =  '<h4 class="page-head-line">DATOS DE LA ENFERMEDAD ' +  '(' + enfermedad + ')</h4>';
+    var tituloFormat =  '<h4 class="page-head-line">DATOS DE LA ENFERMEDAD ' +  '(' + enfermedad.name + ')</h4>';
     ref.innerHTML = tituloFormat;
 }
 
@@ -111,20 +140,12 @@ function generateTable(ref, enfermedad) {
 
     //completar con los datos de la enfermedad
     var tabla = '<table class="table table-striped table-condensed"><thead><th>Nº contagiados</th><th>Nº muertes</th><th>Erradicada</th><th>Peso medio</th></thead>' +
-        '<tbody><tr><td>567</td><td>6</td><td><span class="label label-success">Erradicada</td></span><td>75 Kg</td></tr></tbody></table>';
+        '<tbody><tr><td>' + enfermedad.numcontagions + '</td><td>' + enfermedad.numdeaths + '</td><td><span class="label label-success">Erradicada</td></span><td>' +
+        enfermedad.weight + ' Kg</td></tr></tbody></table>';
 
     ref.innerHTML = tabla;
 }
 
-
-/**
- * prepare the titles and the divs to complete them with the information of the disease
- */
-function prepareTable() {
-    var ref_enfermedad = document.getElementById("enfermedad");
-    var html = '<div class="card-content" id="tituloEnf"></div><div class="card-content" id="datosEnf"><div class="span5" id="tabla"></div></div>';
-    ref_enfermedad.innerHTML = html;
-}
 
 
 /**
