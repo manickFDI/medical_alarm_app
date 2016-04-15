@@ -1,3 +1,5 @@
 1- Poner todos los ID como AI
 2- MySQL no distingue entre minusc y mayusc. Mongo si (ojo posibles inconsistencias)
 3- Entiendo que los estados son 0,1,2,3,4 para indefinido, sano, curado, infectado, muerto
+4- Como se sabe si un contagio esta activo? porque no hay nada en la bbdd en contagios
+5- Nombre de enfermedad deberia ser UQ

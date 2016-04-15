@@ -27,6 +27,25 @@ salida:
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+
+NOTA: Cambiar a que se introduzca por dni y ya esta arriba
+* Devuelve el usuario
+
+apiurl: malarm/api/users/userId/
+
+entrada: nada (el id del usuario se pasa en la apiurl)
+
+salida:
+{
+	"userId":"id",
+	"userDNI":"dni",
+	"name":"nombreYApellidos"
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 * Devuelve una enfermedad(nombre, contagiados, muertos, erradicada y peso medio).
 
 apiurl: malarm/api/disease/ebola
@@ -127,10 +146,10 @@ entrada: -
 
 salida:
     {
-        "cured": 0,
-        "dead": 0,
-        "healthy": 0,
-        "infected": 0,
+        "cured": 2,
+        "dead": 1,
+        "healthy": 2,
+        "infected": 1,
         "undefined": 1
     }
 
@@ -209,6 +228,155 @@ salida:
             "doctor_id": "1",
             "focus_id": "4",
             "num_people": "10",
-            "places": {}
+            "places": []
+        }
+    ]
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+* Dado el nombre de una enfermedad necesito la lista de usuarios infectados por esa enfermedad y el id de ese contagio
+
+apiurl: malarm/api/contagions/?disease=ebola
+type: GET
+
+salida:
+    [
+        {
+            "contagion_id": "1",
+            "date": "10/02/2016",
+            "description": "lorem impsum",
+            "disease_id": "1",
+            "distance": "2",
+            "doctor_id": "1",
+            "level": "3",
+            "place": "Barcelona",
+            "time": "10",
+            "users": [
+                {
+                    "birthday": "20/10/1990",
+                    "email": "jr@malarm.com",
+                    "gender": "0",
+                    "idnumber": "12345678J",
+                    "lastname": "Rodriguez",
+                    "name": "Juan",
+                    "salt": "salt",
+                    "state": 0,
+                    "user_id": "1",
+                    "weight": 65.0
+                },
+                {
+                    "birthday": "08/08/1985",
+                    "email": "manuma@malarm.com",
+                    "gender": "0",
+                    "idnumber": "12345678M",
+                    "lastname": "Martinez",
+                    "name": "Manuel",
+                    "salt": "salt",
+                    "state": 1,
+                    "user_id": "2",
+                    "weight": 80.0
+                },
+                {
+                    "birthday": "18/10/1993",
+                    "email": "diediaz@malarm.com",
+                    "gender": "0",
+                    "idnumber": "12345678D",
+                    "lastname": "Diaz",
+                    "name": "Diego",
+                    "salt": "salt",
+                    "state": 1,
+                    "user_id": "3",
+                    "weight": 60.0
+                },
+                {
+                    "birthday": "19/02/1990",
+                    "email": "pepanero@malarm.com",
+                    "gender": "0",
+                    "idnumber": "12345678P",
+                    "lastname": "Panero",
+                    "name": "Pablo",
+                    "salt": "salt",
+                    "state": 2,
+                    "user_id": "4",
+                    "weight": 70.0
+                }
+            ]
+        },
+        {
+            "contagion_id": "2",
+            "date": "07/04/2016",
+            "description": "lorem impsum",
+            "disease_id": "1",
+            "distance": "2",
+            "doctor_id": "1",
+            "level": "2",
+            "place": "Madrid",
+            "time": "20",
+            "users": [
+                {
+                    "birthday": "20/10/1990",
+                    "email": "jr@malarm.com",
+                    "gender": "0",
+                    "idnumber": "12345678J",
+                    "lastname": "Rodriguez",
+                    "name": "Juan",
+                    "salt": "salt",
+                    "state": 0,
+                    "user_id": "1",
+                    "weight": 65.0
+                },
+                {
+                    "birthday": "19/02/1990",
+                    "email": "pepanero@malarm.com",
+                    "gender": "0",
+                    "idnumber": "12345678P",
+                    "lastname": "Panero",
+                    "name": "Pablo",
+                    "salt": "salt",
+                    "state": 2,
+                    "user_id": "4",
+                    "weight": 70.0
+                }
+            ]
+        },
+        {
+            "contagion_id": "3",
+            "date": "20/03/2016",
+            "description": "lorem impsum",
+            "disease_id": "1",
+            "distance": "2",
+            "doctor_id": "1",
+            "level": "1",
+            "place": "Cartagena",
+            "time": "2",
+            "users": [
+                {
+                    "birthday": "11/05/2987",
+                    "email": "silcosta@malarm.com",
+                    "gender": "1",
+                    "idnumber": "12345678S",
+                    "lastname": "Costa",
+                    "name": "Silvia",
+                    "salt": "salt",
+                    "state": 3,
+                    "user_id": "6",
+                    "weight": 55.0
+                },
+                {
+                    "birthday": "07/09/1994",
+                    "email": "saflores@malarm.com",
+                    "gender": "1",
+                    "idnumber": "12345678F",
+                    "lastname": "Flores",
+                    "name": "Sara",
+                    "salt": "salt",
+                    "state": 4,
+                    "user_id": "7",
+                    "weight": 47.0
+                }
+            ]
         }
     ]

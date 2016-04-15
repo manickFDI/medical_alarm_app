@@ -322,6 +322,15 @@ class Focuses(Resource):
     def get(self):
         return mysqldb.get_focuses()
 
+class Contagions(Resource):
+
+    def get(self):
+        disease = request.args['disease']
+
+        if disease is not None:
+            return mysqldb.get_contagions(disease)
+        else:
+            return []
 
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
@@ -334,7 +343,7 @@ api.add_resource(Sensors, '/malarm/api/sensors/', endpoint='sensors')
 api.add_resource(Diseases, '/malarm/api/diseases/', endpoint='diseases')
 api.add_resource(Disease, '/malarm/api/disease/<name>/', endpoint='disease')
 api.add_resource(Focuses, '/malarm/api/focuses/', endpoint='focuses')
-
+api.add_resource(Contagions, '/malarm/api/contagions/', endpoint='contagions')
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
 if __name__ == '__main__':

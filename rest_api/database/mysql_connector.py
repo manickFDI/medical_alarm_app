@@ -21,6 +21,8 @@ FOCUS_TABLENAME = "foco"
 FOCUS_TABLE_COLUMNS = "idFoco, descripcion, numPersonas, idMedico"
 FOCUS_PLACES_TABLENAME = "lugaresFoco"
 FOCUS_PLACES_TABLE_COLUMNS = "idFoco, lugar, fecha"
+CONTAGIONS_TABLENAME = "contagio"
+CONTAGIONS_USERS_TABLENAME = "usuarioContagiado"
 
 global db
 db = create_engine(SQLALCHEMY_DATABASE_URI)
@@ -215,7 +217,7 @@ class MysqlDatabase(object):
             focus = self.create_focus_object(row)
             placesRows = db.execute(placesQuery + focus['focus_id'])
             if rows is None or placesRows.rowcount < 1:
-                focus['places'] = {}
+                focus['places'] = []
             else:
                 places = []
                 for placeRow in placesRows:
@@ -263,3 +265,77 @@ class MysqlDatabase(object):
         focus = {'focus_id': id, 'place': place, 'date': date}
 
         return focus
+
+
+    """
+    CONTAGIONS RELATED FUNCTIONS
+    """
+
+    def get_contagions(self, disease):
+        diseaseQuery = "SELECT idEnfermedad FROM {0} WHERE nombre = \"{1}\"".format(DISEASE_TABLENAME, disease);
+        rows = db.execute(diseaseQuery)
+
+        diseaseId = -1
+        if rows is None or rows.rowcount > 1:
+            return {}
+        for row in rows:
+            diseaseId = row['idEnfermedad']
+
+        contagionsQuery = "SELECT * FROM {0} WHERE idEnfermedad = {1}".format(CONTAGIONS_TABLENAME, diseaseId)
+        rows = db.execute(contagionsQuery)
+
+        if rows is None or rows.rowcount < 1:
+            return {}
+        contagions = []
+        for row in rows:
+            contagion = self.create_contagion_object(row)
+
+            infectedUsersQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_USERS_TABLENAME,
+                                                                                   contagion['contagion_id'])
+            infectedUsersRows = db.execute(infectedUsersQuery)
+            if infectedUsersRows is None or infectedUsersRows.rowcount < 1:
+                contagion['users']=[]
+            else:
+                users = []
+                for infectedUserRow in infectedUsersRows:
+                    userQuery = "SELECT * FROM {0} WHERE idUsuario = {1}".format(USERS_TABLENAME, infectedUserRow['idUsuario'])
+                    userRows = db.execute(userQuery)
+
+                    if userRows is not None and userRows.rowcount == 1:
+                        for userRow in userRows:
+                            users.append(self.create_user_object(userRow))
+                contagion['users'] = users
+
+            contagions.append(contagion)
+
+        return contagions
+
+    @staticmethod
+    def create_contagion_object(row):
+        """
+            +--------------+--------------+------+-----+---------+-------+
+            | idContagio   | int(11)      | NO   | PRI | NULL    |       |
+            | idEnfermedad | int(11)      | NO   | MUL | NULL    |       |
+            | idMedico     | int(11)      | NO   | MUL | NULL    |       |
+            | tiempo       | int(11)      | NO   |     | NULL    |       |
+            | distancia    | int(11)      | NO   |     | NULL    |       |
+            | fecha        | varchar(10)  | NO   |     | NULL    |       |
+            | nivel        | int(11)      | NO   |     | NULL    |       |
+            | descripcion  | varchar(140) | NO   |     | NULL    |       |
+            | zona         | varchar(45)  | NO   |     | NULL    |       |
+            +--------------+--------------+------+-----+---------+-------+
+        """
+        id = str(row['idContagio'])
+        idDisease = str(row['idEnfermedad'])
+        idDoctor = str(row['idMedico'])
+        time = str(row['tiempo'])
+        distance = str(row['distancia'])
+        level = str(row['nivel'])
+        place = row['zona']
+        date = row['fecha']
+        description = row['descripcion']
+
+        contagion = {'contagion_id': id, 'disease_id': idDisease, 'doctor_id': idDoctor, 'time': time,
+                    'distance':distance, 'level': level, 'place': place, 'date': date, 'description': description}
+
+        return contagion
