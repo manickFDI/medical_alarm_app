@@ -132,10 +132,10 @@ function convertToSex(number) {
 
     switch(number) {
         case 0:
-            ret = "Masculino";
+            ret = "Hombre";
             break;
         case 1:
-            ret = "Femenino";
+            ret = "Mujer";
             break;
         default:
             ret = "Undefined";
