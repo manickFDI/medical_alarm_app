@@ -42,6 +42,141 @@ function validateDNI(dni) {
 }
 
 
+
+/**
+ * Calculate the age of a person. Receive the date in a string with a correct spanish format (dd-mm-aaaa || dd/mm/aaaa)
+ * @param fecha
+ * @returns {*} integer with the age. Returns false if date is incorrect or greater than current day
+ */
+function calculateAge(date){
+
+    var BARRA = "/";
+    var GUION = "-";
+
+    var age;
+
+    //calculo la fecha actual
+    var today = new Date();
+    //alert(today);
+
+    //calculo la fecha que recibo si viene con / o -
+    var separacionG = date.indexOf(GUION);
+    var separacionB = date.indexOf(BARRA);
+
+    if(separacionG != -1) {
+        //La descompongo en un array
+        var array_fecha = date.split(GUION);
+        //si el array no tiene tres partes, la fecha es incorrecta
+        if (array_fecha.length!=3) {
+            age = -1;
+        }
+    } else if(separacionB != -1) {
+        //La descompongo en un array
+        var array_fecha = date.split(BARRA);
+        //si el array no tiene tres partes, la fecha es incorrecta
+        if (array_fecha.length!=3) {
+            age = -1;
+        }
+    } else {
+        age = -1;
+    }
+
+    //compruebo que los ano, mes, dia son correctos
+    var year;
+    year = parseInt(array_fecha[2]);
+    if (isNaN(year))
+        age = -1;
+
+    var month;
+    month = parseInt(array_fecha[1]);
+    if (isNaN(month))
+        age = -1;
+
+    var day;
+    day = parseInt(array_fecha[0]);
+    if (isNaN(day))
+        age = -1;
+
+
+    //si el año de la fecha que recibo solo tiene 2 cifras hay que cambiarlo a 4
+    if (year <= 99) {
+        year = 1900 + year;
+    }
+
+    //resto los años de las dos fechas
+    var aux = today.getFullYear();//ciudado con getYear despues del año 2000 no funciona
+    age = aux- year - 1; //-1 porque no se si ha cumplido años ya este año
+
+    //si resto los meses y me da menor que 0 entonces no ha cumplido años. Si da mayor si ha cumplido
+    if (today.getMonth() + 1 - month < 0) {
+        age = age;
+    } else if (today.getMonth() + 1 - month > 0) { //+ 1 porque los meses empiezan en 0
+        age = age + 1;
+    } else if((today.getUTCDate() - day) >= 0) {//entonces es que eran iguales. miro los dias. Si resto los dias y me da menor que 0 entonces no ha cumplido años. Si da mayor o igual si ha cumplido
+        age = age + 1;
+    }
+
+    return age;
+}
+
+
+
+/**
+ * Convert the number of the corresponding sex in the db to string
+ * @param number
+ * @returns {*} the string converted
+ */
+function convertToSex(number) {
+
+    var ret;
+
+    switch(number) {
+        case 0:
+            ret = "Masculino";
+            break;
+        case 1:
+            ret = "Femenino";
+            break;
+        default:
+            ret = "Undefined";
+    }
+    return ret;
+}
+
+
+
+/**
+ * Convert the number in the db of the user state  to a string format
+ * @param number
+ * @returns {*} the string converted
+ */
+function convertToState(number) {
+
+    var ret;
+
+    switch(number) {
+        case 0:
+            ret = "Indefinido";
+            break;
+        case 1:
+            ret = "Sano";
+            break;
+        case 2:
+            ret = "Curado";
+            break;
+        case 3:
+            ret = "Enfermo";
+            break;
+        case 4:
+            ret = "Fallecido";
+            break;
+        default:
+            ret = "Undefined";
+    }
+    return ret;
+}
+
+
 /**
  * Complete the html that belongs to the user writing the information of the user in the specific div and the buttons of the message
  * @param div
@@ -53,16 +188,20 @@ function writeUser(div, user) {
     var nombre = String(user.name);
     var apellidos = String(user.lastname);
     var nombreCompleto = nombre.concat(WHITE_SPACE, apellidos);
+    var edad = calculateAge(user.birthday);
+    var sexo = convertToSex(parseInt(user.gender));
+    var state = convertToState(parseInt(user.state));
 
     div.innerHTML = "<h3>" + nombreCompleto + "</h3>";
     div.innerHTML += "<hr />";
     div.innerHTML += "<h6 id='dni'>DNI/NIE: " + user.idnumber + "</h6>";
     div.innerHTML += "<h6 id='email'>Email: " + user.email + "</h6>";
-    div.innerHTML += "<h6>Edad: " + user.birthday + "</h6>";
-    div.innerHTML += "<h6>Sexo: " + user.gender + "</h6>";
+    div.innerHTML += "<h6>Fecha de nacimiento: " + user.birthday + "</h6>";
+    div.innerHTML += "<h6>Edad: " + edad + "</h6>";
+    div.innerHTML += "<h6>Sexo: " + sexo + "</h6>";
     div.innerHTML += "<h6>Peso: " + user.weight + " Kg</h6>";
     div.innerHTML += "<hr />";
-    div.innerHTML += "<h6 id='estado'>Estado: <strong>INDEFINIDO</strong></h6>";
+    div.innerHTML += "<h6 id='estado'>Estado: <strong>" + state.toUpperCase() + "</strong></h6>";
     div.innerHTML += "<hr />";
 
     showButtonsUser();

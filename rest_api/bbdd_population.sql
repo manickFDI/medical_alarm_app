@@ -8,9 +8,9 @@ insert into usuario values (5, "Juan Pedro", "Guitierrez", "jprodriguez@malarm.c
 insert into usuario values (6, "Silvia", "Costa", "silcosta@malarm.com", "11/05/2987", 1, 55, "12345678S", "secret", "salt", 3);
 insert into usuario values (7, "Sara", "Flores", "saflores@malarm.com", "07/09/1994", 1, 47, "12345678F", "secret", "salt", 4);
 insert into usuario values (7, "Paz", "Sánchez García", "pazsanga@gmail.com", "15/02/1962", 1, 47, "50305550L", "secret", "salt", 0);
-insert into usuario values (7, "Manuel", "Martínez Zurimendi", "manuelzuri.martinez@ono.es", "02/10/1960", 1, 47, "50301055D", "secret", "salt", 0);
+insert into usuario values (7, "Manuel", "Martínez Zurimendi", "manuelzuri.martinez@ono.es", "02/10/1960", 0, 47, "50301055D", "secret", "salt", 0);
 insert into usuario values (7, "Victoria", "García Contreras", "prueba@malarm.com", "24/01/1933", 1, 47, "02162236Y", "secret", "salt", 0);
-insert into usuario values (7, "Juan Domingo", "Sánchez Lorenzo", "prueba@malarm.com", "12/11/1934", 1, 47, "00625351G", "secret", "salt", 0);
+insert into usuario values (7, "Juan Domingo", "Sánchez Lorenzo", "prueba@malarm.com", "12/11/1934", 0, 47, "00625351G", "secret", "salt", 0);
 
 #Disease
 
