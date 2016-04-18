@@ -138,11 +138,16 @@ function generateTitle(ref, enfermedad) {
  */
 function generateTable(ref, enfermedad) {
 
-    //completar con los datos de la enfermedad
-    var tabla = '<table class="table table-striped table-condensed"><thead><th>Nº contagiados</th><th>Nº muertes</th><th>Erradicada</th><th>Peso medio</th></thead>' +
-        '<tbody><tr><td>' + enfermedad.numcontagions + '</td><td>' + enfermedad.numdeaths + '</td><td><span class="label label-success">Erradicada</td></span><td>' +
-        enfermedad.weight + ' Kg</td></tr></tbody></table>';
-
+    if(String(enfermedad.eradicated).localeCompare("yes")) { //str1 > str2 --> number > 0
+        //completar con los datos de la enfermedad
+        var tabla = '<table class="table table-striped table-condensed"><thead><th>Nº contagiados</th><th>Nº muertes</th><th>Erradicada</th><th>Peso medio</th></thead>' +
+            '<tbody><tr><td>' + enfermedad.numcontagions + '</td><td>' + enfermedad.numdeaths + '</td><td><span class="label label-success">Erradicada</td></span><td>' +
+            enfermedad.weight + ' Kg</td></tr></tbody></table>';
+    } else { //no erradicada
+        var tabla = '<table class="table table-striped table-condensed"><thead><th>Nº contagiados</th><th>Nº muertes</th><th>Erradicada</th><th>Peso medio</th></thead>' +
+            '<tbody><tr><td>' + enfermedad.numcontagions + '</td><td>' + enfermedad.numdeaths + '</td><td><span class="label label-danger"> No erradicada</td></span><td>' +
+            enfermedad.weight + ' Kg</td></tr></tbody></table>';
+    }
     ref.innerHTML = tabla;
 }
 

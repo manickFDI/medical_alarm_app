@@ -4,10 +4,12 @@
 
 //var ENTRYPOINT = "http://localhost:5000/malarm/api/user/11868634J&callback=?";
 var ENTRYPOINT = "http://localhost:5000/malarm/api/";
-var ENTRYPOINT_CONT = "/malarm/api/contagios/";
 
 var DEBUG = true;
 var WHITE_SPACE = " ";
+
+
+//window.onload = cargarContagios; //llamar a esta funcion cuando se cargue la página
 
 /**
  * Verify if the param dni has a good format of dni with 8 digits and a letter (correct letter)
@@ -96,12 +98,6 @@ function calculateAge(date){
     day = parseInt(array_fecha[0]);
     if (isNaN(day))
         age = -1;
-
-
-    //si el año de la fecha que recibo solo tiene 2 cifras hay que cambiarlo a 4
-    if (year <= 99) {
-        year = 1900 + year;
-    }
 
     //resto los años de las dos fechas
     var aux = today.getFullYear();//ciudado con getYear despues del año 2000 no funciona
@@ -259,14 +255,15 @@ function getUser_db(apiurl) {
 //// problem with th function. Inside onclick appears twice. Without function
 $('#estadosList li a').on('click', function(){
 
-    var nuevoEstado = $(this).text().toUpperCase()
+    var nuevoEstado = $(this).text();
     var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
     if (ret) {
         var estado = document.getElementById("estado");
-        estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado + "</strong></h6>";
+        estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado.toUpperCase() + "</strong></h6>";
 
         //query UPDATE
-        var apiurl = ENTRYPOINT + "/" + document.getElementById("email");
+        //split dni
+        //var apiurl = ENTRYPOINT + "/" + document.getElementById("dni");
         //updateEstate(apiurl, nuevoEstado); //solo el estado o  el usuario entero
     }
 });
@@ -301,12 +298,20 @@ function updateEstate(apiurl, userData) {
 
 
 /**
+ * function that call to other function chosen to give back the active contagions from the db.
+ */
+function cargarContagios() {
+    var apiurl = ENTRYPOINT + "contagions";
+    getContagions(apiurl);
+}
+
+
+/**
  * Connect with the api_REST and obtain all the active contagions in the system with the necessary information
  * @returns {*}
  */
 
-function getContagions() {
-    var apiurl = ENTRYPOINT_CONT;
+function getContagions(apiurl) {
     return $.ajax({
         url: apiurl,
         dataType:"json"
@@ -314,12 +319,9 @@ function getContagions() {
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
-
         var contagios = data.collection.items;
         for (var i=0; i < contagios.length; i++){
             var contagio = contagios[i];
-
-            var contagio_data = contagio.data;
             for (var j=0; j<contagio_data.length;j++){
                 addContagioToList(contagio_data[j].value);
             }
@@ -351,6 +353,45 @@ function addContagioToList(contagio) {
     //añadir a la lista cada contagio
     $("#contagiosList").append($contagio);
     return $contagio;
+}
+
+
+
+/**
+ * delete an active contagion from the html
+ * @param id
+ */
+function deleteContagion(id) {
+    var aux = "'" + id + "'"
+    var li = document.getElementById(aux);
+    li.parentNode.removeChild(li);
+
+    //la eliminamos de verdad
+    //var apiurl = ENTRYPOINT + "contagion/" + id;
+    //removeContagion_db(apiurl);
+}
+
+
+/**
+ * remove or set the level of the contagion to 0 and delete the contagion from the db
+ * @param apiurl
+ * @returns {*}
+ */
+function removeContagion_db(apiurl) {
+    return $.ajax({
+        url: apiurl,
+        dataType:"json"
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+        alert ("Contagio eliminado de la lista");
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        alert ("Error. No se ha podido eliminar el contagio");
+    });
 }
 
 
@@ -405,15 +446,4 @@ function contagions() {
     for (var j=0; j<4;j++){
         addContagioToList(j);
     }
-}
-
-
-/**
- * delete an active contagion from the html
- * @param id
- */
-function deleteContagion(id) {
-    var aux = "'" + id + "'"
-    var li = document.getElementById(aux);
-    li.parentNode.removeChild(li);
 }
