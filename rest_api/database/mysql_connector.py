@@ -181,7 +181,7 @@ class MysqlDatabase(object):
 
         id = str(row['idEnfermedad'])
         name = row['nombre']
-        if row['erradicada'] is True:
+        if row['erradicada'] == 1:
             eradicated = "yes"
         else:
             eradicated = "no"
