@@ -7,6 +7,22 @@ var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 var DEBUG = true;
 var WHITE_SPACE = " ";
 
+window.onload = load();//function that is called when the page is loaded (general graphics)
+
+
+/**
+ * load all the graphics from the main tab
+ */
+function load() {
+    var apiurl_c = ENTRYPOINT + 'diseases/?type=c&top=5';
+    var apiurl_d = ENTRYPOINT + 'diseases/?type=d&top=5';
+    var apiurl_u = ENTRYPOINT + 'users/?type=status';
+    rankingDead_db(apiurl_d);
+    rankingContagion_db(apiurl_c);
+    allUsers(apiurl_u);
+}
+
+
 /**
  * Verify if a string contains only numbers. This prevent SQL Injection
  * @param enfermedad
@@ -116,6 +132,7 @@ function completeDisease(ref_titulo, ref_tabla, enfermedad) {
     $("#contagiosEdad").show(1000);
     generateTitle(ref_titulo, enfermedad);
     generateTable(ref_tabla, enfermedad);
+    generateGraphicsDisease(enfermedad);
 }
 
 
@@ -138,7 +155,6 @@ function generateTitle(ref, enfermedad) {
  */
 function generateTable(ref, enfermedad) {
 
-    alert(String(enfermedad.eradicated));
     if(String(enfermedad.eradicated) == "yes") { //str1 > str2 --> number > 0
         //completar con los datos de la enfermedad
         var tabla = '<table class="table table-striped table-condensed"><thead><th>Nº contagiados</th><th>Nº muertes</th><th>Erradicada</th><th>Peso medio</th></thead>' +
@@ -153,6 +169,346 @@ function generateTable(ref, enfermedad) {
 }
 
 
+/**
+ * Comunicates with the db to obtain the ranking of the deads
+ * @param apiurl with the complete url of the API
+ * @returns {*}
+ */
+function rankingDead_db(apiurl) {
+    return $.ajax({
+        url: apiurl,
+        dataType:"json"
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+
+        generateGraphicsTopDeads(data); //c3.js
+
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        alert ("Error al obtener el ranking");
+    });
+}
+
+
+
+/**
+ * Comunicates with the db to obtain the ranking of the contagions
+ * @param apiurl with the complete url of the API
+ * @returns {*}
+ */
+function rankingContagion_db(apiurl) {
+    return $.ajax({
+        url: apiurl,
+        dataType:"json"
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+
+        generateGraphicsTopContagions(data); //c3.js
+
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        alert ("Error al obtener el ranking");
+    });
+}
+
+
+
+/**
+ * Comunicates with the db to obtain the number of eack kind of users of the system
+ * @param apiurl with the complete url of the API
+ * @returns {*}
+ */
+function allUsers(apiurl) {
+    return $.ajax({
+        url: apiurl,
+        dataType:"json"
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+
+        generateGraphicsAllUsers(data);
+
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        alert ("Error al obtener todos los usuarios");
+    });
+}
+
+
+
+/**
+ * Is encargated of generate the diagram of the diseases top ranking
+ * @param data the information of the disease (json)
+ */
+function generateGraphicsDisease(data) {
+
+    var aux_h = Number(((data.nummen * 100) / data.numcontagions).toFixed(2));
+    var aux_m = Number((100 - aux_h).toFixed(2));
+
+    var aux_n = Number(((data.numchildren * 100) / data.numcontagions).toFixed(2));
+    var aux_a = Number(((data.numadults * 100) / data.numcontagions).toFixed(2));
+    var aux_v = Number(100 - (aux_n + aux_a));
+
+
+    var chart = c3.generate({
+        size: {
+            height: 240,
+            width: 480
+        },
+        bindto: '#pie',
+        data: {
+            // Con esto podríamos crear un grafico a mano
+            columns: [
+                ['data1', aux_h],
+                ['data2', aux_m]
+            ],
+            names: {
+                data1: 'Hombres',
+                data2: 'Mujeres'
+                //data3: 'Python'
+            },
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            //json: storedData,
+            //keys: {
+            //value: ['Java', 'Python', 'Ruby']
+            //},
+            type : 'pie',
+            // Descomentar esto para jugar con los colores
+            colors: {
+                data1: '#CECB0E',
+                data2: '#DF6C07'
+                //data3: '#79d3c2'
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        size: {
+            height: 240,
+            width: 480
+        },
+        bindto: '#donut',
+        data: {
+            // Con esto podríamos crear un grafico a mano
+            columns: [
+                ['data1', aux_n],
+                ['data2', aux_a],
+                ['data3', aux_v]
+            ],
+            names: {
+                data1: 'Niños',
+                data2: 'Adultos',
+                data3: 'Ancianos'
+            },
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            //json: storedData,
+            //keys: {
+            //value: ['Java', 'Python', 'Ruby']
+            //},
+            type : 'donut',
+            // Descomentar esto para jugar con los colores
+            colors: {
+                data1: '#CECB0E',
+                data2: '#F09E05',
+                data3: '#DF6C07'
+            }
+        }
+    });
+}
+
+
+/**
+ * Is encargated of generate the diagram of the deads top ranking
+ * @param data the information of the system (json)
+ */
+function generateGraphicsTopDeads(data) {
+
+    var storedData = data;
+
+    var colors = ['#7710AA', '#3920DE', '#208CDE', '#009688', '#20DBDE'];
+
+    var bar1 = c3.generate({
+        size: {
+            height: 240,
+            width: 480
+        },
+        bindto: '#bar1',
+        data: {
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            json: storedData,
+            keys: {
+                x: 'name',
+                value: ["num_deaths"]
+            },
+            type : 'bar',
+            labels: true,
+            // Descomentar esto para jugar con los colores
+            color: function (color, d) {
+                return colors[d.index];
+            }
+        },
+        axis: {
+            x: {
+                type: 'category'
+            },
+            y: {
+                label: 'Muertes'
+            }
+        },
+        legend: {
+            show:false
+        }
+    });
+}
+
+
+
+/**
+ * Is encargated of generate the diagram of the contagions top ranking
+ * @param data the information of the system (json)
+ */
+function generateGraphicsTopContagions(data) {
+
+    var storedData = data;
+
+    var colors = ['#135802','#1EB241','#23D009', '#87D009', '#B0FDAE'];
+
+    var bar2 = c3.generate({
+        size: {
+            height: 240,
+            width: 480
+        },
+        bindto: '#bar2',
+        data: {
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            json: storedData,
+            keys: {
+                x: 'name',
+                value: ["num_contagions"]
+            },
+            type : 'bar',
+            labels: true,
+            // Descomentar esto para jugar con los colores
+            color: function (color, d) {
+                return colors[d.index];
+            }
+        },
+        axis: {
+            x: {
+                type: 'category'
+            },
+            y: {
+                label: 'Contagios'
+            }
+        },
+        legend: {
+            show:false
+        }
+    });
+            /*// Con esta opcion vamos a tratar de hacerlo dinámico
+            json: storedData,
+            keys: {
+                x: 'name',
+                value: ['num_contagions']
+            },
+            type : 'bar',
+            labels: true,
+            // Descomentar esto para jugar con los colores
+            color: function (color, d) {
+                return colors[d.index];
+            }
+        },
+        axis: {
+            x: {
+                type: 'category'
+            },
+            y: {
+                label: 'Contagios'
+            }
+        },
+        legend: {
+            show:false
+        }
+    });*/
+}
+
+
+/**
+ * Is encargated of generate the diagram of the diseases top ranking
+ * @param data the information of the system (json)
+ */
+function generateGraphicsAllUsers(data) {
+
+    var storedData = data;
+
+    var bar3 = c3.generate({
+        size: {
+            height: 340,
+            width: 1080
+        },
+        bindto: '#bar3',
+        data: {
+            // Con esto podríamos crear un grafico a mano
+            columns: [
+                ['data1', data.undefined],
+                ['data2', data.healthy],
+                ['data3', data.cured],
+                ['data4', data.infected],
+                ['data5', data.dead]
+            ],
+            names: {
+                data1: 'Indefinido',
+                data2: 'Sano',
+                data3: 'Curado',
+                data4: 'Enfermo',
+                data5: 'Fallecido'
+            },
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            //json: storedData,
+            //keys: {
+            //value: ['Ébola', 'Gripe A', 'Tuberculosis']
+            // },
+            type : 'bar',
+            labels: true,
+            // Descomentar esto para jugar con los colores
+            colors: {
+                data1: '#F7FA26',
+                data2: '#fcad02',
+                data3: '#DABB0B',
+                data4: '#DA8E0B',
+                data5: '#754306'
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ['Estado']
+            },
+            y: {
+                label: 'Nº personas'
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
+
 
 /**
  * generate the graphics for the web. Use c3.js and d3.js with many types of graphics
@@ -160,11 +516,7 @@ function generateTable(ref, enfermedad) {
 
 function generate() {}
 
-var storedData = [
-            {"Java": 2, "Python": 3}
-];
-
-    var chart = c3.generate({
+    /*var chart = c3.generate({
         size: {
         height: 240,
         width: 480
@@ -227,9 +579,9 @@ var storedData = [
         data3: '#DF6C07'
         }
     }
-    });
+    });*/
 
-    var bar1 = c3.generate({
+    /*var bar1 = c3.generate({
         size: {
         height: 240,
         width: 480
@@ -273,9 +625,9 @@ var storedData = [
         label: 'Muertes'
         }
     }
-    });
+    });*/
 
-    var bar2 = c3.generate({
+    /*var bar2 = c3.generate({
         size: {
         height: 240,
         width: 480
@@ -319,10 +671,10 @@ var storedData = [
         label: 'Contagios'
         }
     }
-    });
+    });*/
 
 
-    var bar3 = c3.generate({
+    /*var bar3 = c3.generate({
         size: {
         height: 340,
         width: 1080
@@ -369,7 +721,7 @@ var storedData = [
         label: 'Nº personas'
         }
     }
-    });
+    });*/
 
     var line = c3.generate({
         size: {
@@ -440,39 +792,6 @@ var storedData = [
         width: 500
     },
     bindto: '#disp2',
-    axis: {
-        x: {
-        label: 'Sepal.Width',
-        tick: {
-        fit: false
-        }
-    },
-    y: {
-        label: 'Petal.Width'
-        }
-    }
-    });
-
-    var disp3 = c3.generate({
-        data: {
-        xs: {
-        setosa: 'setosa_x',
-        versicolor: 'versicolor_x'
-        },
-    // iris data from R
-    columns: [
-    ["setosa_x", 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3.0, 3.0, 4.0, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3.0, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3.0, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3.0, 3.8, 3.2, 3.7, 3.3],
-    ["versicolor_x", 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2.0, 3.0, 2.2, 2.9, 2.9, 3.1, 3.0, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3.0, 2.8, 3.0, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3.0, 3.4, 3.1, 2.3, 3.0, 2.5, 2.6, 3.0, 2.6, 2.3, 2.7, 3.0, 2.9, 2.9, 2.5, 2.8],
-    ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
-    ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3]
-    ],
-    type: 'scatter'
-    },
-    size: {
-        height: 340,
-        width: 1080
-    },
-    bindto: '#disp3',
     axis: {
         x: {
         label: 'Sepal.Width',
