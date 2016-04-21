@@ -347,7 +347,7 @@ function addContagioToList(contagio) {
     var aux_btn = "enf_btn_" + contagio;
 
     var $contagio = '<li id="' + aux_li + '">' + '<span class="sm-box bggreen2" >' + '</span>' +
-        '<span class="leyenda">Enfermedad: Gripe A || Madrid-Centro || Contagios: 12</span>' +
+        '<span class="leyenda">Enfermedad: Gripe A || Madrid-Centro || Nivel: 1 || Contagios: 12</span>' +
         '<a class="btn btn-info btn-xs" onclick="deleteContagion(' + aux_li + ')" id="' + aux_btn + '">Erradicar </a>';
 
     //añadir a la lista cada contagio
