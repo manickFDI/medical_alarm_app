@@ -231,6 +231,7 @@ class Disease(Resource):
         envelope['numdeaths'] = disease_db['num_deaths']
         envelope['numcontagions'] = disease_db['num_contagions']
         envelope['numchildren'] = disease_db['num_children']
+        envelope['numteenagers'] = disease_db['num_teenagers']
         envelope['numadults'] = disease_db['num_adults']
         envelope['numelders'] = disease_db['num_elders']
         envelope['numwomen'] = disease_db['num_women']

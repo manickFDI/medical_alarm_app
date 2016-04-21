@@ -189,13 +189,14 @@ class MysqlDatabase(object):
         numContagions = str(row['numContagions'])
         numChildren = str(row['numNinyos'])
         numAdults = str(row['numAdultos'])
+        numTeens = str(row['numJovenes'])
         numElders = str(row['numAncianos'])
         numWomen = str(row['numMujeres'])
         numMen = str(row['numHombres'])
         weight = str(row['peso'])
 
         disease = {'disease_id': id, 'name': name, 'eradicated': eradicated,
-                   'num_deaths': numDeaths, 'num_contagions': numContagions, 'num_children': numChildren,
+                   'num_deaths': numDeaths, 'num_teenagers': numTeens, 'num_contagions': numContagions, 'num_children': numChildren,
                    'num_adults': numAdults, 'num_elders': numElders, 'num_women': numWomen, 'num_men': numMen,
                    'weight': weight}
 
