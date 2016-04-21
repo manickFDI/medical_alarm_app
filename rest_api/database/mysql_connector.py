@@ -112,6 +112,41 @@ class MysqlDatabase(object):
         for row in rows:
             return self.create_user_object(row)
 
+    def update_user_satus(self, user, c_status, n_status, id_contagion):
+        updateUserQuery = "UPDATE {0} SET estado = {1} WHERE idUsuario = {2}".format(USERS_TABLENAME, self.get_status_int(n_status),
+                                                                    user['user_id'])
+
+        db.execute(updateUserQuery)
+
+        selectContagionQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id_contagion)
+        rows = db.execute(selectContagionQuery)
+
+        contagion = None
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            contagion = self.create_contagion_object(row)
+
+        selectDiseaseQuery = "SELECT * FROM {0} WHERE idEnfermedad = {1}".format(DISEASE_TABLENAME, contagion['disease_id'])
+
+        rows = db.execute(selectDiseaseQuery)
+        disease = None
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            disease = self.create_disease_object(row)
+
+        if n_status == "dead":
+            updateDiseaseQuery = "UPDATE {0} SET numMuertes = {1} WHERE idEnfermedad = {2}".format(DISEASE_TABLENAME,
+                                                                    int(disease['num_deaths'])+1, disease['disease_id'])
+            db.execute(updateDiseaseQuery)
+            return True
+
+        #else:
+
+
+
+
     @staticmethod
     def create_user_object(row):
 
@@ -131,6 +166,18 @@ class MysqlDatabase(object):
                 'weight': weight, 'idnumber': idNumber, 'state': state, 'salt': salt}
 
         return user
+
+    @staticmethod
+    def get_status_int(status):
+        return {
+            'undef': 0,
+            'healthy': 1,
+            'cured': 2,
+            'infected': 3,
+            'dead': 4
+
+        }.get(status, 'undef')
+
 
     """
     DISEASE RELATED FUNCTIONS
