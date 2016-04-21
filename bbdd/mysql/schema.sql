@@ -23,14 +23,13 @@ CREATE TABLE IF NOT EXISTS `malarm`.`usuario` (
   `apellidos` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `fechaNacimiento` VARCHAR(10) NOT NULL,
-  `sexo` INT NULL,
-  `peso` DOUBLE NULL,
+  `sexo` INT NOT NULL,
+  `peso` DOUBLE NOT NULL,
   `DNI` VARCHAR(9) NOT NULL,
   `secret` VARCHAR(45) NOT NULL,
   `salt` VARCHAR(45) NOT NULL,
   `estado` INT NOT NULL,
   PRIMARY KEY (`idUsuario`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   UNIQUE INDEX `DNI_UNIQUE` (`DNI` ASC))
 ENGINE = InnoDB;
 
@@ -45,11 +44,13 @@ CREATE TABLE IF NOT EXISTS `malarm`.`enfermedad` (
   `numMuertes` INT NULL,
   `numNinyos` INT NULL,
   `numAdultos` INT NULL,
+  `numJovenes` INT NULL,
   `numAncianos` INT NULL,
   `numMujeres` INT NULL,
   `numHombres` INT NULL,
   `peso` INT NULL,
-  PRIMARY KEY (`idEnfermedad`))
+  PRIMARY KEY (`idEnfermedad`),
+  UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC))
 ENGINE = InnoDB;
 
 

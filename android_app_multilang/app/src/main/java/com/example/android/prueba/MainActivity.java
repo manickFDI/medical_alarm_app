@@ -95,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
         //startService(intent);
 
 
-        SharedPreferences.Editor prefsEditor = prefs.edit();
+        /*SharedPreferences.Editor prefsEditor = prefs.edit();
         boolean initialized = prefs.getBoolean("sensors_status", false);
         if(initialized){
             Intent intentSensor = new Intent(this, SensorService.class);
             startService(intentSensor);
         }
         prefsEditor.putBoolean("sensors_initialized", initialized);
-        prefsEditor.commit();
+        prefsEditor.commit();*/
 
 
         // PRUEBA POST
