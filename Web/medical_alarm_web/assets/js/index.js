@@ -365,7 +365,13 @@ function deleteContagion(id) {
     var aux = "'" + id + "'"
     var li = document.getElementById(aux);
     li.parentNode.removeChild(li);
-
+    //$.notify("Hello");
+    /*$.notify('Hello World', {
+        offset: {
+            x: 50,
+            y: 100
+        }
+    });*/
     //la eliminamos de verdad
     //var apiurl = ENTRYPOINT + "contagion/" + id;
     //removeContagion_db(apiurl);
@@ -447,3 +453,12 @@ function contagions() {
         addContagioToList(j);
     }
 }
+
+
+function loadMap() {
+
+}
+
+
+
+ // KEY_API   --->>   AIzaSyDqC2mEHCJ98RqjUjyVKWIF7Y67y9aUaBU

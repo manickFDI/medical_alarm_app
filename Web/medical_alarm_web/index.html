@@ -87,24 +87,61 @@
                 </div>
                 <div class="col-md-6">
                     <h4 class="page-head-line">BUSCADOR DE USUARIOS</h4>
-                        <div id="custom-search-input">
-                            <div class="input-group col-md-12">
-                                <input type="text" class="form-control input-lg" id="buscadorUsuario" placeholder="DNI / Nº SANITARIO" />
+                </div>
+            </div>
+            <div class="row"> 
+                <div class="col-md-6">
+                    <div id="map">
+                        <script>
+                            var map, heatmap;
+
+                            function initMap() {
+                                map = new google.maps.Map(document.getElementById('map'), {
+                                    zoom: 5,
+                                    center: {lat: 40.489, lng: -3.682},
+                                    mapTypeId: google.maps.MapTypeId.TERRAIN, //TERRAIN or ROADMAP
+                                    zoomControl: false,
+                                    scaleControl: false,
+                                    streetViewControl: true
+                                    //rotateControl: true
+                                });
+
+                                heatmap = new google.maps.visualization.HeatmapLayer({
+                                    data: getPoints(),
+                                    map: map
+                                });
+                            }
+
+                            // Heatmap data: barcelona y madrid
+                            function getPoints() {
+                                return [
+                                    new google.maps.LatLng(40.458820, -3.698383), //tetuan
+                                    new google.maps.LatLng(40.398852, -3.710394), //arganzuela
+                                    new google.maps.LatLng(40.372771, -3.728498), //carabanchel
+                                    new google.maps.LatLng(40.363859, -3.758456), //peseta
+                                    new google.maps.LatLng(40.330053, -3.771248), //leganes
+                                    new google.maps.LatLng(40.340892, -3.837245), //alcorcon
+                                    new google.maps.LatLng(41.403608, 2.188574), //la sagrada familia
+                                    new google.maps.LatLng(41.391715, 2.166115), //ensanche barcelona
+                                    new google.maps.LatLng(41.356223, 2.147619), //montjuic
+                                    new google.maps.LatLng(40.369044, -4.340382) //pelayos
+                                ];
+                            }
+
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control input-lg" id="buscadorUsuario" placeholder="DNI / Nº SANITARIO" />
                                 <span class="input-group-btn">
                                 <button class="btn btn-info btn-lg" type="button" onclick="getUser()">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </button>
                                 </span>
-                            </div>
                         </div>
-                </div>
-            </div>
-            <div class="row"> 
-                <div class="col-md-6">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4918459.712804433!2d-2.5259161020965886!3d39.364376910466774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1457789513073" width="500" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    <!--AIzaSyDqC2mEHCJ98RqjUjyVKWIF7Y67y9aUaBU-->
-                </div>
-                <div class="col-md-6"> 
+                    </div>
                     <div class="container-fluid well span6">
                         <div class="row-fluid">
                             <div class="span8" id="infoUsuario">
@@ -211,12 +248,19 @@
     <script src="assets/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/notify.js"></script>
+    <script src="assets/js/bootstrap-notify.js"></script>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=visualization"></script>
-    <script src="assets/js/heatmap.js"></script>
-    <script src="assets/js/gmaps-heatmap.js"></script>
+
     <script src="assets/js/cargaFooter.js"></script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqC2mEHCJ98RqjUjyVKWIF7Y67y9aUaBU&libraries=visualization&callback=initMap">
+    </script>
+
     <script src="assets/js/index.js"></script>
+
+
 
 </body>
 </html>
