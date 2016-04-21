@@ -197,6 +197,37 @@ class User(Resource):
 
         return envelope
 
+    def put(self, dni):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['status']
+        _currentStatus = input_data['current_status']
+        _newStatus = input_data['new_status']
+        _idContagion = input_data['id_contagion']
+
+        user_db = mysqldb.get_user(dni)
+
+        # PERFORM OPERATIONS
+        if not user_db:
+            return create_error_response(404, "Unknown user",
+                                         "There is no a user with dni %s"
+                                         % dni,
+                                         "User")
+
+        if not mysqldb.update_user_satus(user_db, _currentStatus, _newStatus, _idContagion):
+            return create_error_response(500, "User update error",
+                                         "Error when updating the user %s status"
+                                         % dni,
+                                         "User")
+
+        # RENDER RESPONSE
+        return '', 204
+
 
 class Diseases(Resource):
     def get(self):
@@ -231,6 +262,7 @@ class Disease(Resource):
         envelope['numdeaths'] = disease_db['num_deaths']
         envelope['numcontagions'] = disease_db['num_contagions']
         envelope['numchildren'] = disease_db['num_children']
+        envelope['numteenagers'] = disease_db['num_teenagers']
         envelope['numadults'] = disease_db['num_adults']
         envelope['numelders'] = disease_db['num_elders']
         envelope['numwomen'] = disease_db['num_women']
