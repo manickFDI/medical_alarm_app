@@ -75,3 +75,81 @@ salida:
 Pensar si la clasificación de sexo y edad son muertes o contagios
 
 Mirar las dispersiones
+
+
+* Dado el dni de un usuario me devuelve el listado de notificaciones enviadas a dicho usuario
+
+malarm/api/notifications/?dni=12345678L
+
+entrada: nada
+
+salida:
+	[
+		{
+			"idUsuario":"id",
+			"idContagio":"id",
+			"date":"fecha de la notificacion",
+			"confirmaded":"true",
+			"disease":"nombre de la enfermedad",
+			"userName":"nombre del usuario"
+			"userLastname":"apellidos del usuario"
+		},
+		{
+			"idUsuario":"id",
+			"idContagio":"id",
+			"fecha":"fecha",
+			"confirmado":"true",
+			"nombreEnfermedad":"nombre"
+		},
+		{
+			"idUsuario":"id",
+			"idContagio":"id",
+			"fecha":"fecha",
+			"confirmado":"true",
+			"nombreEnfermedad":"nombre"
+		}
+	]
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado un idUsuario y un idContagio, actualiza el valor 'confirmado' de la tabla 'notificacion' a 'true'
+
+malarm/api/notifications/confirmRevision
+
+type: UPDATE
+
+entrada:
+{
+	"idUsuario":"id",
+	"idContagio":"id"
+}
+
+
+salida: nada
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado un idUsuario y un idContagio añade una nueva fila a la tabla UsuariosContagiados
+
+malarm/api/users/contagions/
+
+type: POST
+
+entrada:
+{
+	"idUsuario":"id",
+	"idContagio":"id"
+}
+
+salida: nada
+
+
+NOTA: puede ser tentador juntar esta funcion con la anterior, ya que ambas reciben lo mismo, pero no se puede hacer
+ya que la confirmacion de la notificacion se realizará siempre que el usuario vaya al medico a hacerse la revision,
+pero solo se añadira el usuario contagiado si realmente resulta estar infectado. besis
