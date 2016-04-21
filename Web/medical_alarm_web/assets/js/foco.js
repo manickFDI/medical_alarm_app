@@ -1,12 +1,13 @@
-ENTRYPOINT_FOCUS = "malarm/api/focus/",
-ENTRYPOINT_USERS = "malarm/api/users/"
+ENTRYPOINT_FOCUSES = "http://localhost:5000/malarm/api/focuses/",
+ENTRYPOINT_FOCUS = "http://localhost:5000/malarm/api/focus/",
+ENTRYPOINT_USER = "http://localhost:5000/malarm/api/user/"
 
 /*
 	Realiza la peticion AJAX para obtener la lista de focos activos.
 	Delega a createTable() la funcion de crear la tabla correctamente con los datos devueltos por la peticion AJAX
 */
 function loadFocusTable() {
-	/*var apiURL = ENTRYPOINT_FOCUS;
+	var apiURL = ENTRYPOINT_FOCUSES;
 
 	return $.ajax({
 		url: apiURL
@@ -16,9 +17,9 @@ function loadFocusTable() {
 		createTable(data);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		alert("Error al buscar focos.");
-	});*/
+	});
 
-	createTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+	//createTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
 }
 
 
@@ -58,43 +59,60 @@ function createTable(data) {
 	tblThead.appendChild(cabecera);
 
 	// Crea las celdas
-	for (var i=0; i<5; i++) { //filas
-		var fila = document.createElement("tr");
+	for (var i=0; i<data.length; i++) { //filas
+		var focus = data[i];
 
-		for (var j=0; j<5; j++) { //columnas
-			var celda = document.createElement("td");
+		for(var j=0; j<focus.places.length; j++) {
+			var fila = document.createElement("tr");
+			var place = focus.places[j];
 
-			if(j == 4) { // creamos el boton y el span de "Confirmar revision"
-				var button = document.createElement("button");
-				button.setAttribute("class", "btn btn-danger");
-				var focusId = i; // OJO!! focusId vendrá en la respuesta de la peticion AJAX
-				button.setAttribute("id", focusId);	// usamos como id del boton el id del usuario para que cuando pulsemos
-													// en "Confirmar revisión" podamos actualizar su estado
-				button.setAttribute("onclick", "removeFocus(" + focusId + ", this)");
-				var spanButton = document.createElement("span");
-				spanButton.setAttribute("class", "glyphicon glyphicon-ok");
-				button.appendChild(spanButton);
-				celda.appendChild(button);
+			for (var k=0; k<5; k++) { //columnas
+				var celda = document.createElement("td");
+
+				if(k==0) {
+					var textoCelda = document.createTextNode(place.place);
+					celda.appendChild(textoCelda);
+				}
+				else if(k==1) {
+					var textoCelda = document.createTextNode(focus.num_people);
+					celda.appendChild(textoCelda);
+				}
+				else if(k==2) {
+					var textoCelda = document.createTextNode(place.date);
+					celda.appendChild(textoCelda);
+				}
+				else if(k==3) {
+					var textoCelda = document.createTextNode(focus.description);
+					celda.appendChild(textoCelda);
+				}
+				else if(k==4) { // creamos el boton y el span de "Confirmar revision"
+					var button = document.createElement("button");
+					button.setAttribute("class", "btn btn-danger");
+					var focusId = data[i].focus_id;
+					button.setAttribute("id", focusId);	// usamos como id del boton el id del usuario para que cuando pulsemos
+														// en "Confirmar revisión" podamos actualizar su estado
+					button.setAttribute("onclick", "removeFocus(" + focusId + ", this)");
+					var spanButton = document.createElement("span");
+					spanButton.setAttribute("class", "glyphicon glyphicon-ok");
+					button.appendChild(spanButton);
+					celda.appendChild(button);
+				}
+				fila.appendChild(celda);
 			}
-			else {
-				var textoCelda = document.createTextNode("celda en la fila " + i + ", columna " + j);
-				celda.appendChild(textoCelda);
-			}
-			fila.appendChild(celda);
+
+			// agrega la fila al final de la tabla (al final del elemento tblbody)
+			tblBody.appendChild(fila);
 		}
 
-		// agrega la fila al final de la tabla (al final del elemento tblbody)
-		tblBody.appendChild(fila);
-	}
+		tabla.appendChild(tblThead);
+		tabla.appendChild(tblBody);
 
-	tabla.appendChild(tblThead);
-	tabla.appendChild(tblBody);
+		tabla.setAttribute("id", "focusTable");
+		tabla.setAttribute("class", "table table-striped table-bordered");
 
-	tabla.setAttribute("id", "focusTable");
-	tabla.setAttribute("class", "table table-striped table-bordered");
-
-	// appends <table> into <div>
-	$("#divFocusTable").append(tabla);	
+		// appends <table> into <div>
+		$("#divFocusTable").append(tabla);
+	}	
 }
 
 
@@ -107,16 +125,16 @@ function createTable(data) {
 function removeFocus(focusId, row) {
 	var apiURL = ENTRYPOINT_FOCUS + focusId + "/";
 
-	/*return $.ajax({
+	return $.ajax({
 		url: apiURL,
 		type: "DELETE"
 	}).done(function (data, textStatus, jqXHR) {
-		removeUserFromTable(row);
+		removeUserFromTable('focusTable', row);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
-		alert("Error al buscar usuario.");
-	});*/
+		alert("Error al eliminar el foco.");
+	});
 
-	removeRowFromTable('focusTable', row); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+	//removeRowFromTable('focusTable', row); // OJO!! quitar esta linea cuando funcione la peticion AJAX
 }
 
 
@@ -136,22 +154,26 @@ function removeRowFromTable(tblName, row) {
 function getUserToFocus() {
 	var userDNI = document.getElementById('inputTxt').value; // Cogemos el dni del usuario del input
 	if(userDNI != "") {
-		if(validateDNI(userDNI)) {
-			/*var apiURL = ENTRYPOINT_USERS + userDNI + "/";
+		//if(validateDNI(userDNI)) {
+			var apiURL = ENTRYPOINT_USER + userDNI;
 
 			return $.ajax({
 				url: apiURL
 			}).done(function (data, textStatus, jqXHR) {
-				updateUsersToFocusTable(data);
+				if(!duplicatedUserInTable(data.idusuario))
+					updateUsersToFocusTable(data);
+				else
+					alert("DNI repetido.");
 			}).fail(function (jqXHR, textStatus, errorThrown) {
 				alert("Error al buscar usuario.");
-			});*/
+			});
 			
-			updateUsersToFocusTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
-		}
-		else {
-			alert("DNI no válido.");
-		}
+			//updateUsersToFocusTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+
+		//}
+		//else {
+			//alert("DNI no válido.");
+		//}
 	}
 	else {
 		alert("Debe introducir el DNI del usuario.");
@@ -169,18 +191,22 @@ function updateUsersToFocusTable(data) {
 
 	for (var i=0; i<3; i++) { //columnas
 		var celda = document.createElement("td");
-		if(i == 2) {
+		if(i==0) {
+			var textoCelda = document.createTextNode(data.idnumber);
+			celda.appendChild(textoCelda);
+		}
+		else if(i==1) {
+			var textoCelda = document.createTextNode(data.name + " " + data.lastname);
+			celda.appendChild(textoCelda);
+		}
+		else if(i==2) {
 			var button = document.createElement("button");
 			button.setAttribute("class", "btn btn-danger");
-			var userId = Math.random(); // OJO!! userId vendrá en la respuesta de la peticion AJAX
+			var userId = data.idusuario;
 			button.setAttribute("id", userId);
 			button.setAttribute("onclick", "removeRowFromTable('tableUsersToFocus', this)");
 			button.innerHTML = "Quitar";
 			celda.appendChild(button);
-		}
-		else {
-			var textoCelda = document.createTextNode("celda en la columna " + i);
-			celda.appendChild(textoCelda);
 		}
 		fila.appendChild(celda);
 	}
@@ -196,13 +222,13 @@ function updateUsersToFocusTable(data) {
 function confirmSubmit() {
 	var apiURL = ENTRYPOINT_FOCUS;
 	var table = document.getElementById('tableUsersToFocus');
-	var numFilas = table.rows.length-1; // numFilas-1 para quitar la cabecera
+	var numFilas = table.rows.length;
 
-	if(numFilas > 1) {
+	if(numFilas > 2) {
 		var description = document.getElementById('focusDescription').value; // Cogemos el campo descripcion del form
 		//if(description != "") {
 			if(confirm("¿Esta seguro de que quiere dar de alta este contagio?")) {
-				var userData = '{ "numUsers":"' + numFilas + '","usersId":[';
+				var userData = '{ "usersId":[';
 
 				for(i=1; i<numFilas; i++) { // Empezamos en i=1 para no contar la cabecera
 					var userId = table.rows[i].cells[2].firstChild.id; // Cogemos el id de los botones que contienen el id del usuario
@@ -225,13 +251,13 @@ function confirmSubmit() {
 				}).done(function (data, textStatus, jqXHR) {
 					alert("Contagio dado de alta correctamente");
 					createTableFocusFound(data);
-					updateGoogleMap(data);
+					location.href = "#focusFound";
+					//updateGoogleMap(data);
 				}).fail(function (jqXHR, textStatus, errorThrown) {
-					alert("Error al buscar usuario.");
+					alert("Error al dar de alta un foco.");
 				});*/
 
 				createTableFocusFound(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
-				location.href = "#focusFound";
 			}
 		/*}
 		else {
@@ -251,6 +277,7 @@ function confirmSubmit() {
 function createTableFocusFound(data) {
 	var tblBody = document.getElementById('tbodyFocusFound');
 	var numFilas = 3; // OJO!!! numFilas viene en data
+	//var numFilas = data.length;
 
 	for(var i=0; i<numFilas; i++) {
 		var fila = document.createElement("tr");
@@ -259,6 +286,7 @@ function createTableFocusFound(data) {
 		celda.appendChild(textoCelda);
 		var celda2 = document.createElement("td");
 		var textoCelda2 = document.createTextNode("celda en la columna 1");
+		//var textoCelda2 = document.createTextNode(data[i].place);
 		celda2.appendChild(textoCelda2);
 
 		fila.appendChild(celda);
@@ -296,6 +324,32 @@ function validateDNI(dni) {
     }
     return ret;
 }
+
+
+
+/*
+	Comprueba si el usuario ya esta en la tabla
+*/
+function duplicatedUserInTable(id) {
+	var table = document.getElementById('tableUsersToFocus');
+	var numFilas = table.rows.length-1; // numFilas-1 para quitar la cabecera
+	var found = false;
+
+	if(numFilas > 1) {
+		var i=1;
+
+		while(i<numFilas && !found) {
+			var userId = table.rows[i].cells[2].firstChild.id; // Cogemos el id de los botones que contienen el id del usuario
+			if(id == userId)
+				found = true;
+			else
+				i++;
+		}
+	}
+
+	return found;
+}
+
 
 
 /*

@@ -1,31 +1,33 @@
-ENTRYPOINT_CONTAGIONS = "malarm/api/contagions/",
-ENTRYPOINT_NOTIFICATIONS = "malarm/api/notifications/"
+ENTRYPOINT_CONTAGIONS = "http://localhost:5000/malarm/api/contagions/",
+ENTRYPOINT_USERS_CONTAGIONS = "http://localhost:5000/malarm/api/users/contagions/",
+ENTRYPOINT_NOTIFICATIONS = "http://localhost:5000/malarm/api/notifications/"
 
 /*
 	Busca los posibles usuarios contagiados por la enfermedad buscada.
 	Actualiza la tabla de usuarios contagiados
 */
 function getInfectedUsers() {
-	var apiURL = ENTRYPOINT_CONTAGIONS + "getUsersInfected" + "/";
 	var disease = document.getElementById('inputTxt').value; // Cogemos el nombre de la enfermedad del input
 	if(disease != "") {
 		if(correctInput(disease)) {
-			/*var userData = '{ "disease":"' + disease + '"}'; // Creamos el txt con el json
-			userData = JSON.stringify(userData); // Verificamos que el formato es json
+			var apiURL = ENTRYPOINT_USERS_CONTAGIONS + "?disease=" + disease;
+			//var userData = '{ "disease":"' + disease + '"}'; // Creamos el txt con el json
+			//userData = JSON.stringify(userData); // Verificamos que el formato es json
 
 			return $.ajax({
 				url: apiURL,
-				type: "POST",
-				data: userData
+				//type: "POST",
+				//data: userData
 			}).always(function() {
 				$("#usersTable").remove(); // Vaciar la tabla de posibles usuarios contagiados
 			}).done(function (data, textStatus, jqXHR) {
-				updateUsersTable(data); // data contiene
+				console.log(data[0]);
+				updateUsersTable(data);
 			}).fail(function (jqXHR, textStatus, errorThrown) {
-				alert("Error al buscar la enfermedad.");
-			});*/
+				alert("Error al buscar la enfermedad");
+			});
 
-			updateUsersTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+			//updateUsersTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
 		}
 		else {
 			alert("Formato de entrada incorrecto.");
@@ -76,35 +78,41 @@ function updateUsersTable(data) {
 	cabecera.appendChild(celda3);
 	tblThead.appendChild(cabecera);
 
-	// Crea las celdas
-	for (var i=0; i<2; i++) { //filas
-		var fila = document.createElement("tr");
+	for(i=0; i<data.length; i++) { // para cada contagio
+		// Crea las celdas
+		for (var j=0; j<data[i].users.length; j++) { //filas
+			var fila = document.createElement("tr");
+			var user = data[i].users[j];
+			for (var k=0; k<3; k++) { //columnas
+				var celda = document.createElement("td");
 
-		for (var j=0; j<3; j++) { //columnas
-			var celda = document.createElement("td");
+				if(k==0) { // nombre y apellidos
+					var textoCelda = document.createTextNode(user.name + " " + user.lastname);
+					celda.appendChild(textoCelda);
+				}
+				else if(k==1) { // estado actual
+					var textoCelda = document.createTextNode(parserState(user.state));
+					celda.appendChild(textoCelda);
+				}
+				else if(k==2) { // creamos el boton y el span de "Confirmar revision"
+					var button = document.createElement("button");
+					button.setAttribute("class", "btn btn-success");
+					var userId = user.user_id;
+					var contagioId = data[i].contagion_id;
+					button.setAttribute("id", userId);	// usamos como id del boton el id del usuario para que cuando pulsemos
+														// en "Confirmar revisión" podamos actualizar su estado
+					button.setAttribute("onclick", "confirmRevision(" + userId + ", " + contagioId + ", this)");
+					var spanButton = document.createElement("span");
+					spanButton.setAttribute("class", "glyphicon glyphicon-ok");
+					button.appendChild(spanButton);
+					celda.appendChild(button);
+				}
+				fila.appendChild(celda);
+			}
 
-			if(j==2) { // creamos el boton y el span de "Confirmar revision"
-				var button = document.createElement("button");
-				button.setAttribute("class", "btn btn-success");
-				var userId = i; // OJO!! userId vendrá en la respuesta de la peticion AJAX
-				var contagioId = i;
-				button.setAttribute("id", userId);	// usamos como id del boton el id del usuario para que cuando pulsemos
-													// en "Confirmar revisión" podamos actualizar su estado
-				button.setAttribute("onclick", "confirmRevision(" + userId + ", " + contagioId + ", this)");
-				var spanButton = document.createElement("span");
-				spanButton.setAttribute("class", "glyphicon glyphicon-ok");
-				button.appendChild(spanButton);
-				celda.appendChild(button);
-			}
-			else {
-				var textoCelda = document.createTextNode("celda en la fila " + i + ", columna " + j);
-				celda.appendChild(textoCelda);
-			}
-			fila.appendChild(celda);
+			// agrega la fila al final de la tabla (al final del elemento tblbody)
+			tblBody.appendChild(fila);
 		}
-
-		// agrega la fila al final de la tabla (al final del elemento tblbody)
-		tblBody.appendChild(fila);
 	}
 
 	tabla.appendChild(tblThead);
@@ -225,4 +233,21 @@ function validateDNI(dni) {
         }
     }
     return ret;
+}
+
+
+/*
+	Dado el enumerado, devuelve el string del estado de un usuario
+	* Params: state - int [0,1,2,3]
+*/
+function parserState(state) {
+	var ret;
+	switch(state) {
+		case 0: ret = "Indefinido"; break;
+		case 1: ret = "Enfermo"; break;
+		case 2: ret = "Curado"; break;
+		case 3: ret = "Fallecido"; break;
+		default: ret = "Sin estado"; break;
+	}
+	return ret;
 }
