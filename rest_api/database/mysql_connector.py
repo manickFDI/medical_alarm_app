@@ -364,7 +364,7 @@ class MysqlDatabase(object):
     def delete_contagion(self, id):
 
         existsContagionQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id)
-        deleteContagionQuery = "DELETE FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME,id)
+        deleteContagionQuery = "UPDATE {0} SET nivel={1} WHERE idContagio = {2}".format(CONTAGIONS_TABLENAME,0, id)
         rows = db.execute(existsContagionQuery)
 
         if rows is not None and rows.rowcount > 0:
