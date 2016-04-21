@@ -58,13 +58,14 @@ salida:
         "eradicated": "no",
         "iddisease": "1",
         "name": "Ebola",
-        "numadults": "10",
+        "numteenagers": "10",
+        "numadults": "15",
         "numchildren": "4",
-        "numcontagions": "29",
+        "numcontagions": "31",
         "numdeaths": "10",
-        "numelders": "15",
+        "numelders": "2",
         "nummen": "15",
-        "numwomen": "14",
+        "numwomen": "16",
         "weight": "60"
     }
 
