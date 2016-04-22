@@ -1,4 +1,7 @@
 from sqlalchemy import create_engine
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+import time
 
 MYSQL_DATABASE_USER = 'root'
 MYSQL_DATABASE_PASSWORD = 'rooting'
@@ -23,6 +26,7 @@ FOCUS_PLACES_TABLENAME = "lugaresFoco"
 FOCUS_PLACES_TABLE_COLUMNS = "idFoco, lugar, fecha"
 CONTAGIONS_TABLENAME = "contagio"
 CONTAGIONS_USERS_TABLENAME = "usuarioContagiado"
+USER_NOTIFICATIONS_TABLENAME = "notificacion"
 
 global db
 db = create_engine(SQLALCHEMY_DATABASE_URI)
@@ -102,7 +106,17 @@ class MysqlDatabase(object):
 
         return 0
 
-    def get_user(self, dni):
+    def get_user_by_id(self, id):
+
+        query = "SELECT * FROM {0} WHERE idUsuario = \"{1}\"".format(USERS_TABLENAME, id)
+        rows = db.execute(query)
+
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            return self.create_user_object(row)
+
+    def get_user_by_dni(self, dni):
 
         query = "SELECT * FROM {0} WHERE dni = \"{1}\"".format(USERS_TABLENAME, dni)
         rows = db.execute(query)
@@ -144,9 +158,6 @@ class MysqlDatabase(object):
 
         #else:
 
-
-
-
     @staticmethod
     def create_user_object(row):
 
@@ -182,8 +193,17 @@ class MysqlDatabase(object):
     """
     DISEASE RELATED FUNCTIONS
     """
+    def get_disease_by_id(self, id):
+        query = "SELECT *, (numHombres+numMujeres) as numContagions FROM {0} " \
+                "WHERE idEnfermedad = \"{1}\"".format(DISEASE_TABLENAME, id)
+        rows = db.execute(query)
 
-    def get_disease(self, name):
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            return self.create_disease_object(row)
+
+    def get_disease_by_name(self, name):
 
         query = "SELECT *, (numHombres+numMujeres) as numContagions FROM {0} " \
                 "WHERE nombre = \"{1}\"".format(DISEASE_TABLENAME, name)
@@ -222,6 +242,52 @@ class MysqlDatabase(object):
             ranking.append(disease)
 
         return ranking
+
+    def update_disease_with_new_infected(self, _user_id, _contagion_id):
+
+        user = self.get_user_by_id(_user_id)
+        contagion = self.get_contagion(_contagion_id)
+
+        if user is not None and contagion is not None:
+            disease = self.get_disease_by_id(contagion['disease_id'])
+            birth_date = datetime.strptime(user['birthday'], '%d-%m-%y')
+            current_date = time.strftime("%d-%m-%Y")
+            difference_in_years = relativedelta(birth_date, current_date).years
+
+            new_person_by_age = ""
+            if 0 < difference_in_years <= 12:
+                amount = int(disease['num_children']) + 1
+                new_person_by_age = "numNinyos = {0}".format(amount)
+            elif 13 <= difference_in_years <= 25:
+                amount = int(disease['num_teenagers']) + 1
+                new_person_by_age = "numJovenes = {0}".format(amount)
+            elif 26 <= difference_in_years <= 65:
+                amount = int(disease['num_adults']) + 1
+                new_person_by_age = "numAdultos = {0}".format(amount)
+            elif 66 <= difference_in_years:
+                amount = int(disease['num_elders']) + 1
+                new_person_by_age = "numAncianos = {0}".format(amount)
+
+            new_person_by_gender = ""
+            if user['gender'] == 1:
+                amount = int(disease['num_men']) + 1
+                new_person_by_gender = "numHombre = {0}".format(amount)
+            elif user['gender'] == 2:
+                amount = int(disease['num_men']) + 1
+                new_person_by_gender = "numMujeres = {0}".format(amount)
+
+            old_weight = int(disease['weight']) * (int(disease['num_men']) + int(disease['num_men']))
+            new_weight = (old_weight + int(user['weight'])) / (1+ int(disease['num_men']) + int(disease['num_men']))
+
+            updateDiseaseQuery = "UPDATE {0} SET {1}, {2}, peso = {3} WHERE idEnfermedad = {4}".format(
+                DISEASE_TABLENAME, new_person_by_age, new_person_by_gender, new_weight, disease['disease_id']
+            )
+            db.execute(updateDiseaseQuery)
+            return True
+
+        return False
+
+
 
     @staticmethod
     def create_disease_object(row):
@@ -335,6 +401,14 @@ class MysqlDatabase(object):
     """
     CONTAGIONS RELATED FUNCTIONS
     """
+    def get_contagion(self, id):
+        selectQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id)
+
+        rows = db.execute(selectQuery)
+        if rows is None or rows.rowcount != 1:
+            return None
+        for row in rows:
+            return self.create_contagion_object(row)
 
     def get_users_contagions(self, disease):
         diseaseQuery = "SELECT idEnfermedad FROM {0} WHERE nombre = \"{1}\"".format(DISEASE_TABLENAME, disease);
@@ -420,6 +494,13 @@ class MysqlDatabase(object):
             return True
         return False
 
+    def insert_user_contagion(self, user_id, contagion_id):
+
+        insertQuery = "INSERT INTO {0} (idUsuario, idContagio) VALUES ({1}, {2})".format(CONTAGIONS_USERS_TABLENAME, user_id, contagion_id)
+        db.execute(insertQuery)
+        return True
+
+
     @staticmethod
     def create_contagion_object(row):
         """
@@ -449,3 +530,72 @@ class MysqlDatabase(object):
                     'distance':distance, 'level': level, 'place': place, 'date': date, 'description': description}
 
         return contagion
+
+
+    """
+    NOTIFICATIONS RELATED FUNCTIONS
+    """
+    def get_notifications(self, user):
+
+        selectNotificationsQuery = "SELECT * FROM {0} WHERE idUsuario = {1}".format(USER_NOTIFICATIONS_TABLENAME, user['user_id'])
+
+        rows = db.execute(selectNotificationsQuery)
+        notifications = []
+        if rows is None or rows.rowcount < 1:
+            return {}
+        for row in rows:
+            notification = self.create_notification_object(row)
+            contagion = self.get_contagion(notification['contagion_id'])
+            if contagion:
+                contagion['disease'] = self.get_disease_by_id(contagion['disease_id'])
+
+            notification['contagion'] = contagion
+
+            notifications.append(notification)
+
+        return notifications
+
+
+    """
+    NOTIFICATION RELATED FUNCTIONS
+    """
+    def get_notification(self, user_id, contagion_id):
+
+        selectQuery = "SELECT * FROM {0} WHERE idUsuario = {1} and idContagio = {2}".format(USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
+
+        rows = db.execute(selectQuery)
+        if rows is None or rows.rowcount != 1:
+            return None
+        for row in rows:
+            return self.create_notification_object(row)
+
+    def update_notification(self, user_id,contagion_id):
+
+        notification = self.get_notification(user_id, contagion_id)
+        if notification is None:
+            return None
+        updateQuery = "UPDATE {0} SET confirmado = true WHERE idUsuario = {1} and idContagio = {2}".format(USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
+
+        db.execute(updateQuery)
+        return True
+
+    @staticmethod
+    def create_notification_object(row):
+        """
+            +------------+-------------+------+-----+---------+-------+
+            | Field      | Type        | Null | Key | Default | Extra |
+            +------------+-------------+------+-----+---------+-------+
+            | idUsuario  | int(11)     | NO   | PRI | NULL    |       |
+            | idContagio | int(11)     | NO   | PRI | NULL    |       |
+            | fecha      | varchar(10) | NO   |     | NULL    |       |
+            | confirmado | tinyint(1)  | NO   |     | NULL    |       |
+            +------------+-------------+------+-----+---------+-------+
+        """
+        idUser = str(row['idUsuario'])
+        idContagion = str(row['idContagio'])
+        date = row['fecha']
+        confirmed = str(row['confirmado'])
+
+        notification = {'user_id': idUser, 'contagion_id': idContagion, 'date': date, 'confirmed': confirmed}
+
+        return notification
