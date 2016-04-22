@@ -395,7 +395,7 @@ class Contagions(Resource):
 
 
 class Contagion(Resource):
-    def delete(self, id):
+    def put(self, id):
 
         # PEROFRM OPERATIONS
         # Try to delete the contagion. If it could not be deleted, the database
