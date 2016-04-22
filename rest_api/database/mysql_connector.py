@@ -1,4 +1,7 @@
 from sqlalchemy import create_engine
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+import time
 
 MYSQL_DATABASE_USER = 'root'
 MYSQL_DATABASE_PASSWORD = 'rooting'
@@ -103,7 +106,17 @@ class MysqlDatabase(object):
 
         return 0
 
-    def get_user(self, dni):
+    def get_user_by_id(self, id):
+
+        query = "SELECT * FROM {0} WHERE idUsuario = \"{1}\"".format(USERS_TABLENAME, id)
+        rows = db.execute(query)
+
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            return self.create_user_object(row)
+
+    def get_user_by_dni(self, dni):
 
         query = "SELECT * FROM {0} WHERE dni = \"{1}\"".format(USERS_TABLENAME, dni)
         rows = db.execute(query)
@@ -229,6 +242,52 @@ class MysqlDatabase(object):
             ranking.append(disease)
 
         return ranking
+
+    def update_disease_with_new_infected(self, _user_id, _contagion_id):
+
+        user = self.get_user_by_id(_user_id)
+        contagion = self.get_contagion(_contagion_id)
+
+        if user is not None and contagion is not None:
+            disease = self.get_disease_by_id(contagion['disease_id'])
+            birth_date = datetime.strptime(user['birthday'], '%d-%m-%y')
+            current_date = time.strftime("%d-%m-%Y")
+            difference_in_years = relativedelta(birth_date, current_date).years
+
+            new_person_by_age = ""
+            if 0 < difference_in_years <= 12:
+                amount = int(disease['num_children']) + 1
+                new_person_by_age = "numNinyos = {0}".format(amount)
+            elif 13 <= difference_in_years <= 25:
+                amount = int(disease['num_teenagers']) + 1
+                new_person_by_age = "numJovenes = {0}".format(amount)
+            elif 26 <= difference_in_years <= 65:
+                amount = int(disease['num_adults']) + 1
+                new_person_by_age = "numAdultos = {0}".format(amount)
+            elif 66 <= difference_in_years:
+                amount = int(disease['num_elders']) + 1
+                new_person_by_age = "numAncianos = {0}".format(amount)
+
+            new_person_by_gender = ""
+            if user['gender'] == 1:
+                amount = int(disease['num_men']) + 1
+                new_person_by_gender = "numHombre = {0}".format(amount)
+            elif user['gender'] == 2:
+                amount = int(disease['num_men']) + 1
+                new_person_by_gender = "numMujeres = {0}".format(amount)
+
+            old_weight = int(disease['weight']) * (int(disease['num_men']) + int(disease['num_men']))
+            new_weight = (old_weight + int(user['weight'])) / (1+ int(disease['num_men']) + int(disease['num_men']))
+
+            updateDiseaseQuery = "UPDATE {0} SET {1}, {2}, peso = {3} WHERE idEnfermedad = {4}".format(
+                DISEASE_TABLENAME, new_person_by_age, new_person_by_gender, new_weight, disease['disease_id']
+            )
+            db.execute(updateDiseaseQuery)
+            return True
+
+        return False
+
+
 
     @staticmethod
     def create_disease_object(row):

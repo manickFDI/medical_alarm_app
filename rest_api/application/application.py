@@ -145,7 +145,7 @@ class User(Resource):
         input_data = input['user']
         _secret = input_data['secret']
 
-        user_db = mysqldb.get_user(dni)
+        user_db = mysqldb.get_user_by_dni(dni)
 
         # PERFORM OPERATIONS
         if not user_db:
@@ -173,7 +173,7 @@ class User(Resource):
 
     def get(self, dni):
 
-        user_db = mysqldb.get_user(dni)
+        user_db = mysqldb.get_user_by_dni(dni)
 
         # PERFORM OPERATIONS
         if not user_db:
@@ -210,7 +210,7 @@ class User(Resource):
         _newStatus = input_data['new_status']
         _idContagion = input_data['id_contagion']
 
-        user_db = mysqldb.get_user(dni)
+        user_db = mysqldb.get_user_by_dni(dni)
 
         # PERFORM OPERATIONS
         if not user_db:
@@ -377,11 +377,16 @@ class UsersContagions(Resource):
         _contagion_id = input_data['contagion_id']
 
         if mysqldb.insert_user_contagion(_user_id, _contagion_id):
-            return '', 204
+            if mysqldb.update_disease_with_new_infected(_user_id, _contagion_id):
+                return '', 204
 
-        return create_error_response(403, "Error updating notification",
-                                     "There is no a notification with the provided ids",
-                                     "Notification")
+            return create_error_response(403, "Error updating disease",
+                                         "There is no a disease or contagion with the provided ids",
+                                         "UserContagions")
+
+        return create_error_response(403, "Error updating infected user",
+                                     "There is no a user contagion with the provided ids",
+                                     "UserContagions")
 
 
 class Contagions(Resource):
@@ -427,7 +432,7 @@ class Notifications(Resource):
     def get(self):
         _dni = request.args['dni']
 
-        _user_db = mysqldb.get_user(_dni)
+        _user_db = mysqldb.get_user_by_dni(_dni)
 
         # PERFORM OPERATIONS
         if not _user_db:
