@@ -595,25 +595,167 @@ entrada: -
 
 salida:  - (204 NO CONTENT)
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-* Actualiza un usuario cambiando el estado.
+* Dado el dni de un usuario me devuelve el listado de notificaciones enviadas a dicho usuario
+NOTA: devuelve tanto confirmadas true y false porque en el fondo son enviadas, si hay que filtrar por solo true o false avisar
 
-NOTA: status can be "undef", "healthy", "cured", "infected", "dead"
+/malarm/api/user/notifications/?dni=12345678P
 
-apiurl: malarm/api/user/dni
-type: PUT
+entrada: nada
+
+salida:
+	{
+        "notifications": [
+            {
+                "confirmed": "1",
+                "contagion": {
+                    "contagion_id": "1",
+                    "date": "10/02/2016",
+                    "description": "lorem impsum",
+                    "disease": {
+                        "disease_id": "1",
+                        "eradicated": "no",
+                        "name": "Ebola",
+                        "num_adults": "15",
+                        "num_children": "4",
+                        "num_contagions": "31",
+                        "num_deaths": "10",
+                        "num_elders": "2",
+                        "num_men": "15",
+                        "num_teenagers": "10",
+                        "num_women": "16",
+                        "weight": "60"
+                    },
+                    "disease_id": "1",
+                    "distance": "2",
+                    "doctor_id": "1",
+                    "level": "3",
+                    "place": "Barcelona",
+                    "time": "10"
+                },
+                "contagion_id": "1",
+                "date": "10/02/2016",
+                "user_id": "5"
+            },
+            {
+                "confirmed": "1",
+                "contagion": {
+                    "contagion_id": "2",
+                    "date": "07/04/2016",
+                    "description": "lorem impsum",
+                    "disease": {
+                        "disease_id": "1",
+                        "eradicated": "no",
+                        "name": "Ebola",
+                        "num_adults": "15",
+                        "num_children": "4",
+                        "num_contagions": "31",
+                        "num_deaths": "10",
+                        "num_elders": "2",
+                        "num_men": "15",
+                        "num_teenagers": "10",
+                        "num_women": "16",
+                        "weight": "60"
+                    },
+                    "disease_id": "1",
+                    "distance": "2",
+                    "doctor_id": "1",
+                    "level": "2",
+                    "place": "Madrid",
+                    "time": "20"
+                },
+                "contagion_id": "2",
+                "date": "20/03/2016",
+                "user_id": "5"
+            },
+            {
+                "confirmed": "0",
+                "contagion": {
+                    "contagion_id": "3",
+                    "date": "20/03/2016",
+                    "description": "lorem impsum",
+                    "disease": {
+                        "disease_id": "1",
+                        "eradicated": "no",
+                        "name": "Ebola",
+                        "num_adults": "15",
+                        "num_children": "4",
+                        "num_contagions": "31",
+                        "num_deaths": "10",
+                        "num_elders": "2",
+                        "num_men": "15",
+                        "num_teenagers": "10",
+                        "num_women": "16",
+                        "weight": "60"
+                    },
+                    "disease_id": "1",
+                    "distance": "2",
+                    "doctor_id": "1",
+                    "level": "1",
+                    "place": "Cartagena",
+                    "time": "2"
+                },
+                "contagion_id": "3",
+                "date": "14/05/2016",
+                "user_id": "5"
+            }
+        ],
+        "user": {
+            "birthday": "19/02/1990",
+            "email": "pepanero@malarm.com",
+            "gender": "0",
+            "idnumber": "12345678P",
+            "lastname": "Panero",
+            "name": "Pablo",
+            "salt": "salt",
+            "state": 2,
+            "user_id": "5",
+            "weight": 70.0
+        }
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado un idUsuario y un idContagio, actualiza el valor 'confirmado' de la tabla 'notificacion' a 'true'
+
+/malarm/api/notification/
+
+type: UPDATE
 
 entrada:
+    {
+        "notification":{
+            "user_id":"7",
+            "contagion_id":"3"
+        }
+    }
 
-status: {
-    id_contagion: "1",
-    current_satus: "healthy",
-    new_status: "infected"
-}
 
-salida:  - (204 NO CONTENT)
+salida: - (204 NO CONTENT)
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado un idUsuario y un idContagio añade una nueva fila a la tabla UsuariosContagiados
+
+/malarm/api/users/contagions/
+
+type: POST
+
+entrada:
+    {
+        "user_contagion":{
+            "user_id":"2",
+            "contagion_id":"6"
+        }
+    }
+
+salida: - (204 NO CONTENT)
 

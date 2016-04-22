@@ -72,3 +72,16 @@ insert into usuarioContagiado (idUsuario, idContagio) values (7,5);
 insert into usuarioContagiado (idUsuario, idContagio) values (11,6);
 insert into usuarioContagiado (idUsuario, idContagio) values (2,7);
 
+
+#Notifications
+
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (5, 1, "10/02/2016", true);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (5, 2, "20/03/2016", true);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (5, 3, "14/05/2016", false);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (6, 1, "28/10/2016", false);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (6, 5, "15/02/2016", false);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (7, 6, "19/12/2016", true);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (7, 3, "20/09/2016", false);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (2, 1, "14/01/2016", true);
+insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (3, 6, "09/05/2016", true);
+

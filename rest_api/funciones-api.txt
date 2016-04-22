@@ -3,24 +3,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-* Dado un idUsuario y un idContagio confirma que el usuario ha pasado revision
-
-apiurl: malarm/api/notifications/confirmRevision/
-
-entrada:
-{	
-	"userId":"id",
-	"contagionId":"id"
-}
-
-salida: nada
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
 * Da de alta un nuevo contagio.
 
 apiurl: malarm/api/contagions/
@@ -77,79 +59,23 @@ Pensar si la clasificación de sexo y edad son muertes o contagios
 Mirar las dispersiones
 
 
-* Dado el dni de un usuario me devuelve el listado de notificaciones enviadas a dicho usuario
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
-malarm/api/notifications/?dni=12345678L
+* Actualiza un usuario cambiando el estado.
 
-entrada: nada
+NOTA: status can be "undef", "healthy", "cured", "infected", "dead"
 
-salida:
-	[
-		{
-			"idUsuario":"id",
-			"idContagio":"id",
-			"date":"fecha de la notificacion",
-			"confirmaded":"true",
-			"disease":"nombre de la enfermedad",
-			"userName":"nombre del usuario"
-			"userLastname":"apellidos del usuario"
-		},
-		{
-			"idUsuario":"id",
-			"idContagio":"id",
-			"fecha":"fecha",
-			"confirmado":"true",
-			"nombreEnfermedad":"nombre"
-		},
-		{
-			"idUsuario":"id",
-			"idContagio":"id",
-			"fecha":"fecha",
-			"confirmado":"true",
-			"nombreEnfermedad":"nombre"
-		}
-	]
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-* Dado un idUsuario y un idContagio, actualiza el valor 'confirmado' de la tabla 'notificacion' a 'true'
-
-malarm/api/notifications/confirmRevision
-
-type: UPDATE
+apiurl: malarm/api/user/dni
+type: PUT
 
 entrada:
-{
-	"idUsuario":"id",
-	"idContagio":"id"
+
+status: {
+    id_contagion: "1",
+    current_satus: "healthy",
+    new_status: "infected"
 }
 
-
-salida: nada
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-* Dado un idUsuario y un idContagio añade una nueva fila a la tabla UsuariosContagiados
-
-malarm/api/users/contagions/
-
-type: POST
-
-entrada:
-{
-	"idUsuario":"id",
-	"idContagio":"id"
-}
-
-salida: nada
-
-
-NOTA: puede ser tentador juntar esta funcion con la anterior, ya que ambas reciben lo mismo, pero no se puede hacer
-ya que la confirmacion de la notificacion se realizará siempre que el usuario vaya al medico a hacerse la revision,
-pero solo se añadira el usuario contagiado si realmente resulta estar infectado. besis
+salida:  - (204 NO CONTENT)

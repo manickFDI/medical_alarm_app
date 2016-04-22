@@ -23,6 +23,7 @@ FOCUS_PLACES_TABLENAME = "lugaresFoco"
 FOCUS_PLACES_TABLE_COLUMNS = "idFoco, lugar, fecha"
 CONTAGIONS_TABLENAME = "contagio"
 CONTAGIONS_USERS_TABLENAME = "usuarioContagiado"
+USER_NOTIFICATIONS_TABLENAME = "notificacion"
 
 global db
 db = create_engine(SQLALCHEMY_DATABASE_URI)
@@ -144,9 +145,6 @@ class MysqlDatabase(object):
 
         #else:
 
-
-
-
     @staticmethod
     def create_user_object(row):
 
@@ -182,8 +180,17 @@ class MysqlDatabase(object):
     """
     DISEASE RELATED FUNCTIONS
     """
+    def get_disease_by_id(self, id):
+        query = "SELECT *, (numHombres+numMujeres) as numContagions FROM {0} " \
+                "WHERE idEnfermedad = \"{1}\"".format(DISEASE_TABLENAME, id)
+        rows = db.execute(query)
 
-    def get_disease(self, name):
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            return self.create_disease_object(row)
+
+    def get_disease_by_name(self, name):
 
         query = "SELECT *, (numHombres+numMujeres) as numContagions FROM {0} " \
                 "WHERE nombre = \"{1}\"".format(DISEASE_TABLENAME, name)
@@ -335,6 +342,14 @@ class MysqlDatabase(object):
     """
     CONTAGIONS RELATED FUNCTIONS
     """
+    def get_contagion(self, id):
+        selectQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id)
+
+        rows = db.execute(selectQuery)
+        if rows is None or rows.rowcount != 1:
+            return None
+        for row in rows:
+            return self.create_contagion_object(row)
 
     def get_users_contagions(self, disease):
         diseaseQuery = "SELECT idEnfermedad FROM {0} WHERE nombre = \"{1}\"".format(DISEASE_TABLENAME, disease);
@@ -420,6 +435,13 @@ class MysqlDatabase(object):
             return True
         return False
 
+    def insert_user_contagion(self, user_id, contagion_id):
+
+        insertQuery = "INSERT INTO {0} (idUsuario, idContagio) VALUES ({1}, {2})".format(CONTAGIONS_USERS_TABLENAME, user_id, contagion_id)
+        db.execute(insertQuery)
+        return True
+
+
     @staticmethod
     def create_contagion_object(row):
         """
@@ -449,3 +471,72 @@ class MysqlDatabase(object):
                     'distance':distance, 'level': level, 'place': place, 'date': date, 'description': description}
 
         return contagion
+
+
+    """
+    NOTIFICATIONS RELATED FUNCTIONS
+    """
+    def get_notifications(self, user):
+
+        selectNotificationsQuery = "SELECT * FROM {0} WHERE idUsuario = {1}".format(USER_NOTIFICATIONS_TABLENAME, user['user_id'])
+
+        rows = db.execute(selectNotificationsQuery)
+        notifications = []
+        if rows is None or rows.rowcount < 1:
+            return {}
+        for row in rows:
+            notification = self.create_notification_object(row)
+            contagion = self.get_contagion(notification['contagion_id'])
+            if contagion:
+                contagion['disease'] = self.get_disease_by_id(contagion['disease_id'])
+
+            notification['contagion'] = contagion
+
+            notifications.append(notification)
+
+        return notifications
+
+
+    """
+    NOTIFICATION RELATED FUNCTIONS
+    """
+    def get_notification(self, user_id, contagion_id):
+
+        selectQuery = "SELECT * FROM {0} WHERE idUsuario = {1} and idContagio = {2}".format(USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
+
+        rows = db.execute(selectQuery)
+        if rows is None or rows.rowcount != 1:
+            return None
+        for row in rows:
+            return self.create_notification_object(row)
+
+    def update_notification(self, user_id,contagion_id):
+
+        notification = self.get_notification(user_id, contagion_id)
+        if notification is None:
+            return None
+        updateQuery = "UPDATE {0} SET confirmado = true WHERE idUsuario = {1} and idContagio = {2}".format(USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
+
+        db.execute(updateQuery)
+        return True
+
+    @staticmethod
+    def create_notification_object(row):
+        """
+            +------------+-------------+------+-----+---------+-------+
+            | Field      | Type        | Null | Key | Default | Extra |
+            +------------+-------------+------+-----+---------+-------+
+            | idUsuario  | int(11)     | NO   | PRI | NULL    |       |
+            | idContagio | int(11)     | NO   | PRI | NULL    |       |
+            | fecha      | varchar(10) | NO   |     | NULL    |       |
+            | confirmado | tinyint(1)  | NO   |     | NULL    |       |
+            +------------+-------------+------+-----+---------+-------+
+        """
+        idUser = str(row['idUsuario'])
+        idContagion = str(row['idContagio'])
+        date = row['fecha']
+        confirmed = str(row['confirmado'])
+
+        notification = {'user_id': idUser, 'contagion_id': idContagion, 'date': date, 'confirmed': confirmed}
+
+        return notification

@@ -244,7 +244,7 @@ class Diseases(Resource):
 
 class Disease(Resource):
     def get(self, name):
-        disease_db = mysqldb.get_disease(name);
+        disease_db = mysqldb.get_disease_name(name);
 
         # PERFORM OPERATIONS
         if not disease_db:
@@ -356,7 +356,6 @@ class Focuses(Resource):
 
 
 class UsersContagions(Resource):
-
     def get(self):
         disease = request.args['disease']
 
@@ -365,15 +364,32 @@ class UsersContagions(Resource):
         else:
             return []
 
+    def post(self):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['user_contagion']
+        _user_id = input_data['user_id']
+        _contagion_id = input_data['contagion_id']
+
+        if mysqldb.insert_user_contagion(_user_id, _contagion_id):
+            return '', 204
+
+        return create_error_response(403, "Error updating notification",
+                                     "There is no a notification with the provided ids",
+                                     "Notification")
+
 
 class Contagions(Resource):
-
     def get(self):
         return mysqldb.get_active_contagions()
 
 
 class Contagion(Resource):
-
     def delete(self, id):
 
         # PEROFRM OPERATIONS
@@ -405,6 +421,49 @@ class Focus(Resource):
                                          "There is no a focus with id %s"
                                          % id,
                                          "Focus")
+
+
+class Notifications(Resource):
+    def get(self):
+        _dni = request.args['dni']
+
+        _user_db = mysqldb.get_user(_dni)
+
+        # PERFORM OPERATIONS
+        if not _user_db:
+            return create_error_response(404, "Unknown user",
+                                         "There is no a user with dni %s"
+                                         % _dni,
+                                         "Notifications")
+        envelope = {}
+        envelope['user'] = _user_db
+        envelope['notifications'] = mysqldb.get_notifications(_user_db)
+
+        return envelope
+
+
+class Notification(Resource):
+
+    def put(self):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['notification']
+        _user_id = input_data['user_id']
+        _contagion_id = input_data['contagion_id']
+
+        if mysqldb.update_notification(_user_id, _contagion_id):
+            return '', 204
+
+        return create_error_response(403, "Error updating notification",
+                                     "There is no a notification with the provided ids",
+                                     "Notification")
+
+
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
 app.url_map.converters['regex'] = RegexConverter
@@ -420,6 +479,8 @@ api.add_resource(Focuses, '/malarm/api/focuses/', endpoint='focuses')
 api.add_resource(Contagion, '/malarm/api/contagion/<id>/', endpoint='contagion')
 api.add_resource(Contagions, '/malarm/api/contagions/', endpoint='contagions')
 api.add_resource(UsersContagions, '/malarm/api/users/contagions/', endpoint='users_contagions')
+api.add_resource(Notifications, '/malarm/api/user/notifications/', endpoint='user_notifications')
+api.add_resource(Notification, '/malarm/api/notification/', endpoint='notification')
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
 if __name__ == '__main__':
