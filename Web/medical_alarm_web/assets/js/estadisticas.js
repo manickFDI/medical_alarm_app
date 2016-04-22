@@ -263,8 +263,9 @@ function generateGraphicsDisease(data) {
     var aux_m = Number((100 - aux_h).toFixed(2));
 
     var aux_n = Number(((data.numchildren * 100) / data.numcontagions).toFixed(2));
+    var aux_t = Number(((data.numteenagers * 100) / data.numcontagions).toFixed(2));
     var aux_a = Number(((data.numadults * 100) / data.numcontagions).toFixed(2));
-    var aux_v = Number(100 - (aux_n + aux_a));
+    var aux_v = Number(100 - (aux_n + aux_a + aux_t));
 
 
     var chart = c3.generate({
@@ -309,13 +310,15 @@ function generateGraphicsDisease(data) {
             // Con esto podríamos crear un grafico a mano
             columns: [
                 ['data1', aux_n],
-                ['data2', aux_a],
-                ['data3', aux_v]
+                ['data2', aux_t],
+                ['data3', aux_a],
+                ['data4', aux_v]
             ],
             names: {
                 data1: 'Niños',
-                data2: 'Adultos',
-                data3: 'Ancianos'
+                data2: 'Jóvenes',
+                data3: 'Adultos',
+                data4: 'Ancianos'
             },
             // Con esta opcion vamos a tratar de hacerlo dinámico
             //json: storedData,
@@ -327,7 +330,8 @@ function generateGraphicsDisease(data) {
             colors: {
                 data1: '#CECB0E',
                 data2: '#F09E05',
-                data3: '#DF6C07'
+                data3: '#DF6C07',
+                data4: '#A95105'
             }
         }
     });
