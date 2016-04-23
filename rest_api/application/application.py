@@ -244,7 +244,7 @@ class Diseases(Resource):
 
 class Disease(Resource):
     def get(self, name):
-        disease_db = mysqldb.get_disease_name(name);
+        disease_db = mysqldb.get_disease_by_name(name);
 
         # PERFORM OPERATIONS
         if not disease_db:
