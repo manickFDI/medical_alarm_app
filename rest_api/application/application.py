@@ -40,9 +40,8 @@ def resource_not_found(error):
 def unknown_error(error):
     return create_error_response(500, "Error", "The system has failed. Please, contact the administrator")
 
-@staticmethod
-def geocode(place):
 
+def geocode(place):
     base = "https://maps.googleapis.com/maps/api/geocode/json?"
     params = "address={addr}&key={api_key}".format(
             addr=place,
@@ -54,9 +53,7 @@ def geocode(place):
     return data['results'][0]['geometry']['location']
 
 
-@staticmethod
 def reverse_geocode(coordinates):
-
     # grab some lat/long coords from wherever. For this example,
     # I just opened a javascript console in the browser and ran:
     #
@@ -435,7 +432,22 @@ class UsersContagions(Resource):
 
 class Contagions(Resource):
     def get(self):
-        return mysqldb.get_active_contagions()
+
+        _type = request.args['type']
+
+        if _type is not None and _type == 'coordinates':
+            contagions = mysqldb.get_active_contagions()
+            envelope = []
+            for contagion in contagions:
+                coordinates = geocode(contagion['place'])
+                envelope.append(coordinates)
+            return envelope
+
+        elif _type == 'contagions':
+            return mysqldb.get_active_contagions()
+
+        else:
+            return {}
 
 
 class Contagion(Resource):
@@ -492,7 +504,6 @@ class Notifications(Resource):
 
 
 class Notification(Resource):
-
     def put(self):
         # PARSE THE REQUEST:
         input = request.get_json(force=True)

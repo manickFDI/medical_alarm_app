@@ -390,7 +390,7 @@ salida:
 
 NOTA: entiendo como contagio no activo si el nivel es 0
 
-apiurl: malarm/api/contagions/
+apiurl: malarm/api/contagions?type=contagions
 type: GET
 
 entrada: -
@@ -759,3 +759,35 @@ entrada:
 
 salida: - (204 NO CONTENT)
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Obtiene las coordenadas de los contagios
+
+/malarm/api/contagions/?type=coordinates
+Type : GET
+
+entrada: -
+
+salida:
+
+    [
+        {
+            "lat": 40.4167754,
+            "lng": -3.7037902
+        },
+        {
+            "lat": 10.3910485,
+            "lng": -75.4794257
+        },
+        {
+            "lat": 40.4167754,
+            "lng": -3.7037902
+        },
+        {
+            "lat": 41.3850639,
+            "lng": 2.1734035
+        }
+    ]
