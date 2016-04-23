@@ -379,7 +379,6 @@ function addContagioToList(contagio) {
 
     //añadir a la lista cada contagio
     $("#contagiosList").append($contagio);
-    alert(aux_li);
     return $contagio;
 }
 
@@ -390,8 +389,13 @@ function addContagioToList(contagio) {
  * @param id
  */
 function deleteContagion(id) {
-    var aux = id.toString().split("-");
-   // var aux_id = id.toString().substr(4, id.length);
+
+    var apiurl = ENTRYPOINT + "contagion/" + id + "/"; //cuidado con la barra final
+    //la eliminamos de verdad poniendo el nivel a 0 -->se eliminara de manera definitiva con un trigger pasado un tiempo
+    removeContagion_db(apiurl); //eliminamos de la bd poniendo el nivel a 0 (no se elimina)
+
+    //var aux = id.toString().split("-"); problema con id, parametro no coge guiones
+
     var li = document.getElementById(id);
     li.parentNode.removeChild(li);
     //$.notify("Hello");
@@ -401,11 +405,6 @@ function deleteContagion(id) {
             y: 100
         }
     });*/
-    //la eliminamos de verdad poniendo el nivel a 0 -->se eliminara de manera definitiva con un trigger pasado un tiempo
-
-    //var apiurl = ENTRYPOINT + "contagion/" + parseInt(aux[1]);
-    var apiurl = ENTRYPOINT + "contagion/" + id;
-    removeContagion_db(apiurl);
 }
 
 
@@ -417,7 +416,6 @@ function deleteContagion(id) {
 function removeContagion_db(apiurl) {
     return $.ajax({
         url: apiurl,
-        dataType:"json",
         type: "PUT"
     }).done(function (data, textStatus, jqXHR){
         if (DEBUG) {
