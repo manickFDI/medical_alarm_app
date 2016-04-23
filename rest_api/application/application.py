@@ -5,6 +5,7 @@ from flask.ext.restful import Resource, Api
 from database import mongo_connector
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
+import requests
 
 # Define the application and the api
 app = Flask(__name__)
@@ -38,6 +39,46 @@ def resource_not_found(error):
 @app.errorhandler(500)
 def unknown_error(error):
     return create_error_response(500, "Error", "The system has failed. Please, contact the administrator")
+
+
+def geocode(place):
+    base = "https://maps.googleapis.com/maps/api/geocode/json?"
+    params = "address={addr}&key={api_key}".format(
+            addr=place,
+            api_key='AIzaSyDUyflHx7Y6ytJSMRZK6mdO_T4wXb7GQ_U'
+    )
+    url = "{base}{params}".format(base=base, params=params)
+    response = requests.get(url)
+    data = response.json()
+    return data['results'][0]['geometry']['location']
+
+
+def reverse_geocode(coordinates):
+    # grab some lat/long coords from wherever. For this example,
+    # I just opened a javascript console in the browser and ran:
+    #
+    # navigator.geolocation.getCurrentPosition(function(p) {
+    #   console.log(p);
+    # })
+    #
+    latitude = coordinates['lat']
+    longitude = coordinates['lng']
+
+    # Did the geocoding request comes from a device with a
+    # location sensor? Must be either true or false.
+    sensor = 'true'
+
+    base = "http://maps.googleapis.com/maps/api/geocode/json?"
+    params = "latlng={lat},{lon}&sensor={sen}&key{api_key}".format(
+            lat=latitude,
+            lon=longitude,
+            sen=sensor,
+            api_key='AIzaSyDUyflHx7Y6ytJSMRZK6mdO_T4wXb7GQ_U'
+    )
+    url = "{base}{params}".format(base=base, params=params)
+    response = requests.get(url)
+    data = response.json()
+    return data['results'][0]['formatted_address']
 
 
 class Users(Resource):
@@ -391,7 +432,22 @@ class UsersContagions(Resource):
 
 class Contagions(Resource):
     def get(self):
-        return mysqldb.get_active_contagions()
+
+        _type = request.args['type']
+
+        if _type is not None and _type == 'coordinates':
+            contagions = mysqldb.get_active_contagions()
+            envelope = []
+            for contagion in contagions:
+                coordinates = geocode(contagion['place'])
+                envelope.append(coordinates)
+            return envelope
+
+        elif _type == 'contagions':
+            return mysqldb.get_active_contagions()
+
+        else:
+            return {}
 
 
 class Contagion(Resource):
@@ -448,7 +504,6 @@ class Notifications(Resource):
 
 
 class Notification(Resource):
-
     def put(self):
         # PARSE THE REQUEST:
         input = request.get_json(force=True)
