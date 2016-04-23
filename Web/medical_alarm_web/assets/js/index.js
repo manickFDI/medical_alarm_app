@@ -8,6 +8,7 @@ var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 var DEBUG = true;
 var WHITE_SPACE = " ";
 
+window.onload = loadContagions();
 
 //window.onload = cargarContagios; //llamar a esta funcion cuando se cargue la página
 
@@ -300,10 +301,21 @@ function updateEstate(apiurl, userData) {
 /**
  * function that call to other function chosen to give back the active contagions from the db.
  */
-function cargarContagios() {
+function loadContagions() {
     var apiurl = ENTRYPOINT + "contagions";
     getContagions(apiurl);
 }
+
+
+/**
+ * function that call to other function chosen to give back the active contagions from the db reloading the data and cleaning the previous data.
+ */
+function reLoadContagions() {
+
+    $("#contagiosList").empty();//vaciamos la lista actual y recargamos
+    loadContagions();
+}
+
 
 
 /**
@@ -319,12 +331,8 @@ function getContagions(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
-        var contagios = data.collection.items;
-        for (var i=0; i < contagios.length; i++){
-            var contagio = contagios[i];
-            for (var j=0; j<contagio_data.length;j++){
-                addContagioToList(contagio_data[j].value);
-            }
+        for (var i=0; i < data.length; i++){
+            addContagioToList(data[i]);
         }
     }).fail(function (jqXHR, textStatus, errorThrown){
         if (DEBUG) {
@@ -341,13 +349,32 @@ function getContagions(apiurl) {
  * @returns {string}
  */
 function addContagioToList(contagio) {
-    //poner contagio.enfermedad ...
 
-    var aux_li = "'enf_" + contagio + "'";
-    var aux_btn = "enf_btn_" + contagio;
+    var type;
 
-    var $contagio = '<li id="' + aux_li + '">' + '<span class="sm-box bggreen2" >' + '</span>' +
-        '<span class="leyenda">Enfermedad: Gripe A || Madrid-Centro || Nivel: 1 || Contagios: 12</span>' +
+    switch(Number(contagio.level)) {
+        case 1:
+            type = '<span class="sm-box bgyellow2" >' + '</span>';
+            break;
+        case 2:
+            type = '<span class="sm-box bgorange2" >' + '</span>';
+            break;
+        case 3:
+            type = '<span class="sm-box bgred2" >' + '</span>';
+            break;
+        default:
+            type = '<span class="sm-box bgblue2" >' + '</span>';
+            break;
+    }
+
+
+    var aux_li = contagio.contagion_id //+ "-" + contagio.disease_id + "-" + contagio.doctor_id;
+    var aux_btn = "btn-" + aux_li;
+    var aux_separator = " || ";
+
+    var $contagio = '<li id="' + aux_li + '">' + type +
+        '<span class="leyenda">' + contagio.disease.name + aux_separator + contagio.place + aux_separator +
+        'Nivel: ' + contagio.level + aux_separator + 'Contagios: ' + contagio.disease.num_contagions + aux_separator + 'Muertes: ' + contagio.disease.num_deaths + '</span>' +
         '<a class="btn btn-info btn-xs" onclick="deleteContagion(' + aux_li + ')" id="' + aux_btn + '">Erradicar </a>';
 
     //añadir a la lista cada contagio
@@ -362,8 +389,14 @@ function addContagioToList(contagio) {
  * @param id
  */
 function deleteContagion(id) {
-    var aux = "'" + id + "'"
-    var li = document.getElementById(aux);
+
+    var apiurl = ENTRYPOINT + "contagion/" + id + "/"; //cuidado con la barra final
+    //la eliminamos de verdad poniendo el nivel a 0 -->se eliminara de manera definitiva con un trigger pasado un tiempo
+    removeContagion_db(apiurl); //eliminamos de la bd poniendo el nivel a 0 (no se elimina)
+
+    //var aux = id.toString().split("-"); problema con id, parametro no coge guiones
+
+    var li = document.getElementById(id);
     li.parentNode.removeChild(li);
     //$.notify("Hello");
     /*$.notify('Hello World', {
@@ -372,9 +405,6 @@ function deleteContagion(id) {
             y: 100
         }
     });*/
-    //la eliminamos de verdad
-    //var apiurl = ENTRYPOINT + "contagion/" + id;
-    //removeContagion_db(apiurl);
 }
 
 
@@ -386,12 +416,12 @@ function deleteContagion(id) {
 function removeContagion_db(apiurl) {
     return $.ajax({
         url: apiurl,
-        dataType:"json"
+        type: "PUT"
     }).done(function (data, textStatus, jqXHR){
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
-        alert ("Contagio eliminado de la lista");
+        alert ("Contagio eliminado de la lista. NIVEL = 0");
     }).fail(function (jqXHR, textStatus, errorThrown){
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
@@ -442,16 +472,6 @@ function showMessage() {
  */
 function showButtonsUser() {
     $("#botonesPanelUsuario").show();
-}
-
-
-/**
- * temporal function that complete the table with the contagions
- */
-function contagions() {
-    for (var j=0; j<4;j++){
-        addContagioToList(j);
-    }
 }
 
 
