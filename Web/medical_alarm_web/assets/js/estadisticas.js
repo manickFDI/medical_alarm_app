@@ -17,25 +17,12 @@ function load() {
     var apiurl_c = ENTRYPOINT + 'diseases/?type=c&top=5';
     var apiurl_d = ENTRYPOINT + 'diseases/?type=d&top=5';
     var apiurl_u = ENTRYPOINT + 'users/?type=status';
+
+    personalAlert("CARGANDO  ", " --  Generando resultados...Cargando gráficas", "info", 2000, true);
+    
     rankingDead_db(apiurl_d);
     rankingContagion_db(apiurl_c);
     allUsers(apiurl_u);
-}
-
-
-/**
- * Verify if a string contains only numbers. This prevent SQL Injection
- * @param enfermedad
- * @returns {boolean}
- */
-function correctInput(enfermedad) {
-    var ret = false;
-    var exp = /^[A-Za-z\-\.\s\xF1\xD1]+$/; //alfabetico con espacios
-
-    if (exp.test(enfermedad)) {
-        ret = true
-    }
-    return ret;
 }
 
 
@@ -51,7 +38,7 @@ function searchDisease() {
         getDisease_db(apiurl);
     }
     else {
-        alert("Entrada incorrecta (FORMATO INCORRECTO)");
+        personalAlert("ERROR  ", " --  Entrada incorrecta (FORMATO INCORRECTO)", "danger", 2000, false);
     }
 }
 
@@ -82,7 +69,7 @@ function getDisease_db(apiurl) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
         showEmptyDisease();
-        alert ("Error al obtener enfermedad");
+        personalAlert("ERROR  ", " --  Enfermedad no encontrada", "danger", 2000, false);
     });
 }
 
@@ -130,6 +117,7 @@ function prepareTable() {
  */
 
 function completeDisease(ref_titulo, ref_tabla, enfermedad) {
+
     $("#enfermedad").show(500);
     $("#contagiosSexo").show(1000);
     $("#contagiosEdad").show(1000);
@@ -195,7 +183,7 @@ function rankingDead_db(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
-        alert ("Error al obtener el ranking");
+        personalAlert("ERROR  ", " --  No se pudo obtener el ranking de TOP-MUERTES", "danger", 2000, false);
     });
 }
 
@@ -221,7 +209,7 @@ function rankingContagion_db(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
-        alert ("Error al obtener el ranking");
+        personalAlert("ERROR  ", " --  No se pudo obtener el ranking de TOP-CONTAGIOS", "danger", 2000, false);
     });
 }
 
@@ -247,7 +235,7 @@ function allUsers(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
-        alert ("Error al obtener todos los usuarios");
+        personalAlert("ERROR  ", " --  No se pudo obtener el grafico del estado de todos los usuarios", "danger", 2000, false);
     });
 }
 
