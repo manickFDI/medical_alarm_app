@@ -250,9 +250,10 @@ class MysqlDatabase(object):
 
         if user is not None and contagion is not None:
             disease = self.get_disease_by_id(contagion['disease_id'])
+
             birth_date = datetime.strptime(user['birthday'], '%d-%m-%y')
-            current_date = time.strftime("%d-%m-%Y")
-            difference_in_years = relativedelta(birth_date, current_date).years
+            current_date = datetime.strptime(time.strftime('%d/%m/%Y'), '%d/%m/%Y')
+            difference_in_years = relativedelta(current_date, birth_date).years
 
             new_person_by_age = ""
             if 0 < difference_in_years <= 12:
