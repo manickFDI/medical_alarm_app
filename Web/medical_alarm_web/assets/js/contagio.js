@@ -1,60 +1,49 @@
+NUM_COLUMNS = 5, // dni, nombre, enfermedad, fecha, confirmar revision
 ENTRYPOINT_CONTAGIONS = "http://localhost:5000/malarm/api/contagions/",
 ENTRYPOINT_USERS_CONTAGIONS = "http://localhost:5000/malarm/api/users/contagions/",
-ENTRYPOINT_NOTIFICATIONS = "http://localhost:5000/malarm/api/notifications/"
+ENTRYPOINT_NOTIFICATION = "http://localhost:5000/malarm/api/notification/",
+ENTRYPOINT_USERS_NOTIFICATIONS = "http://localhost:5000/malarm/api/user/notifications/"
 
 /*
-	Busca los posibles usuarios contagiados por la enfermedad buscada.
-	Actualiza la tabla de usuarios contagiados
+	Busca las notificaciones enviadas a un usuario.
+	Delega en updateNotificationsTable la funcion de actualizar la tabla de notificaciones.
 */
-function getInfectedUsers() {
-	var disease = document.getElementById('inputTxt').value; // Cogemos el nombre de la enfermedad del input
-	if(disease != "") {
-		if(correctInput(disease)) {
-			var apiURL = ENTRYPOINT_USERS_CONTAGIONS + "?disease=" + disease;
-			//var userData = '{ "disease":"' + disease + '"}'; // Creamos el txt con el json
-			//userData = JSON.stringify(userData); // Verificamos que el formato es json
-
+function getNotifications() {
+	var dni = document.getElementById('inputTxt').value;
+	if(dni != "") {
+		if(validateDNI(dni)) {
+			var apiURL = ENTRYPOINT_USERS_NOTIFICATIONS + "?dni=" + dni;
+			personalAlert("CARGANDO  ", " --  Cargando notificaciones...", "info", 500, true);
 			return $.ajax({
 				url: apiURL,
-				//type: "POST",
-				//data: userData
 			}).always(function() {
-				$("#usersTable").remove(); // Vaciar la tabla de posibles usuarios contagiados
+				$("#notificationsTable").remove(); // Vaciar la tabla
 			}).done(function (data, textStatus, jqXHR) {
-				console.log(data[0]);
-				updateUsersTable(data);
+				updateNotificationsTable(data, dni);
 			}).fail(function (jqXHR, textStatus, errorThrown) {
-				alert("Error al buscar la enfermedad");
+				//alert("Error al buscar el usuario.");
+				personalAlert("ERROR  ", " --  Error al buscar el usuario.", "danger", 2000, false);
 			});
 
 			//updateUsersTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
 		}
 		else {
-			alert("Formato de entrada incorrecto.");
+			//alert("DNI incorrecto.");
+			personalAlert("ERROR  ", " --  DNI incorrecto.", "danger", 2000, false);
 		}
 	}
 	else {
-		alert("Debe introducir el nombre de la enfermedad.");
+		//alert("Debe introducir el DNI de un usuario.");
+		personalAlert("ERROR  ", " --  Debe introducir el DNI de un usuario.", "danger", 2000, false);
 	}
 }
 
 
 /*
-	Comprueba que el texto solo contenga letras y espacios para evitar entradas malintencionadas
+	Actualiza la tabla de notificaciones enviadas al usuario a partir de la respuesta AJAX.
+	* Params: data - la respuesta de la peticion AJAX.
 */
-function correctInput(text) {
-    var exp = /^[A-Za-z\-\.\s\xF1\xD1]+$/; //alfabetico con espacios
-
-    return exp.test(text);
-}
-
-
-/*
-	Actualiza la tabla de usuarios contagiados a partir de la respuesta AJAX.
-	A cada boton de la fila le asigna como id la id del usuario para que facilite "Confirmar revision"
-	* Params: data - la respuesta de la peticion AJAX. Contiene el id del contagio y la lista de usuarios contagiados
-*/
-function updateUsersTable(data) {
+function updateNotificationsTable(data, dni) {
 	$("#usersTable").remove(); // Eliminamos la tabla inicial para crear la nueva tabla
 
 	// Crea el elemento <table>, el elemento <thead> y el elemento <tbody>
@@ -64,88 +53,170 @@ function updateUsersTable(data) {
 	// Añadimos la cabecera
 	var cabecera = document.createElement("tr");
 	var celda1 = document.createElement("th");
-	var textoCabecera1 = document.createTextNode("Nombre y apellidos:");
+	var textoCabecera1 = document.createTextNode("DNI:");
 	celda1.appendChild(textoCabecera1);
 	var celda2 = document.createElement("th");
-	var textoCabecera2 = document.createTextNode("Estado actual:");
+	var textoCabecera2 = document.createTextNode("Nombre y apellidos:");
 	celda2.appendChild(textoCabecera2);
 	var celda3 = document.createElement("th");
-	var textoCabecera3 = document.createTextNode("Confirmar revisión:");
+	var textoCabecera3 = document.createTextNode("Enfermedad:");
 	celda3.appendChild(textoCabecera3);
+	var celda4 = document.createElement("th");
+	var textoCabecera4 = document.createTextNode("Notificación enviada:");
+	celda4.appendChild(textoCabecera4);
+	var celda5 = document.createElement("th");
+	var textoCabecera5 = document.createTextNode("Evaluación de la revisión:");
+	celda5.appendChild(textoCabecera5);
 	// appends
 	cabecera.appendChild(celda1);
 	cabecera.appendChild(celda2);
 	cabecera.appendChild(celda3);
+	cabecera.appendChild(celda4);
+	cabecera.appendChild(celda5);
 	tblThead.appendChild(cabecera);
 
-	for(i=0; i<data.length; i++) { // para cada contagio
-		// Crea las celdas
-		for (var j=0; j<data[i].users.length; j++) { //filas
-			var fila = document.createElement("tr");
-			var user = data[i].users[j];
-			for (var k=0; k<3; k++) { //columnas
-				var celda = document.createElement("td");
+	for(i=0; i<data.notifications.length; i++) { // para cada notificacion
+		var fila = document.createElement("tr");
+		var notification = data.notifications[i];
+		var user = data.user;
 
-				if(k==0) { // nombre y apellidos
-					var textoCelda = document.createTextNode(user.name + " " + user.lastname);
-					celda.appendChild(textoCelda);
-				}
-				else if(k==1) { // estado actual
-					var textoCelda = document.createTextNode(parserState(user.state));
-					celda.appendChild(textoCelda);
-				}
-				else if(k==2) { // creamos el boton y el span de "Confirmar revision"
-					var button = document.createElement("button");
-					button.setAttribute("class", "btn btn-success");
-					var userId = user.user_id;
-					var contagioId = data[i].contagion_id;
-					button.setAttribute("id", userId);	// usamos como id del boton el id del usuario para que cuando pulsemos
-														// en "Confirmar revisión" podamos actualizar su estado
-					button.setAttribute("onclick", "confirmRevision(" + userId + ", " + contagioId + ", this)");
-					var spanButton = document.createElement("span");
-					spanButton.setAttribute("class", "glyphicon glyphicon-ok");
-					button.appendChild(spanButton);
-					celda.appendChild(button);
-				}
-				fila.appendChild(celda);
+		for (var k=0; k<NUM_COLUMNS; k++) { //columnas
+			var celda = document.createElement("td");
+
+			if(k==0) { // dni
+				var textoCelda = document.createTextNode(dni);
+				celda.appendChild(textoCelda);
+			}
+			else if(k==1) { // nombre y apellidos
+				var textoCelda = document.createTextNode(user.name + " " + user.lastname);
+				celda.appendChild(textoCelda);
+			}
+			else if(k==2) { // enfermedad
+				var textoCelda = document.createTextNode(notification.contagion.disease.name);
+				celda.appendChild(textoCelda);
+			}
+			else if(k==3) { // fecha de la notificacion
+				var textoCelda = document.createTextNode(notification.date);
+				celda.appendChild(textoCelda);
+			}
+			else if(k==4) { // evaluacion de la revisión -> dos botones: Positivo y Negativo
+				var button = document.createElement("button");
+				button.setAttribute("class", "btn btn-danger");
+				var userId = user.user_id;
+				var contagioId = notification.contagion_id;
+				//console.log(userId);
+				//console.log(contagioId);
+				//button.setAttribute("id", userId);
+				button.setAttribute("onclick", "confirmPositive(" + userId + ", " + contagioId + ", this)");
+				//var spanButton = document.createElement("span");
+				//spanButton.setAttribute("class", "glyphicon glyphicon-ok");
+				//button.appendChild(spanButton);
+				button.innerHTML = "Contagiado";
+				celda.appendChild(button);
+
+				var button2 = document.createElement("button");
+				button2.setAttribute("class", "btn btn-success");
+				//button2.setAttribute("id", userId);
+				button2.setAttribute("onclick", "confirmNegative(" + userId + ", " + contagioId + ", this)");
+				//var spanButton = document.createElement("span");
+				//spanButton.setAttribute("class", "glyphicon glyphicon-ok");
+				//button2.appendChild(spanButton);
+				button2.innerHTML = "Falsa alarma";
+				celda.appendChild(button2);
 			}
 
-			// agrega la fila al final de la tabla (al final del elemento tblbody)
-			tblBody.appendChild(fila);
+			fila.appendChild(celda);
 		}
+
+		tblBody.appendChild(fila); // agrega la fila al final de la tabla (al final del elemento tblbody)
 	}
 
 	tabla.appendChild(tblThead);
 	tabla.appendChild(tblBody);
 
-	tabla.setAttribute("id", "usersTable");
+	tabla.setAttribute("id", "notificationsTable");
 	tabla.setAttribute("class", "table table-striped table-bordered");
 
 	// appends <table> into <div>
-	$("#divUsersTable").append(tabla);	
+	$("#divNotificationsTable").append(tabla);	
 }
 
 
 /*
-	Confirma que el usuario ha pasado cita con el medico.
-	Cambia el campo bool Confirmado de la tabla Notificacion y elimina la fila de la tabla
+	Confirma que el usuario ha pasado cita con el medico y que SI esta contagiado.
+	Cambia el campo bool Confirmado de la tabla Notificacion y elimina la fila de la tabla.
+	Ademas, añade el nuevo contagio.
 	* Params: el id del usuario, el id del contagio y la fila que debemos quitar
 */
-function confirmRevision(userId, contagionId, row) {
-	/*var apiURL = ENTRYPOINT_NOTIFICATIONS + "confirmRevision" + "/";
-	var userData = '{ "userId":"' + userId + '",' + '"contagionId":"' + contagionId + '"}'; // Creamos el txt con el json
-	userData = JSON.stringify(userData); // Verificamos que el formato es json
+function confirmPositive(userId, contagionId, row) {
+	var apiURL = ENTRYPOINT_NOTIFICATION;
+	var userData = '{"notification":{ "user_id":"' + userId + '",' + '"contagion_id":"' + contagionId + '"}}'; // Creamos el txt con el json
+	//userData = JSON.stringify(userData); // Verificamos que el formato es json
+
+	return $.ajax({
+		url: apiURL,
+		type: "PUT",
+		data: userData
+	}).done(function (data, textStatus, jqXHR) {
+		addNewUserInfected(userId, contagionId);
+		removeUserFromTable(row);
+	}).fail(function (jqXHR, textStatus, errorThrown) {
+		//alert("Error al buscar usuario.");
+		personalAlert("ERROR  ", " --  Error al buscar usuario.", "danger", 2000, false);
+	});
+
+	//removeUserFromTable(row); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+}
+
+
+/*
+	Añade una nueva fila en la tabla UsuariosContagiados
+*/
+function addNewUserInfected(userId, contagionId) {
+	var apiURL = ENTRYPOINT_USERS_CONTAGIONS;
+	var userData = '{"user_contagion":{ "user_id":"' + userId + '",' + '"contagion_id":"' + contagionId + '"}}'; // Creamos el txt con el json
+	//userData = JSON.stringify(userData); // Verificamos que el formato es json
 
 	return $.ajax({
 		url: apiURL,
 		type: "POST",
 		data: userData
 	}).done(function (data, textStatus, jqXHR) {
+		//alert("Se ha añadido el usuario al contagio actual.");
+		personalAlert("SUCCESS  ", " --  Se ha añadido el usuario al contagio actual.", "danger", 2000, false);
+	}).fail(function (jqXHR, textStatus, errorThrown) {
+		//alert("Error al buscar usuario.");
+		personalAlert("ERROR  ", " --  Error al buscar usuario.", "danger", 2000, false);
+	});
+}
+
+
+
+/*
+	Confirma que el usuario ha pasado cita con el medico y que NO esta contagiado.
+	Cambia el campo bool Confirmado de la tabla Notificacion y elimina la fila de la tabla.
+	* Params: el id del usuario, el id del contagio y la fila que debemos quitar
+*/
+function confirmNegative(userId, contagionId, row) {
+	//console.log(userId + ", " + contagionId);
+	var apiURL = ENTRYPOINT_NOTIFICATION;
+	var userData = '{"notification":{"user_id":"' + userId + '",' + '"contagion_id":"' + contagionId + '"}}'; // Creamos el txt con el json
+	//console.log(userData);
+
+	//userData = JSON.stringify(userData); // Verificamos que el formato es json NOOOOOOOO!
+
+	return $.ajax({
+		url: apiURL,
+		type: "PUT",
+		data: userData
+	}).done(function (data, textStatus, jqXHR) {
 		removeUserFromTable(row);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
-		alert("Error al buscar usuario.");
-	});*/
-	removeUserFromTable(row); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+		//alert("Error al confirmar falsa alarma.");
+		personalAlert("ERROR  ", " --  Error al confirmar falsa alarma.", "danger", 2000, false);
+	});
+
+	//removeUserFromTable(row); // OJO!! quitar esta linea cuando funcione la peticion AJAX
 }
 
 
@@ -154,7 +225,7 @@ function confirmRevision(userId, contagionId, row) {
 */
 function removeUserFromTable(row) {
 	var i = row.parentNode.parentNode.rowIndex;
-    document.getElementById("usersTable").deleteRow(i);
+    document.getElementById("notificationsTable").deleteRow(i);
 }
 
 
@@ -184,7 +255,7 @@ function confirmSubmit() {
 							'"level":"' + level + '",' +
 							'"description":"' + description + '"' +
 							' }'; // Creamos el txt con el json
-			alert(userData);
+			//alert(userData);
 			
 			/*userData = JSON.stringify(userData); // Verificamos que el formato es json
 
@@ -193,14 +264,17 @@ function confirmSubmit() {
 				type: "POST",
 				data: userData
 			}).done(function (data, textStatus, jqXHR) {
-				alert("Contagio dado de alta correctamente");
+				//alert("Contagio dado de alta correctamente");
+				personalAlert("SUCCESS  ", " --  Contagio dado de alta correctamente.", "danger", 2000, false);
 			}).fail(function (jqXHR, textStatus, errorThrown) {
-				alert("Error al buscar usuario.");
+				//alert("Error al buscar usuario.");
+				personalAlert("ERROR  ", " --  Error al buscar usuario.", "danger", 2000, false);
 			});*/
 		}
 	}
 	else {
-		alert("DNI no válido.");
+		//alert("DNI no válido.");
+		personalAlert("ERROR  ", " --  DNI no válido.", "danger", 2000, false);
 	}
 
 }
@@ -209,7 +283,7 @@ function confirmSubmit() {
 /*
 	Comprueba que el dni tenga el formato correcto
 */
-function validateDNI(dni) {
+/*function validateDNI(dni) {
     var numero;
     var letra;
     var letraSet;
@@ -233,21 +307,30 @@ function validateDNI(dni) {
         }
     }
     return ret;
-}
+}*/
 
 
 /*
 	Dado el enumerado, devuelve el string del estado de un usuario
-	* Params: state - int [0,1,2,3]
+	* Params: state - int [0,1,2,3,4]
 */
-function parserState(state) {
+/*function parserState(state) {
 	var ret;
 	switch(state) {
-		case 0: ret = "Indefinido"; break;
-		case 1: ret = "Enfermo"; break;
+		case 1: ret = "Sano"; break;
 		case 2: ret = "Curado"; break;
-		case 3: ret = "Fallecido"; break;
-		default: ret = "Sin estado"; break;
+		case 3: ret = "Enfermo"; break;
+		case 4: ret = "Fallecido"; break;
+		default: ret = "Indefinido"; break;
 	}
 	return ret;
-}
+}*/
+
+
+/*
+	Comprueba que el texto solo contenga letras y espacios para evitar entradas malintencionadas
+*/
+/*function correctInput(text) {
+    var exp = /^[A-Za-z\-\.\s\xF1\xD1]+$/; //alfabetico con espacios
+    return exp.test(text);
+}*/

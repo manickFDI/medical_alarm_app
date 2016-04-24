@@ -8,7 +8,7 @@ ENTRYPOINT_USER = "http://localhost:5000/malarm/api/user/"
 */
 function loadFocusTable() {
 	var apiURL = ENTRYPOINT_FOCUSES;
-
+	personalAlert("CARGANDO  ", " --  Cargando focos activos...", "info", 1000, true);
 	return $.ajax({
 		url: apiURL
 	}).always(function() {
@@ -16,7 +16,8 @@ function loadFocusTable() {
 	}).done(function (data, textStatus, jqXHR) {
 		createTable(data);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
-		alert("Error al buscar focos.");
+		//alert("Error al buscar focos.");
+		personalAlert("ERROR  ", " --  Error al buscar focos.", "danger", 2000, false);
 	});
 
 	//createTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
@@ -129,9 +130,10 @@ function removeFocus(focusId, row) {
 		url: apiURL,
 		type: "DELETE"
 	}).done(function (data, textStatus, jqXHR) {
-		removeUserFromTable('focusTable', row);
+		removeRowFromTable('focusTable', row);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
-		alert("Error al eliminar el foco.");
+		//alert("Error al eliminar el foco.");
+		personalAlert("ERROR  ", " --  Error al eliminar el foco.", "danger", 2000, false);
 	});
 
 	//removeRowFromTable('focusTable', row); // OJO!! quitar esta linea cuando funcione la peticion AJAX
@@ -154,7 +156,7 @@ function removeRowFromTable(tblName, row) {
 function getUserToFocus() {
 	var userDNI = document.getElementById('inputTxt').value; // Cogemos el dni del usuario del input
 	if(userDNI != "") {
-		//if(validateDNI(userDNI)) {
+		if(validateDNI(userDNI)) {
 			var apiURL = ENTRYPOINT_USER + userDNI;
 
 			return $.ajax({
@@ -162,21 +164,24 @@ function getUserToFocus() {
 			}).done(function (data, textStatus, jqXHR) {
 				if(!duplicatedUserInTable(data.idusuario))
 					updateUsersToFocusTable(data);
-				else
-					alert("DNI repetido.");
+				else {
+					//alert("DNI repetido.");
+					personalAlert("ERROR  ", " --  DNI repetido.", "danger", 2000, false);
+				}
 			}).fail(function (jqXHR, textStatus, errorThrown) {
 				alert("Error al buscar usuario.");
 			});
 			
 			//updateUsersToFocusTable(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
-
-		//}
-		//else {
+		}
+		else {
 			//alert("DNI no válido.");
-		//}
+			personalAlert("ERROR  ", " --  DNI no válido.", "danger", 2000, false);
+		}
 	}
 	else {
-		alert("Debe introducir el DNI del usuario.");
+		//alert("Debe introducir el DNI del usuario.");
+		personalAlert("ERROR  ", " --  Debe introducir el DNI del usuario.", "danger", 2000, false);
 	}
 }
 
@@ -220,6 +225,7 @@ function updateUsersToFocusTable(data) {
 	Delega en createTableFocusFound() la funcion de actualizar la tabla de focos encontrados.
 */
 function confirmSubmit() {
+	personalAlert("CARGANDO  ", " --  Buscando los posibles focos...", "info", 1000, true);
 	var apiURL = ENTRYPOINT_FOCUS;
 	var table = document.getElementById('tableUsersToFocus');
 	var numFilas = table.rows.length;
@@ -256,7 +262,8 @@ function confirmSubmit() {
 				}).fail(function (jqXHR, textStatus, errorThrown) {
 					alert("Error al dar de alta un foco.");
 				});*/
-
+				location.href = "#focusFound";
+				initMap();
 				createTableFocusFound(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
 			}
 		/*}
@@ -265,7 +272,8 @@ function confirmSubmit() {
 		}*/
 	}
 	else {
-		alert("Debe introducir al menos dos usuarios para dar de alta el foco.");
+		//alert("Debe introducir al menos dos usuarios para dar de alta el foco.");
+		personalAlert("ERROR  ", " --  Debe introducir al menos dos usuarios para dar de alta el foco.", "danger", 2000, false);
 	}
 }
 
@@ -299,7 +307,7 @@ function createTableFocusFound(data) {
 /*
 	Comprueba que el dni tenga el formato correcto
 */
-function validateDNI(dni) {
+/*function validateDNI(dni) {
     var numero;
     var letra;
     var letraSet;
@@ -323,7 +331,7 @@ function validateDNI(dni) {
         }
     }
     return ret;
-}
+}*/
 
 
 
@@ -355,11 +363,12 @@ function duplicatedUserInTable(id) {
 /*
 	Situa en el mapa los puntos de los focos encontrados
 */
-function updateGoogleMap(data) {
-	/*var myLatLng = {lat: -25.363, lng: 131.044};
+function initMap(data) {
+	console.log("initMap");
+	var myLatLng = {lat: 40.489, lng: -3.682};
 
-	var map = new google.maps.Map(document.getElementById('divGoogleMap'), {
-		zoom: 4,
+	var map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 5,
 		center: myLatLng
 	});
 
@@ -367,5 +376,7 @@ function updateGoogleMap(data) {
 		position: myLatLng,
 		map: map,
 		title: 'Foco 1'
-	});*/
+	});
+
+	//marker.setMap(map);
 }
