@@ -8,7 +8,7 @@ var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 var DEBUG = true;
 var WHITE_SPACE = " ";
 
-window.onload = loadContagions();
+//window.onload = loadContagions();
 
 //window.onload = cargarContagios; //llamar a esta funcion cuando se cargue la página
 
@@ -29,7 +29,7 @@ function writeUser(div, user) {
     var sexo = convertToSex(parseInt(user.gender));
     var state = convertToState(parseInt(user.state));
 
-    div.innerHTML = "<h3>" + nombreCompleto + "</h3>";
+    div.innerHTML = "<h3 id='paciente'>" + nombreCompleto + "</h3>";
     div.innerHTML += "<hr />";
     div.innerHTML += "<h6 id='dni'>DNI/NIE: " + user.idnumber + "</h6>";
     div.innerHTML += "<h6 id='email'>Email: " + user.email + "</h6>";
@@ -100,7 +100,10 @@ $('#estadosList li a').on('click', function(){
     var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
     if (ret) {
         var estado = document.getElementById("estado");
+        var pac = document.getElementById("paciente").innerHTML;
         estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado.toUpperCase() + "</strong></h6>";
+
+        personalAlert("AVISO  ", " --  Se ha cambiado el estado del paciente " + pac + " a " + nuevoEstado.toUpperCase(), "warning", 2000, false);
 
         //query UPDATE
         //split dni
@@ -142,7 +145,10 @@ function updateEstate(apiurl, userData) {
  * function that call to other function chosen to give back the active contagions from the db.
  */
 function loadContagions() {
-    var apiurl = ENTRYPOINT + "contagions";
+
+    personalAlert("CARGANDO  ", " --  Cargando contagios activos...Generando mapa de calor", "info", 2500, true);
+
+    var apiurl = ENTRYPOINT + "contagions?type=contagions";
     getContagions(apiurl);
 }
 
@@ -151,7 +157,6 @@ function loadContagions() {
  * function that call to other function chosen to give back the active contagions from the db reloading the data and cleaning the previous data.
  */
 function reLoadContagions() {
-    personalAlert("CARGANDO  ", " --  Recargando los contagios activos", "info", 500, true);
     $("#contagiosList").empty();//vaciamos la lista actual y recargamos
     loadContagions();
 }
@@ -171,6 +176,10 @@ function getContagions(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
+
+        var new_apiurl = ENTRYPOINT + "contagions/?type=coordinates";
+        loadMap(new_apiurl);
+
         for (var i=0; i < data.length; i++){
             addContagioToList(data[i]);
         }
@@ -238,6 +247,8 @@ function deleteContagion(id) {
 
     var li = document.getElementById(id);
     li.parentNode.removeChild(li);
+
+    reLoadContagions();
 }
 
 
@@ -308,20 +319,41 @@ function showButtonsUser() {
 }
 
 
-function loadMap() {
-
-    initMap();
-
+/**
+ * give back the coordenates of the active contagions
+ * @param apiurl
+ * @returns {*}
+ */
+function loadMap(apiurl) {
+    return $.ajax({
+        url: apiurl,
+        dataType:"json",
+        type: "GET"
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+        initMap(data);
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        personalAlert("ERROR  ", " --  No se han podido obtener las coordenadas de los lugares contagiados", "danger", 2000, false);
+    });
 }
 
 
-function initMap() {
+/**
+ * create the map
+ * @param data
+ */
+function initMap(data) {
 
     var map, heatmap;
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 5,
-        center: {lat: 40.489, lng: -3.682},
+        center: {lat: 40.489, lng: -3.682}, //CENTRO DEL MAPA MADRID
         mapTypeId: google.maps.MapTypeId.TERRAIN, //TERRAIN or ROADMAP
         zoomControl: false,
         scaleControl: false,
@@ -330,14 +362,31 @@ function initMap() {
     });
 
     heatmap = new google.maps.visualization.HeatmapLayer({
-        data: getPoints(),
+        data: getPoints(data),
         map: map
     });
 }
 
-// Heatmap data: barcelona y madrid
-function getPoints() {
-    return [
+
+// Heatmap data example: barcelona y madrid
+/**
+ * put the points in data into a correct format to paint them in the map
+ * @param data
+ * @returns {Array}
+ */
+function getPoints(data) {
+
+    var loc = [];
+    var latLng;
+
+    for (var i=0; i < data.length; i++){
+        latLng =  new google.maps.LatLng(data[i].lat, data[i].lng);
+        loc.push(latLng);
+    }
+
+    return loc;
+
+    /*return [
         new google.maps.LatLng(40.458820, -3.698383), //tetuan
         new google.maps.LatLng(40.398852, -3.710394), //arganzuela
         new google.maps.LatLng(40.372771, -3.728498), //carabanchel
@@ -348,8 +397,7 @@ function getPoints() {
         new google.maps.LatLng(41.391715, 2.166115), //ensanche barcelona
         new google.maps.LatLng(41.356223, 2.147619), //montjuic
         new google.maps.LatLng(40.369044, -4.340382) //pelayos
-    ];
+    ];*/
 }
-
 
  // KEY_API   --->>   AIzaSyDqC2mEHCJ98RqjUjyVKWIF7Y67y9aUaBU

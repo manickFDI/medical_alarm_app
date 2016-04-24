@@ -19,7 +19,7 @@ function load() {
     var apiurl_u = ENTRYPOINT + 'users/?type=status';
 
     personalAlert("CARGANDO  ", " --  Generando resultados...Cargando gráficas", "info", 2000, true);
-    
+
     rankingDead_db(apiurl_d);
     rankingContagion_db(apiurl_c);
     allUsers(apiurl_u);
