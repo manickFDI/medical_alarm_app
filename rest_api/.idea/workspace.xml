@@ -37,7 +37,7 @@
       <file leaf-file-name="mysql_connector.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/database/mysql_connector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58295965">
+            <state vertical-scroll-proportion="3.1862068">
               <caret line="504" column="37" selection-start-line="504" selection-start-column="37" selection-end-line="504" selection-end-column="37" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
@@ -1048,12 +1048,12 @@
       <workItem from="1461402755607" duration="261000" />
       <workItem from="1461403158954" duration="266000" />
       <workItem from="1461430126761" duration="1929000" />
-      <workItem from="1461433225549" duration="618000" />
+      <workItem from="1461433225549" duration="939000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35867000" />
+    <option name="totallyTimeSpent" value="36188000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1083,7 +1083,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37051794" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37051794" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3128,7 +3128,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/database/mysql_connector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58295965">
+        <state vertical-scroll-proportion="3.1862068">
           <caret line="504" column="37" selection-start-line="504" selection-start-column="37" selection-end-line="504" selection-end-column="37" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
