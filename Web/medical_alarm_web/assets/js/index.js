@@ -8,170 +8,10 @@ var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 var DEBUG = true;
 var WHITE_SPACE = " ";
 
-window.onload = loadContagions();
+//window.onload = loadContagions();
 
 //window.onload = cargarContagios; //llamar a esta funcion cuando se cargue la página
 
-/**
- * Verify if the param dni has a good format of dni with 8 digits and a letter (correct letter)
- * @param dni
- * @returns {boolean}
- */
-
-function validateDNI(dni) {
-    var number;
-    var letter;
-    var letraSet;
-    var expresion_regular_dni;
-    var ret = false;
-
-    expresion_regular_dni = /^\d{8}[a-zA-Z]$/; //expresion regular formada por 8 digitos y una letra (mayus o minus)
-
-    if(expresion_regular_dni.test (dni) == true){ //test -> comprueba que dni es correcto
-        number = dni.substr(0,dni.length-1); //nos quedamos con los digitos
-        letter = dni.substr(dni.length-1,1);//nos quedamos con la letra
-
-        number = number % 23; //necesario para saber si la letra es valida (proceso)
-
-        letraSet='TRWAGMYFPDXBNJZSQVHLCKET'; //todas las letras posibles (ni Ñ ni I ni O)
-
-        letraSet=letraSet.substring(number,number+1);
-
-        if (letraSet==letter.toUpperCase()) {
-            ret = true;
-        }
-    }
-    return ret;
-}
-
-
-
-/**
- * Calculate the age of a person. Receive the date in a string with a correct spanish format (dd-mm-aaaa || dd/mm/aaaa)
- * @param fecha
- * @returns {*} integer with the age. Returns false if date is incorrect or greater than current day
- */
-function calculateAge(date){
-
-    var BARRA = "/";
-    var GUION = "-";
-
-    var age;
-
-    //calculo la fecha actual
-    var today = new Date();
-    //alert(today);
-
-    //calculo la fecha que recibo si viene con / o -
-    var separacionG = date.indexOf(GUION);
-    var separacionB = date.indexOf(BARRA);
-
-    if(separacionG != -1) {
-        //La descompongo en un array
-        var array_fecha = date.split(GUION);
-        //si el array no tiene tres partes, la fecha es incorrecta
-        if (array_fecha.length!=3) {
-            age = -1;
-        }
-    } else if(separacionB != -1) {
-        //La descompongo en un array
-        var array_fecha = date.split(BARRA);
-        //si el array no tiene tres partes, la fecha es incorrecta
-        if (array_fecha.length!=3) {
-            age = -1;
-        }
-    } else {
-        age = -1;
-    }
-
-    //compruebo que los ano, mes, dia son correctos
-    var year;
-    year = parseInt(array_fecha[2]);
-    if (isNaN(year))
-        age = -1;
-
-    var month;
-    month = parseInt(array_fecha[1]);
-    if (isNaN(month))
-        age = -1;
-
-    var day;
-    day = parseInt(array_fecha[0]);
-    if (isNaN(day))
-        age = -1;
-
-    //resto los años de las dos fechas
-    var aux = today.getFullYear();//ciudado con getYear despues del año 2000 no funciona
-    age = aux- year - 1; //-1 porque no se si ha cumplido años ya este año
-
-    //si resto los meses y me da menor que 0 entonces no ha cumplido años. Si da mayor si ha cumplido
-    if (today.getMonth() + 1 - month < 0) {
-        age = age;
-    } else if (today.getMonth() + 1 - month > 0) { //+ 1 porque los meses empiezan en 0
-        age = age + 1;
-    } else if((today.getUTCDate() - day) >= 0) {//entonces es que eran iguales. miro los dias. Si resto los dias y me da menor que 0 entonces no ha cumplido años. Si da mayor o igual si ha cumplido
-        age = age + 1;
-    }
-
-    return age;
-}
-
-
-
-/**
- * Convert the number of the corresponding sex in the db to string
- * @param number
- * @returns {*} the string converted
- */
-function convertToSex(number) {
-
-    var ret;
-
-    switch(number) {
-        case 0:
-            ret = "Hombre";
-            break;
-        case 1:
-            ret = "Mujer";
-            break;
-        default:
-            ret = "Undefined";
-    }
-    return ret;
-}
-
-
-
-/**
- * Convert the number in the db of the user state  to a string format
- * @param number
- * @returns {*} the string converted
- */
-function convertToState(number) {
-
-    var ret;
-
-    switch(number) {
-        case 0:
-            ret = "Indefinido";
-            break;
-        case 1:
-            ret = "Sano";
-            break;
-        case 2:
-            ret = "Curado";
-            break;
-        case 3:
-            ret = "Enfermo";
-            break;
-        case 4:
-            ret = "Fallecido";
-            break;
-        default:
-            ret = "Undefined";
-    }
-    return ret;
-}
 
 
 /**
@@ -189,7 +29,7 @@ function writeUser(div, user) {
     var sexo = convertToSex(parseInt(user.gender));
     var state = convertToState(parseInt(user.state));
 
-    div.innerHTML = "<h3>" + nombreCompleto + "</h3>";
+    div.innerHTML = "<h3 id='paciente'>" + nombreCompleto + "</h3>";
     div.innerHTML += "<hr />";
     div.innerHTML += "<h6 id='dni'>DNI/NIE: " + user.idnumber + "</h6>";
     div.innerHTML += "<h6 id='email'>Email: " + user.email + "</h6>";
@@ -216,7 +56,7 @@ function getUser() {
         getUser_db(apiurl);
     }
     else {
-        alert("Error al introducir el DNI (FORMATO INCORRECTO)");
+        personalAlert("ERROR  ", " --  Formato de DNI incorrecto", "danger", 2000, false);
     }
 }
 
@@ -245,7 +85,7 @@ function getUser_db(apiurl) {
         }
         $("#infoUsuario").empty();
         showEmptyUser();
-        alert ("Error al obtener usuario")
+        personalAlert("ERROR  ", " -- Usuario no encontrado", "danger", 2000, false);
     });
 }
 
@@ -260,7 +100,10 @@ $('#estadosList li a').on('click', function(){
     var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
     if (ret) {
         var estado = document.getElementById("estado");
+        var pac = document.getElementById("paciente").innerHTML;
         estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado.toUpperCase() + "</strong></h6>";
+
+        personalAlert("AVISO  ", " --  Se ha cambiado el estado del paciente " + pac + " a " + nuevoEstado.toUpperCase(), "warning", 2000, false);
 
         //query UPDATE
         //split dni
@@ -302,7 +145,10 @@ function updateEstate(apiurl, userData) {
  * function that call to other function chosen to give back the active contagions from the db.
  */
 function loadContagions() {
-    var apiurl = ENTRYPOINT + "contagions";
+
+    personalAlert("CARGANDO  ", " --  Cargando contagios activos...Generando mapa de calor", "info", 2500, true);
+
+    var apiurl = ENTRYPOINT + "contagions?type=contagions";
     getContagions(apiurl);
 }
 
@@ -311,7 +157,6 @@ function loadContagions() {
  * function that call to other function chosen to give back the active contagions from the db reloading the data and cleaning the previous data.
  */
 function reLoadContagions() {
-
     $("#contagiosList").empty();//vaciamos la lista actual y recargamos
     loadContagions();
 }
@@ -331,6 +176,10 @@ function getContagions(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
+
+        var new_apiurl = ENTRYPOINT + "contagions/?type=coordinates";
+        loadMap(new_apiurl);
+
         for (var i=0; i < data.length; i++){
             addContagioToList(data[i]);
         }
@@ -338,7 +187,7 @@ function getContagions(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
-        alert ("Error en la consulta de los contagios");
+        personalAlert("ERROR  ", " --  No se han podido cargar los contagios activos", "danger", 2000, false);
     });
 }
 
@@ -398,13 +247,8 @@ function deleteContagion(id) {
 
     var li = document.getElementById(id);
     li.parentNode.removeChild(li);
-    //$.notify("Hello");
-    /*$.notify('Hello World', {
-        offset: {
-            x: 50,
-            y: 100
-        }
-    });*/
+
+    reLoadContagions();
 }
 
 
@@ -421,12 +265,12 @@ function removeContagion_db(apiurl) {
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
         }
-        alert ("Contagio eliminado de la lista. NIVEL = 0");
+        personalAlert("ÉXITO  ", " --  Contagio eliminado de la lista. NIVEL = 0", "success", 1000, false);
     }).fail(function (jqXHR, textStatus, errorThrown){
         if (DEBUG) {
             console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
         }
-        alert ("Error. No se ha podido eliminar el contagio");
+        personalAlert("ERROR  ", " --  No se ha podido eliminar el contagio", "danger", 2000, false);
     });
 }
 
@@ -475,10 +319,85 @@ function showButtonsUser() {
 }
 
 
-function loadMap() {
-
+/**
+ * give back the coordenates of the active contagions
+ * @param apiurl
+ * @returns {*}
+ */
+function loadMap(apiurl) {
+    return $.ajax({
+        url: apiurl,
+        dataType:"json",
+        type: "GET"
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+        initMap(data);
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        personalAlert("ERROR  ", " --  No se han podido obtener las coordenadas de los lugares contagiados", "danger", 2000, false);
+    });
 }
 
 
+/**
+ * create the map
+ * @param data
+ */
+function initMap(data) {
+
+    var map, heatmap;
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 5,
+        center: {lat: 40.489, lng: -3.682}, //CENTRO DEL MAPA MADRID
+        mapTypeId: google.maps.MapTypeId.TERRAIN, //TERRAIN or ROADMAP
+        zoomControl: false,
+        scaleControl: false,
+        streetViewControl: true
+        //rotateControl: true
+    });
+
+    heatmap = new google.maps.visualization.HeatmapLayer({
+        data: getPoints(data),
+        map: map
+    });
+}
+
+
+// Heatmap data example: barcelona y madrid
+/**
+ * put the points in data into a correct format to paint them in the map
+ * @param data
+ * @returns {Array}
+ */
+function getPoints(data) {
+
+    var loc = [];
+    var latLng;
+
+    for (var i=0; i < data.length; i++){
+        latLng =  new google.maps.LatLng(data[i].lat, data[i].lng);
+        loc.push(latLng);
+    }
+
+    return loc;
+
+    /*return [
+        new google.maps.LatLng(40.458820, -3.698383), //tetuan
+        new google.maps.LatLng(40.398852, -3.710394), //arganzuela
+        new google.maps.LatLng(40.372771, -3.728498), //carabanchel
+        new google.maps.LatLng(40.363859, -3.758456), //peseta
+        new google.maps.LatLng(40.330053, -3.771248), //leganes
+        new google.maps.LatLng(40.340892, -3.837245), //alcorcon
+        new google.maps.LatLng(41.403608, 2.188574), //la sagrada familia
+        new google.maps.LatLng(41.391715, 2.166115), //ensanche barcelona
+        new google.maps.LatLng(41.356223, 2.147619), //montjuic
+        new google.maps.LatLng(40.369044, -4.340382) //pelayos
+    ];*/
+}
 
  // KEY_API   --->>   AIzaSyDqC2mEHCJ98RqjUjyVKWIF7Y67y9aUaBU

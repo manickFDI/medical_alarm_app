@@ -104,12 +104,12 @@
                                     <!-- Buscador -->
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4>Busque la enfermedad:</h4>
+                                            <h4>Busqueda del usuario (DNI):</h4>
                                             <div id="custom-search-input">
                                                 <div class="input-group col-md-12">
-                                                    <input type="text" class="form-control input-lg" id="inputTxt" placeholder="Ej: gripe"/>
+                                                    <input type="text" class="form-control input-lg" id="inputTxt" placeholder="Ej: 12345678L"/>
                                                     <span class="input-group-btn">
-                                                    <button class="btn btn-info btn-lg" type="button" onclick="getInfectedUsers()">
+                                                    <button class="btn btn-info btn-lg" type="button" onclick="getNotifications()">
                                                         <i class="glyphicon glyphicon-search"></i>
                                                     </button>
                                                     </span>
@@ -120,10 +120,10 @@
 
                                     </br></br>
 
-                                    <!-- Lista de usuarios contagiados -->
+                                    <!-- Lista de notificaciones enviadas -->
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h4>Usuarios contagiados:</h4>
+                                            <h4>Notificaciones enviadas:</h4>
                                         </div>
                                     </div>
 
@@ -131,14 +131,16 @@
 
                                     <div class="span7">   
                                         <div class="widget stacked widget-table action-table">
-                                            <div class="widget-content" id="divUsersTable">
+                                            <div class="widget-content" id="divNotificationsTable">
 
-                                                <table class="table table-striped table-bordered" id="usersTable">
+                                                <table class="table table-striped table-bordered" id="notificationsTable">
                                                     <thead>
                                                         <tr>
+                                                            <th>DNI:</th>
                                                             <th>Nombre y apellidos:</th>
-                                                            <th>Estado actual:</th>
-                                                            <th>Confirmar revisión:</th>
+                                                            <th>Enfermedad:</th>
+                                                            <th>Notificacion enviada:</th>
+                                                            <th>Evaluación de la revisión:</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -259,8 +261,10 @@
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/moment.js"></script>
     <script src="assets/js/bootstrap-datetimepicker.js"></script>
+    <script src="assets/js/bootstrap-notify.js"></script>
     <!-- CONTAGIO SCRIPTS  -->
     <script src="assets/js/contagio.js"></script>
+    <script src="assets/js/utils.js"></script>
 
     <script> 
         $(function() {
