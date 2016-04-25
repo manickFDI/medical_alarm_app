@@ -591,7 +591,11 @@ salida: - (204: NO CONTENT)
 apiurl: apiurl: malarm/api/focus/1/
 type: DELETE
 
-entrada: -
+entrada: {
+             "focus_place":{
+                 "place": "Barcelona"
+             }
+          }
 
 salida:  - (204 NO CONTENT)
 

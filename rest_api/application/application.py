@@ -469,11 +469,20 @@ class Contagion(Resource):
 
 class Focus(Resource):
     def delete(self, id):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['focus_place']
+        _place = input_data['place']
 
         # PEROFRM OPERATIONS
         # Try to delete the focus. If it could not be deleted, the database
         # returns False.
-        if mysqldb.delete_focus(id):
+        if mysqldb.delete_place_focus(id,_place):
             # RENDER RESPONSE
             return '', 204
         else:

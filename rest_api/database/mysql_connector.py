@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 import time
 
 MYSQL_DATABASE_USER = 'root'
-MYSQL_DATABASE_PASSWORD = '1234'
+MYSQL_DATABASE_PASSWORD = 'rooting'
 MYSQL_DATABASE_DB = 'malarm'
 MYSQL_DATABASE_HOST = 'localhost'
 SQLALCHEMY_DATABASE_URI = 'mysql://{0}:{1}@{2}/{3}'.format(MYSQL_DATABASE_USER,
@@ -27,6 +27,7 @@ FOCUS_PLACES_TABLE_COLUMNS = "idFoco, lugar, fecha"
 CONTAGIONS_TABLENAME = "contagio"
 CONTAGIONS_USERS_TABLENAME = "usuarioContagiado"
 USER_NOTIFICATIONS_TABLENAME = "notificacion"
+PLACE_FOCUS_TABLENAME = "lugaresFoco"
 
 global db
 db = create_engine(SQLALCHEMY_DATABASE_URI)
@@ -56,27 +57,27 @@ class MysqlDatabase(object):
         cured = -1
         infected = -1
         dead = -1
-        rows = db.execute(query+"0")  # indef
+        rows = db.execute(query + "0")  # indef
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 undef = row['amount']
 
-        rows = db.execute(query+"1")  # healthy
+        rows = db.execute(query + "1")  # healthy
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 healthy = row['amount']
 
-        rows = db.execute(query+"2")  # cured
+        rows = db.execute(query + "2")  # cured
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 cured = row['amount']
 
-        rows = db.execute(query+"3")  # infected
+        rows = db.execute(query + "3")  # infected
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 infected = row['amount']
 
-        rows = db.execute(query+"4")  # dead
+        rows = db.execute(query + "4")  # dead
         if rows is not None and rows.rowcount == 1:
             for row in rows:
                 dead = row['amount']
@@ -127,8 +128,9 @@ class MysqlDatabase(object):
             return self.create_user_object(row)
 
     def update_user_satus(self, user, c_status, n_status, id_contagion):
-        updateUserQuery = "UPDATE {0} SET estado = {1} WHERE idUsuario = {2}".format(USERS_TABLENAME, self.get_status_int(n_status),
-                                                                    user['user_id'])
+        updateUserQuery = "UPDATE {0} SET estado = {1} WHERE idUsuario = {2}".format(USERS_TABLENAME,
+                                                                                     self.get_status_int(n_status),
+                                                                                     user['user_id'])
 
         db.execute(updateUserQuery)
 
@@ -141,7 +143,8 @@ class MysqlDatabase(object):
         for row in rows:
             contagion = self.create_contagion_object(row)
 
-        selectDiseaseQuery = "SELECT * FROM {0} WHERE idEnfermedad = {1}".format(DISEASE_TABLENAME, contagion['disease_id'])
+        selectDiseaseQuery = "SELECT * FROM {0} WHERE idEnfermedad = {1}".format(DISEASE_TABLENAME,
+                                                                                 contagion['disease_id'])
 
         rows = db.execute(selectDiseaseQuery)
         disease = None
@@ -152,11 +155,14 @@ class MysqlDatabase(object):
 
         if n_status == "dead":
             updateDiseaseQuery = "UPDATE {0} SET numMuertes = {1} WHERE idEnfermedad = {2}".format(DISEASE_TABLENAME,
-                                                                    int(disease['num_deaths'])+1, disease['disease_id'])
+                                                                                                   int(disease[
+                                                                                                           'num_deaths']) + 1,
+                                                                                                   disease[
+                                                                                                       'disease_id'])
             db.execute(updateDiseaseQuery)
             return True
 
-        #else:
+            # else:
 
     @staticmethod
     def create_user_object(row):
@@ -189,10 +195,10 @@ class MysqlDatabase(object):
 
         }.get(status, 'undef')
 
-
     """
     DISEASE RELATED FUNCTIONS
     """
+
     def get_disease_by_id(self, id):
         query = "SELECT *, (numHombres+numMujeres) as numContagions FROM {0} " \
                 "WHERE idEnfermedad = \"{1}\"".format(DISEASE_TABLENAME, id)
@@ -278,17 +284,15 @@ class MysqlDatabase(object):
                 new_person_by_gender = "numMujeres = {0}".format(amount)
 
             old_weight = int(disease['weight']) * (int(disease['num_men']) + int(disease['num_women']))
-            new_weight = (old_weight + int(user['weight'])) / (1+ int(disease['num_men']) + int(disease['num_women']))
+            new_weight = (old_weight + int(user['weight'])) / (1 + int(disease['num_men']) + int(disease['num_women']))
 
             updateDiseaseQuery = "UPDATE {0} SET {1}, {2}, peso = {3} WHERE idEnfermedad = {4}".format(
-                DISEASE_TABLENAME, new_person_by_age, new_person_by_gender, new_weight, disease['disease_id']
+                    DISEASE_TABLENAME, new_person_by_age, new_person_by_gender, new_weight, disease['disease_id']
             )
             db.execute(updateDiseaseQuery)
             return True
 
         return False
-
-
 
     @staticmethod
     def create_disease_object(row):
@@ -310,7 +314,8 @@ class MysqlDatabase(object):
         weight = str(row['peso'])
 
         disease = {'disease_id': id, 'name': name, 'eradicated': eradicated,
-                   'num_deaths': numDeaths, 'num_teenagers': numTeens, 'num_contagions': numContagions, 'num_children': numChildren,
+                   'num_deaths': numDeaths, 'num_teenagers': numTeens, 'num_contagions': numContagions,
+                   'num_children': numChildren,
                    'num_adults': numAdults, 'num_elders': numElders, 'num_women': numWomen, 'num_men': numMen,
                    'weight': weight}
 
@@ -326,6 +331,7 @@ class MysqlDatabase(object):
     """
     FOCUS RELATED FUNCTIONS
     """
+
     def get_focuses(self):
         query = "SELECT * FROM {0} ".format(FOCUS_TABLENAME)
         placesQuery = "SELECT * FROM {0} WHERE idFoco = ".format(FOCUS_PLACES_TABLENAME)
@@ -347,14 +353,16 @@ class MysqlDatabase(object):
             focuses.append(focus)
         return focuses
 
-    def delete_focus(self, id):
+    def delete_place_focus(self, id, place):
 
-        existsContagionQuery = "SELECT * FROM {0} WHERE idFoco = {1}".format(FOCUS_TABLENAME, id)
-        deleteContagionQuery = "DELETE FROM {0} WHERE idFoco = {1}".format(FOCUS_TABLENAME,id)
-        rows = db.execute(existsContagionQuery)
+        existsFocusQuery = "SELECT * FROM {0} WHERE idFoco = {1} AND lugar = \"{2}\"".format(PLACE_FOCUS_TABLENAME, id,
+                                                                                             place)
+        deleteFocusQuery = "DELETE FROM {0} WHERE idFoco = {1} AND lugar = \"{2}\"".format(PLACE_FOCUS_TABLENAME, id,
+                                                                                           place)
+        rows = db.execute(existsFocusQuery)
 
         if rows is not None and rows.rowcount > 0:
-            db.execute(deleteContagionQuery)
+            db.execute(deleteFocusQuery)
             return True
         return False
 
@@ -398,10 +406,10 @@ class MysqlDatabase(object):
 
         return focus
 
-
     """
     CONTAGIONS RELATED FUNCTIONS
     """
+
     def get_contagion(self, id):
         selectQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id)
 
@@ -434,11 +442,12 @@ class MysqlDatabase(object):
                                                                                    contagion['contagion_id'])
             infectedUsersRows = db.execute(infectedUsersQuery)
             if infectedUsersRows is None or infectedUsersRows.rowcount < 1:
-                contagion['users']=[]
+                contagion['users'] = []
             else:
                 users = []
                 for infectedUserRow in infectedUsersRows:
-                    userQuery = "SELECT * FROM {0} WHERE idUsuario = {1}".format(USERS_TABLENAME, infectedUserRow['idUsuario'])
+                    userQuery = "SELECT * FROM {0} WHERE idUsuario = {1}".format(USERS_TABLENAME,
+                                                                                 infectedUserRow['idUsuario'])
                     userRows = db.execute(userQuery)
 
                     if userRows is not None and userRows.rowcount == 1:
@@ -462,7 +471,7 @@ class MysqlDatabase(object):
             diseasesData.append(self.create_disease_object(diseaseRow))
 
         contagions = []
-        #Get contagions
+        # Get contagions
         contagionsQuery = "SELECT * FROM {0} WHERE nivel > 0".format(CONTAGIONS_TABLENAME)
         contagionRows = db.execute(contagionsQuery)
         if contagionRows is None or contagionRows.rowcount < 1:
@@ -487,7 +496,7 @@ class MysqlDatabase(object):
     def delete_contagion(self, id):
 
         existsContagionQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id)
-        deleteContagionQuery = "UPDATE {0} SET nivel={1} WHERE idContagio = {2}".format(CONTAGIONS_TABLENAME,0, id)
+        deleteContagionQuery = "UPDATE {0} SET nivel={1} WHERE idContagio = {2}".format(CONTAGIONS_TABLENAME, 0, id)
         rows = db.execute(existsContagionQuery)
 
         if rows is not None and rows.rowcount > 0:
@@ -497,10 +506,10 @@ class MysqlDatabase(object):
 
     def insert_user_contagion(self, user_id, contagion_id):
 
-        insertQuery = "INSERT INTO {0} (idUsuario, idContagio) VALUES ({1}, {2})".format(CONTAGIONS_USERS_TABLENAME, user_id, contagion_id)
+        insertQuery = "INSERT INTO {0} (idUsuario, idContagio) VALUES ({1}, {2})".format(CONTAGIONS_USERS_TABLENAME,
+                                                                                         user_id, contagion_id)
         db.execute(insertQuery)
         return True
-
 
     @staticmethod
     def create_contagion_object(row):
@@ -528,17 +537,18 @@ class MysqlDatabase(object):
         description = row['descripcion']
 
         contagion = {'contagion_id': id, 'disease_id': idDisease, 'doctor_id': idDoctor, 'time': time,
-                    'distance':distance, 'level': level, 'place': place, 'date': date, 'description': description}
+                     'distance': distance, 'level': level, 'place': place, 'date': date, 'description': description}
 
         return contagion
-
 
     """
     NOTIFICATIONS RELATED FUNCTIONS
     """
+
     def get_notifications(self, user):
 
-        selectNotificationsQuery = "SELECT * FROM {0} WHERE idUsuario = {1}".format(USER_NOTIFICATIONS_TABLENAME, user['user_id'])
+        selectNotificationsQuery = "SELECT * FROM {0} WHERE idUsuario = {1}".format(USER_NOTIFICATIONS_TABLENAME,
+                                                                                    user['user_id'])
 
         rows = db.execute(selectNotificationsQuery)
         notifications = []
@@ -556,13 +566,14 @@ class MysqlDatabase(object):
 
         return notifications
 
-
     """
     NOTIFICATION RELATED FUNCTIONS
     """
+
     def get_notification(self, user_id, contagion_id):
 
-        selectQuery = "SELECT * FROM {0} WHERE idUsuario = {1} and idContagio = {2}".format(USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
+        selectQuery = "SELECT * FROM {0} WHERE idUsuario = {1} and idContagio = {2}".format(
+            USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
 
         rows = db.execute(selectQuery)
         if rows is None or rows.rowcount != 1:
@@ -570,12 +581,13 @@ class MysqlDatabase(object):
         for row in rows:
             return self.create_notification_object(row)
 
-    def update_notification(self, user_id,contagion_id):
+    def update_notification(self, user_id, contagion_id):
 
         notification = self.get_notification(user_id, contagion_id)
         if notification is None:
             return None
-        updateQuery = "UPDATE {0} SET confirmado = true WHERE idUsuario = {1} and idContagio = {2}".format(USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
+        updateQuery = "UPDATE {0} SET confirmado = true WHERE idUsuario = {1} and idContagio = {2}".format(
+            USER_NOTIFICATIONS_TABLENAME, user_id, contagion_id)
 
         db.execute(updateQuery)
         return True
