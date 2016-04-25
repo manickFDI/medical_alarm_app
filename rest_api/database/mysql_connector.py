@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 import time
 
 MYSQL_DATABASE_USER = 'root'
-MYSQL_DATABASE_PASSWORD = 'rooting'
+MYSQL_DATABASE_PASSWORD = '1234'
 MYSQL_DATABASE_DB = 'malarm'
 MYSQL_DATABASE_HOST = 'localhost'
 SQLALCHEMY_DATABASE_URI = 'mysql://{0}:{1}@{2}/{3}'.format(MYSQL_DATABASE_USER,
@@ -270,15 +270,15 @@ class MysqlDatabase(object):
                 new_person_by_age = "numAncianos = {0}".format(amount)
 
             new_person_by_gender = ""
-            if user['gender'] == 1:
+            if user['gender'] == '0':
                 amount = int(disease['num_men']) + 1
-                new_person_by_gender = "numHombre = {0}".format(amount)
-            elif user['gender'] == 2:
-                amount = int(disease['num_men']) + 1
+                new_person_by_gender = "numHombres = {0}".format(amount)
+            elif user['gender'] == '1':
+                amount = int(disease['num_women']) + 1
                 new_person_by_gender = "numMujeres = {0}".format(amount)
 
-            old_weight = int(disease['weight']) * (int(disease['num_men']) + int(disease['num_men']))
-            new_weight = (old_weight + int(user['weight'])) / (1+ int(disease['num_men']) + int(disease['num_men']))
+            old_weight = int(disease['weight']) * (int(disease['num_men']) + int(disease['num_women']))
+            new_weight = (old_weight + int(user['weight'])) / (1+ int(disease['num_men']) + int(disease['num_women']))
 
             updateDiseaseQuery = "UPDATE {0} SET {1}, {2}, peso = {3} WHERE idEnfermedad = {4}".format(
                 DISEASE_TABLENAME, new_person_by_age, new_person_by_gender, new_weight, disease['disease_id']

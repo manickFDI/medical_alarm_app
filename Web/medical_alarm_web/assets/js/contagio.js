@@ -183,7 +183,7 @@ function addNewUserInfected(userId, contagionId) {
 		data: userData
 	}).done(function (data, textStatus, jqXHR) {
 		//alert("Se ha añadido el usuario al contagio actual.");
-		personalAlert("SUCCESS  ", " --  Se ha añadido el usuario al contagio actual.", "danger", 2000, false);
+		personalAlert("INFO  ", " --  Se ha añadido el usuario al contagio actual.", "success", 2000, false);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		//alert("Error al buscar usuario.");
 		personalAlert("ERROR  ", " --  Error al buscar usuario.", "danger", 2000, false);
@@ -210,6 +210,7 @@ function confirmNegative(userId, contagionId, row) {
 		type: "PUT",
 		data: userData
 	}).done(function (data, textStatus, jqXHR) {
+		personalAlert("INFO  ", " --  Falsa alarma establecida correctamente.", "success", 2000, false);
 		removeUserFromTable(row);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		//alert("Error al confirmar falsa alarma.");

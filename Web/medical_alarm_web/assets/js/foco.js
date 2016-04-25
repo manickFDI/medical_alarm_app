@@ -126,6 +126,8 @@ function createTable(data) {
 function removeFocus(focusId, row) {
 	var apiURL = ENTRYPOINT_FOCUS + focusId + "/";
 
+	// OJO! pasar por json el lugar para eliminar unicamente el foco en ese lugar
+
 	return $.ajax({
 		url: apiURL,
 		type: "DELETE"
