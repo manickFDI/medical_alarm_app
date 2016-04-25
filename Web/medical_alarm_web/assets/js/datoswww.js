@@ -34,16 +34,13 @@ function writeDisease(div, disease) {
             break;
     }
 
-    var aux_separator = " || ";
-
-    var $disease = '<li">' + type +
-        '<span class="leyenda">' + disease.diseaseKey.name + aux_separator + disease.diseaseKey.location  + aux_separator +
-        'Nivel: ' + disease.level + aux_separator + 
-        'CDC: ' + disease.cdcCount + aux_separator + 
-        'News: ' + disease.newsCount + aux_separator +
-        'Twitter: ' + disease.tweetsCount + aux_separator +
-        'Last update: ' + disease.lastUpdate + 
-        '</span><br>';
+    var $disease = '<li class="list-group-item"><h3 class="card-title">' + type +
+        disease.diseaseKey.name + '</h3>' + 
+        '<span class="pull-right"><img src="assets/img/ic_cdc.png" alt="cdc count" style="width:25px;height:25px;"> CDC: ' + disease.cdcCount + '</span>' +
+        '<span class="pull-right"> <img src="assets/img/ic_twitter.png" alt="twitter count" style="width:25px;height:25px;"> Twitter: ' + disease.tweetsCount + '</span>' + 
+        '<span class="pull-right"><img src="assets/img/ic_news.png" alt="news count" style="width:25px;height:25px;"> News: ' + disease.newsCount+ '</span>' +
+        '<p class="card-text">' + disease.diseaseKey.location  + ',' + disease.lastUpdate + '</p>' +
+        '</li>';
 
     //añadir a la lista cada contagio
     $("#diseasesList").append($disease);
@@ -79,7 +76,7 @@ function getDiseaseByZoneAndDate() {
 }
 
 function validateDate(date){
-	var patt = new RegExp("^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\d\d$");
+	var patt = new RegExp('^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\\d\\d$');
 	return patt.test(date);
 }
 
@@ -170,19 +167,22 @@ function initMap(data) {
     var map, heatmap;
 
     map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 2,
+        center: {lat: 27.568779, lng: -36.713787}, //Approximately the middle of the globe
         mapTypeId: google.maps.MapTypeId.TERRAIN, //TERRAIN or ROADMAP
-        zoomControl: false,
+        zoomControl: true,
         scaleControl: false,
-        streetViewControl: true
+        streetViewControl: false
         //rotateControl: true
     });
+
+    getMarkers(map, data)
 
     heatmap = new google.maps.visualization.HeatmapLayer({
         data: getPoints(data),
         map: map
     });
 }
-
 
 // Heatmap data example: barcelona y madrid
 /**
@@ -196,11 +196,24 @@ function getPoints(data) {
     var latLng;
 
     for (var i=0; i < data.heatPointList.length; i++){
-        latLng =  new google.maps.LatLng(data.heatPointList[i].location.coordinates[1], data.heatPointList[i].location.coordinates[1]);
+        latLng =  new google.maps.LatLng(data.heatPointList[i].location.coordinates[1], data.heatPointList[i].location.coordinates[0]);
         loc.push(latLng);
     }
 
     return loc;
+}
+
+function getMarkers(map, data){
+
+    for( i = 0; i < data.centerList.length; i++) {
+        var position = new google.maps.LatLng(data.centerList[i].location.coordinates[1], data.centerList[i].location.coordinates[0]);
+        var name = data.centerList[i].name;
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: data.centerList[i].name
+        });
+    }
 }
 
  // KEY_API   --->>   AIzaSyDqC2mEHCJ98RqjUjyVKWIF7Y67y9aUaBU
