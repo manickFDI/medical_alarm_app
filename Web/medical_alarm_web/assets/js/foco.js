@@ -9,6 +9,7 @@ ENTRYPOINT_USER = "http://localhost:5000/malarm/api/user/"
 function loadFocusTable() {
 	var apiURL = ENTRYPOINT_FOCUSES;
 	personalAlert("CARGANDO  ", " --  Cargando focos activos...", "info", 1000, true);
+
 	return $.ajax({
 		url: apiURL
 	}).always(function() {
@@ -92,7 +93,7 @@ function createTable(data) {
 					var focusId = data[i].focus_id;
 					button.setAttribute("id", focusId);	// usamos como id del boton el id del usuario para que cuando pulsemos
 														// en "Confirmar revisión" podamos actualizar su estado
-					button.setAttribute("onclick", "removeFocus(" + focusId + ", this)");
+					button.setAttribute("onclick", "removeFocus(" + focusId + ",'" + place.place + "', this)");
 					var spanButton = document.createElement("span");
 					spanButton.setAttribute("class", "glyphicon glyphicon-ok");
 					button.appendChild(spanButton);
@@ -123,15 +124,16 @@ function createTable(data) {
 	* Params: focusId - id del foco a eliminar de la bd
 			  row - la fila a quitar de la tabla
 */
-function removeFocus(focusId, row) {
+function removeFocus(focusId, place, row) {
 	var apiURL = ENTRYPOINT_FOCUS + focusId + "/";
-
-	// OJO! pasar por json el lugar para eliminar unicamente el foco en ese lugar
+	var userData = '{"focus_place":{"place":"' + place + '"}}'; // lugar para eliminar unicamente el foco en ese lugar
 
 	return $.ajax({
 		url: apiURL,
-		type: "DELETE"
+		type: "DELETE",
+		data: userData
 	}).done(function (data, textStatus, jqXHR) {
+		personalAlert("INFO  ", " --  Foco eliminado correctamente.", "success", 2000, false);
 		removeRowFromTable('focusTable', row);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		//alert("Error al eliminar el foco.");
