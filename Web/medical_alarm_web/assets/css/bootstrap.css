@@ -7,6 +7,7 @@
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
 /* MANU HA MODIFICADO EL ESTILO DEL BOTON XS PARA LA TABLA DE CONTAGIOS --> FLOAT: RIGTH*/
+/* MANU HA MODIFICADO ESTILO DE BTN-SM FLOAT RIGTH*/
 
 
 
@@ -3342,6 +3343,7 @@ fieldset[disabled] .btn-link:focus {
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
+  float: right; /*modificado*/
 }
 .btn-xs,
 .btn-group-xs > .btn {
@@ -6368,8 +6370,8 @@ button.close {
 
 .btn-send {
   color: #fff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #5bc0de;
+  border-color: #46b8da;
   margin-left: 200px;
 }
 

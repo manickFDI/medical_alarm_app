@@ -99,19 +99,25 @@
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
-        <!-- Altura Label -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
+        <!-- Sexo Label -->
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:theme="@style/inputTextLayout"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_altura"
-                android:layout_width="match_parent"
+            android:orientation="vertical">
+            <RadioButton android:id="@+id/radio_pirates"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="Altura (cm)" />
-        </android.support.design.widget.TextInputLayout>
+                android:text="Hombre"
+                android:color = "#000000"
+                android:onClick="onRadioButtonClicked"/>
+
+            <RadioButton android:id="@+id/radio_ninjas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mujer"
+                android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
 
         <!-- Peso Label -->
         <android.support.design.widget.TextInputLayout
