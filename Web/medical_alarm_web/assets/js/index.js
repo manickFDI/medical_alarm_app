@@ -7,6 +7,7 @@ var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 
 var DEBUG = true;
 var WHITE_SPACE = " ";
+var INFECTED = 3;
 
 //window.onload = loadContagions();
 
@@ -36,13 +37,48 @@ function writeUser(div, user) {
     div.innerHTML += "<h6>Fecha de nacimiento: " + user.birthday + "</h6>";
     div.innerHTML += "<h6>Edad: " + edad + "</h6>";
     div.innerHTML += "<h6>Sexo: " + sexo + "</h6>";
-    div.innerHTML += "<h6>Peso: " + user.weight + " Kg</h6>";
+    div.innerHTML += "<h6>Peso general: " + user.weight + " Kg</h6>";
     div.innerHTML += "<hr />";
-    div.innerHTML += "<h6 id='estado'>Estado: <strong>" + state.toUpperCase() + "</strong></h6>";
+    div.innerHTML += "<h6 id='estado'>Estado general: <strong>" + state.toUpperCase() + "</strong></h6>";
     div.innerHTML += "<hr />";
+
+    if(user.state == INFECTED) {
+        div.innerHTML+= "<h4>Lista de enfermedades</h4>";
+        div.innerHTML += "<hr />";
+        createListDiseasesUser(user, div);
+        //div.innerHTML += "<ul><li style='font-size:16px';>Ebola <a class='btn btn-success btn-sm' id='btnCurar' onclick='confirmCuredDisease()'>Curar</a></li></ul>"
+        div.innerHTML += "<hr />";
+        /*for(var i = 0; i < user.length; i++) {
+            div.innerHTML+= "<h6>user[i].disease</h6>";
+            <a class="btn btn-success" onclick="confirmCuredDisease()"> Usuario curado</a>
+            div.innerHTML += "<hr />";
+        }*/
+
+    }
 
     showButtonsUser();
 }
+
+
+/**
+ * Create the html of a list with diseases user
+ * @param user
+ * @param div
+ */
+function createListDiseasesUser(user, div) {
+    div.innerHTML += "<ul>"
+    for(var i = 0; i < user.contagios.length; i++) {
+        div.innerHTML += "<li style='font-size:16px';>" + user.contagios[i].disease.name +
+            "<a class='btn btn-success btn-sm' id='btnCurar' onclick='confirmCuredDisease(user.idusuario, user.contagios[i].contagion_id)'>Curar</a></li>";
+    }
+    div.innerHTML += "</ul>";
+}
+
+
+function confirmCuredDisease(idUser, idContagion) {
+
+}
+
 
 
 /**

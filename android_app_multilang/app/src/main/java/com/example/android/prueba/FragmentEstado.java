@@ -2,6 +2,7 @@ package com.example.android.prueba;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import android.widget.Toast;
  */
 public class FragmentEstado extends Fragment {
 
+    private SwipeRefreshLayout refreshLayout;
+
     public FragmentEstado() {
     }
 
@@ -35,6 +38,22 @@ public class FragmentEstado extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_estado, container, false);
+
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshEstado);
+        refreshLayout.setColorSchemeResources(
+                R.color.primaryColor,
+                R.color.primaryDarkColor,
+                R.color.accentColor);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //refreshLayout.setRefreshing(true);
+
+                updateState();
+                //refreshLayout.setRefreshing(false);
+            }
+        });
 
         CardView cardPersona = (CardView)view.findViewById(R.id.estadoPersona);
 
@@ -59,6 +78,14 @@ public class FragmentEstado extends Fragment {
         });
 
         return view;
+    }
+
+
+    public void updateState() {
+        // pablo programa aqui
+
+
+        refreshLayout.setRefreshing(false); // esta linea tiene que estar al final del metodo
     }
 
 

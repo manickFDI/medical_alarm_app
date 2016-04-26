@@ -49,6 +49,38 @@ public class FragmentInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_info, container, false);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+        refreshLayout.setColorSchemeResources(
+                R.color.primaryColor,
+                R.color.primaryDarkColor,
+                R.color.accentColor);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(true);
+
+                for(int i = 0; i < 10000; i++) {
+                    Log.d("TAG", "prueba swipe info " + i);
+                }
+                refreshLayout.setRefreshing(false);
+            }
+        });
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+        refreshLayout.setColorSchemeResources(
+                R.color.primaryColor,
+                R.color.primaryDarkColor,
+                R.color.accentColor);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //refreshLayout.setRefreshing(true);
+
+                updateNews();
+                //refreshLayout.setRefreshing(false);
+            }
+        });
 
         //Creamos los strings
 
@@ -97,8 +129,8 @@ public class FragmentInfo extends Fragment {
         }
 
         //Obtener el campo fecha para setearla
-        fecha = (TextView)view.findViewById(R.id.fechaActual);
-        fecha.setText(fechaFormat);
+        //fecha = (TextView)view.findViewById(R.id.fechaActual);
+        //fecha.setText(fechaFormat);
 
         // Obtener el Recycler
         recycler = (RecyclerView)view.findViewById(R.id.recycler);
@@ -187,4 +219,12 @@ public class FragmentInfo extends Fragment {
         }
 
     }*/
+
+
+    public void updateNews() {
+        // pablo programa aqui
+
+
+        refreshLayout.setRefreshing(false); // esta linea tiene que estar al final del metodo
+    }
 }

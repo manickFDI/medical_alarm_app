@@ -14,6 +14,9 @@ import android.widget.EditText;
 
 import com.example.android.prueba.models.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -202,7 +205,12 @@ public class SignUpActivity extends AppCompatActivity {
         builder.appendQueryParameter("weight", Integer.toString(user.getWeight()));
         builder.appendQueryParameter("password", user.getPassword());
 
-        return builder;
+        Uri.Builder builderf = new Uri.Builder();
+        builderf.appendQueryParameter("user", builder.toString());
+        //Log.d("TAG", builder.toString());
+
+
+        return builderf;
     }
 
     /**
@@ -210,8 +218,9 @@ public class SignUpActivity extends AppCompatActivity {
      */
     private class PostUser extends AsyncTask<User, Void, Void> {
 
-        private static final String MY_IP = "10.0.2.2";
-        private static final String MY_URL = "http://" + MY_IP + ":8000/users/"; //OJO!! No usar la 127.0.0.1
+        //private static final String MY_IP = "10.0.2.2";
+        private static final String MY_IP = "10.0.2.2:5000/malarm/api/";
+        private static final String MY_URL = "http://" + MY_IP + "users/"; //OJO!! No usar la 127.0.0.1
 
         /**
          * This function realizes the request (GET) with the correct URL
@@ -229,9 +238,14 @@ public class SignUpActivity extends AppCompatActivity {
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true); // 'true' para POST y PUT
                 Log.d("TAG", "Conexion...");
-                Uri.Builder builder = buildUriUser(params[0]); // añade los parametros de la query
-                String query = builder.build().getEncodedQuery();   // creamos la query
+
+
+                //Uri.Builder builder = buildUriUser(params[0]); // añade los parametros de la query
+                //String query = builder.build().getEncodedQuery();   // creamos la query
                 //String query = "user_id=5&name=manu&surnames=marsan&dni=11&birthdate=07-05-1992&email=prueba@ucm.es&height=11&weight=22&password=aaaa";
+
+                String query = createJson(params[0]);
+
                 OutputStream os = conn.getOutputStream();
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -255,6 +269,30 @@ public class SignUpActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+
+
+
+        private String createJson(User user) {
+            JSONObject jo = new JSONObject();
+            JSONObject jo2 = new JSONObject();
+            try {
+                jo.put("name", user.getName());
+                jo.put("lastname", user.getSurnames());
+                jo.put("dni", user.getDni());
+                jo.put("birthday", user.getBirthdate());
+                jo.put("email", user.getEmail());
+                jo.put("height", Integer.toString(user.getHeight()));
+                jo.put("weight", Integer.toString(user.getWeight()));
+                jo.put("password", user.getPassword());
+
+                jo2.put("user", jo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Log.d("TAG", jo2.toString());
+            return jo2.toString();
         }
     }
 }
