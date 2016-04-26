@@ -1,0 +1,98 @@
+[{
+	"user_id" : 4,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			0,2
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 4,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			2,0
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 2,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			0,0
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 2,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			2,2
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 3,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			0,1
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 3,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			1,2
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 3,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			2,1
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+}]

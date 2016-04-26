@@ -30,13 +30,10 @@ def insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetomete
 
 
 def getNearByLocations(_maxDistance, _latitude, _longitude):
-
-    cur = mongo.db.sensors.find({ "location": { "$nearSphere": { "$geometry": { "type": "Point", "coordinates": [
-                                    float(_latitude), float(_longitude) ] }, "$maxDistance": int(_maxDistance)} } })
-
+    cur = mongo.db.sensors.find({"location": {"$nearSphere": {"$geometry": {"type": "Point", "coordinates": [
+        float(_latitude), float(_longitude)]}, "$maxDistance": int(_maxDistance)}}})
 
     nearLocations = []
-    print(cur.count())
     for item in cur:
         loc = {}
         loc['timestamp'] = item['timestamp']
@@ -45,3 +42,17 @@ def getNearByLocations(_maxDistance, _latitude, _longitude):
         nearLocations.append(loc)
 
     return nearLocations
+
+
+def getPointsGroupedByUser(user_id):
+    #cur = mongo.db.sensors.aggregate([{"$group": {"_id": {"user_id": "$user_id"}, "locations": {
+    #   "$push": {"type": "$location.type", "coordinates": "$location.coordinates"}}}}])
+    aux_id = int(user_id)
+    cur = mongo.db.sensors.find({"user_id": aux_id})
+    points = []
+
+    for item in cur:
+        user = item
+        points.append(user)
+
+    return points

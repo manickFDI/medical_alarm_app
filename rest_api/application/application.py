@@ -1,10 +1,11 @@
-import json
 from flask import Flask, request, Response, jsonify
 from flask.ext.restful import Resource, Api
 # Own Imports
+import algorithm
 from database import mongo_connector
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
+from shapely.geometry import LineString, Point
 import requests
 
 # Define the application and the api
@@ -391,11 +392,6 @@ class Sensors(Resource):
                         )
 
 
-class Focuses(Resource):
-    def get(self):
-        return mysqldb.get_focuses()
-
-
 class UsersContagions(Resource):
     def get(self):
         disease = request.args['disease']
@@ -467,6 +463,40 @@ class Contagion(Resource):
                                          "Contagion")
 
 
+
+class Focuses(Resource):
+    def get(self):
+        return mysqldb.get_focuses()
+
+    def post(self):
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['focus_users']
+
+        lines = []
+        for dni in input_data:
+            user = mysqldb.get_user_by_dni(dni['dni'])
+            locations = mongo_connector.getPointsGroupedByUser(user['user_id'])
+            lineParts = []
+            for location in locations:
+                lineParts.append(Point(location['location']['coordinates'][0], location['location']['coordinates'][1]))
+            if len(lineParts) > 1:
+                lines.append(LineString(lineParts))
+
+        result = []
+        if len(lines) > 1:
+            result = algorithm.calculateFocus(lines)
+            for item in result:
+                print item
+        return {}
+
+
+
+
 class Focus(Resource):
     def delete(self, id):
         # PARSE THE REQUEST:
@@ -491,7 +521,6 @@ class Focus(Resource):
                                          "There is no a focus with id %s"
                                          % id,
                                          "Focus")
-
 
 class Notifications(Resource):
     def get(self):

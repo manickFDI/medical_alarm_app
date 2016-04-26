@@ -122,10 +122,27 @@ class MysqlDatabase(object):
         query = "SELECT * FROM {0} WHERE dni = \"{1}\"".format(USERS_TABLENAME, dni)
         rows = db.execute(query)
 
+        usuario = {}
         if rows is None or rows.rowcount > 1:
             return None
         for row in rows:
-            return self.create_user_object(row)
+            usuario = self.create_user_object(row)
+
+        selectContagionsIdQuery = "SELECT * FROM {0} WHERE idUsuario={1}".format(USERS_TABLENAME, usuario['user_id'])
+        rows = db.execute(query)
+
+        contagios = []
+        if rows is None or rows.rowcount > 1:
+            usuario['contagios'] = contagios
+            return usuario
+
+        #for row in rows:
+            #conatigio = self.create_user_object(row)
+
+            #contagios.append(contagio)
+
+        usuario['contagios'] = contagios
+        return usuario
 
     def update_user_satus(self, user, c_status, n_status, id_contagion):
         updateUserQuery = "UPDATE {0} SET estado = {1} WHERE idUsuario = {2}".format(USERS_TABLENAME,
