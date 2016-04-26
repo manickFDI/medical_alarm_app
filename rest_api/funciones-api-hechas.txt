@@ -795,3 +795,56 @@ salida:
             "lng": 2.1734035
         }
     ]
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+* Da de alta un nuevo foco con la lista de usuarios y la descripcion que se pasa
+
+apiurl: malarm/api/focuses/
+
+entrada:
+    {
+        "focus_users":[
+            {"dni":"12345678J"},
+            {"dni":"11868634J"},
+            {"dni":"12345678D"}
+        ]
+     }
+
+Salida:
+        [
+          {
+            "num_users": 2,
+            "points": {
+              "coordinates": [
+                1.5,
+                1.5
+              ],
+              "type": "Point"
+            }
+          },
+          {
+            "num_users": 2,
+            "points": {
+              "coordinates": [
+                1,
+                1
+              ],
+              "type": "Point"
+            }
+          },
+          {
+            "num_users": 2,
+            "points": {
+              "coordinates": [
+                0.5,
+                1.5
+              ],
+              "type": "Point"
+            }
+          }
+        ]

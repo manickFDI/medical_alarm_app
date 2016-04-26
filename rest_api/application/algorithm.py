@@ -2,18 +2,19 @@ import os
 import sys
 
 # Path for spark source folder
-os.environ['SPARK_HOME']="/usr/local/Cellar/apache-spark/1.5.2"
+from itertools import combinations
+
+os.environ['SPARK_HOME'] = "/usr/local/Cellar/apache-spark/1.5.2"
 # Append pyspark  to Python Path
 sys.path.append("/usr/local/Cellar/apache-spark/1.5.2/libexec/python/")
 
-
 from flask import json
 from pyspark import SparkContext, SparkConf
-from shapely.geometry import LineString
+from shapely.geometry import LineString, mapping
 
 
 def initializeSpark(appName, sparkMaster):
-    conf = SparkConf().setAppName(appName).setMaster(sparkMaster).set("spark.driver.allowMultipleContexts","true")
+    conf = SparkConf().setAppName(appName).setMaster(sparkMaster).set("spark.driver.allowMultipleContexts", "true")
     global sc
     sc = SparkContext(conf=conf)
 
@@ -39,19 +40,23 @@ def calculateFocusForNElems(lines, i):
     return result
 
 
+def combine(items):
+    return sum([map(list, combinations(items, i)) for i in range(len(items) + 1)], [])
+
 
 def calculateFocus(lines):
+
     initializeSpark("Malarm", "local[2]")
-    result = getFocusForLines(lines)
-    if len(result) != 0:
-        stopContext()
-        return result
-    else:
-        i = 0
-        while i < len(lines):
-            result = calculateFocusForNElems(lines, i)
-            if len(result) != 0:
-                stopContext()
-                return result
+    lineCombinations = combine(lines)
+    result = []
+    for lineCombination in lineCombinations:
+        if len(lineCombination) > 1:
+            focusForLines = getFocusForLines(lineCombination)
+            if not focusForLines.is_empty:
+                combination = {}
+                combination['num_users'] = len(lineCombination)
+                combination['points'] = mapping(focusForLines)
+                result.append(combination)
 
-
+    stopContext()
+    return result

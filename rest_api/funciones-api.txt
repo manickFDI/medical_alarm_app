@@ -21,35 +21,6 @@ entrada:
 
 salida: nada
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-* Da de alta un nuevo foco con la lista de usuarios y la descripcion que se pasa
-
-apiurl: malarm/api/focus/
-
-entrada:
-{
-	"numUsers":"num",
-	"usersId": [
-		{ "id":"id" },
-		{ "id":"id" },
-		{ "id":"id" }
-	],
-	"description":"descripcion"
-}
-
-salida:
-{
-	"focus": [
-		{ "place":"lugar", "longitud":"long", "latitud":"lat" }, // OJO!! 'lugar' es un string asi: "Vallecas, Madrid, 28033"
-		{ "place":"lugar", "longitud":"long", "latitud":"lat" },
-		{ "place":"lugar", "longitud":"long", "latitud":"lat" }
-	]
-}
-
 //////
 ******
 //////

@@ -487,11 +487,9 @@ class Focuses(Resource):
             if len(lineParts) > 1:
                 lines.append(LineString(lineParts))
 
-        result = []
         if len(lines) > 1:
-            result = algorithm.calculateFocus(lines)
-            for item in result:
-                print item
+            return algorithm.calculateFocus(lines)
+
         return {}
 
 
