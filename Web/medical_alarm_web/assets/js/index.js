@@ -37,16 +37,17 @@ function writeUser(div, user) {
     div.innerHTML += "<h6>Fecha de nacimiento: " + user.birthday + "</h6>";
     div.innerHTML += "<h6>Edad: " + edad + "</h6>";
     div.innerHTML += "<h6>Sexo: " + sexo + "</h6>";
-    div.innerHTML += "<h6>Peso general: " + user.weight + " Kg</h6>";
+    div.innerHTML += "<h6>Peso: " + user.weight + " Kg</h6>";
     div.innerHTML += "<hr />";
     div.innerHTML += "<h6 id='estado'>Estado general: <strong>" + state.toUpperCase() + "</strong></h6>";
     div.innerHTML += "<hr />";
 
     if(user.state == INFECTED) {
-        div.innerHTML+= "<h4>Lista de enfermedades</h4>";
+        div.innerHTML+= "<h4 id='titEnf'>Lista de enfermedades</h4>";
         div.innerHTML += "<hr />";
         createListDiseasesUser(user, div);
         //div.innerHTML += "<ul><li style='font-size:16px';>Ebola <a class='btn btn-success btn-sm' id='btnCurar' onclick='confirmCuredDisease()'>Curar</a></li></ul>"
+        div.innerHTML += "<hr />";
         div.innerHTML += "<hr />";
         /*for(var i = 0; i < user.length; i++) {
             div.innerHTML+= "<h6>user[i].disease</h6>";
@@ -55,8 +56,7 @@ function writeUser(div, user) {
         }*/
 
     }
-
-    showButtonsUser();
+    showButtonsUser(user.idnumber);
 }
 
 
@@ -66,20 +66,84 @@ function writeUser(div, user) {
  * @param div
  */
 function createListDiseasesUser(user, div) {
-    div.innerHTML += "<ul>"
-    for(var i = 0; i < user.contagios.length; i++) {
-        div.innerHTML += "<li style='font-size:16px';>" + user.contagios[i].disease.name +
-            "<a class='btn btn-success btn-sm' id='btnCurar' onclick='confirmCuredDisease(user.idusuario, user.contagios[i].contagion_id)'>Curar</a></li>";
+    var str = "<ul id='listDiseasesUser'>";
+    for(var i = 0; i < user.contagions.length; i++) {
+        str += "<li id='list" + i + "' style='font-size:16px';>" + user.contagions[i].disease.name +
+            "<a class='btn btn-success btn-sm' id='btnCurar' onclick='confirmCuredDisease(" + user.user_id + ", " + user.contagions[i].contagion_id + ", " + i + ")'>Curar</a></li>";
     }
-    div.innerHTML += "</ul>";
+    str += "</ul>";
+
+    div.innerHTML += str;
 }
 
 
-function confirmCuredDisease(idUser, idContagion) {
+function confirmCuredDisease(idUser, idContagion, id_li) {
+
+    var aux = "list" + id_li;
+    var len = $('#listDiseasesUser').children().length;
+    var data = '{"user_contagion":{ "user_id":"' + idUser + '",' + '"contagion_id":"' + idContagion + '"}}'; // Creamos el txt con el json
+    //data = JSON.stringify(userData); // Verificamos que el formato es json --> OJO, no usar!!
+    var apiURL = ENTRYPOINT + "users/contagions/";
+
+    return $.ajax({
+        url: apiURL,
+        type: "DELETE",
+        data: data
+    }).done(function (data, textStatus, jqXHR) {
+        var aux_li = document.getElementById(aux);
+        aux_li.parentNode.removeChild(aux_li);
+        personalAlert("AVISO  ", " --  El paciente ya no está contagiado de esta enfermedad", "warning", 1000, false);
+
+        //si la tabla esta vacia cambiar el estado y ocultar enfermedades
+        if(len == 1) {
+            var estado = document.getElementById("estado");
+            var pac = document.getElementById("paciente").innerHTML;
+
+            estado.innerHTML = "<h6 id='estado'>Estado general: <strong>" + "CURADO" + "</strong></h6>";
+
+            personalAlert("AVISO  ", " --  Se ha cambiado el estado del paciente " + pac + " a " + "CURADO", "warning", 2000, false);
+
+            var del = document.getElementById("titEnf");
+            del.remove();
+
+        }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //alert("Error al buscar usuario.");
+        personalAlert("ERROR  ", " --  Error al confirmar cura de contagio.", "danger", 2000, false);
+    });
 
 }
 
 
+function confirmDead(dni_user) {
+
+    var data = '{"user":{ "new_status":"dead"}}'; // Creamos el txt con el json
+    var apiURL = ENTRYPOINT + "user/" + dni_user + "/";
+
+    return $.ajax({
+        url: apiURL,
+        type: "PUT",
+        data:data
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+        var estado = document.getElementById("estado");
+        estado.innerHTML = "<h6 id='estado'>Estado general: <strong>" + "FALLECIDO" + "</strong></h6>";
+        personalAlert("AVISO IMPORTANTE ", " --  El estado del paciente ha sido modificado a FALLECIDO ", "warning", 2000, false);
+        var del = document.getElementById("titEnf");
+        var del2 = document.getElementById("listDiseasesUser");
+        if((del != null) && (del2 != null)) {
+            del.remove();
+            del2.remove();
+        }
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        personalAlert("ERROR  ", " --  Error al cambiar el estado del paciente", "danger", 2000, false);
+    });
+}
 
 /**
  * obtain the user from the searcher. It search by the dni.
@@ -127,28 +191,6 @@ function getUser_db(apiurl) {
 
 
 
-/////
-////
-//// problem with th function. Inside onclick appears twice. Without function
-$('#estadosList li a').on('click', function(){
-
-    var nuevoEstado = $(this).text();
-    var ret = confirm("¿Está seguro que desea cambiar el estado del paciente a " + nuevoEstado + "?");
-    if (ret) {
-        var estado = document.getElementById("estado");
-        var pac = document.getElementById("paciente").innerHTML;
-        estado.innerHTML = "<h6 id='estado'>Estado: <strong>" + nuevoEstado.toUpperCase() + "</strong></h6>";
-
-        personalAlert("AVISO  ", " --  Se ha cambiado el estado del paciente " + pac + " a " + nuevoEstado.toUpperCase(), "warning", 2000, false);
-
-        //query UPDATE
-        //split dni
-        //var apiurl = ENTRYPOINT + "/" + document.getElementById("dni");
-        //updateEstate(apiurl, nuevoEstado); //solo el estado o  el usuario entero
-    }
-});
-
-
 /**
  * function that communicate with the api_REST. It update the state of a user when the doctor changes it
  * @param apiurl
@@ -161,7 +203,7 @@ function updateEstate(apiurl, userData) {
     return $.ajax({
         url: apiurl,
         type: "PUT",
-        data:userData,
+        data:userData
     }).done(function (data, textStatus, jqXHR){
         if (DEBUG) {
             console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
@@ -315,7 +357,7 @@ function removeContagion_db(apiurl) {
  * this function prints the initial state of the user div
  * It is used when a new search fails
  */
-function showEmptyUser() {
+function showEmptyUser(dni_user) {
 
     var divUser = document.getElementById("infoUsuario");
 
@@ -323,6 +365,8 @@ function showEmptyUser() {
         '<div class="panel-footer text-muted">Aquí se mostrará la información del paciente una vez realizada la búsqueda</div>';
 
     divUser.innerHTML = html;
+
+    createButtonsUser(dni_user);
 
     if ( $("#botonesPanelUsuario").length ) {
         $("#botonesPanelUsuario").hide();
@@ -350,8 +394,19 @@ function showMessage() {
 /**
  * a partial function that shows the panel with the buttons when a search is done
  */
-function showButtonsUser() {
+function showButtonsUser(dni_user) {
+    createButtonsUser(dni_user);
     $("#botonesPanelUsuario").show();
+}
+
+
+function createButtonsUser(dni_user) {
+    //var aux = "'" + dni_user + "'";
+    var div = document.getElementById("botonesPanelUsuario");
+    var str = '<a class="btn btn-warning" onclick="confirmDead(' + "'" + dni_user + "'" + ')"> Usuario fallecido</a>' +
+    "<a class='btn btn-send' onclick='showMessage()'><span class='glyphicon glyphicon-envelope'></span> Enviar mensaje </a>";
+
+    div.innerHTML = str;
 }
 
 
