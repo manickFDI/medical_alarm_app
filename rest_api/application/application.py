@@ -235,10 +235,8 @@ class User(Resource):
                                          "Use a JSON compatible format",
                                          "User")
             # Get the password sent through post body
-        input_data = input['status']
-        _currentStatus = input_data['current_status']
+        input_data = input['user']
         _newStatus = input_data['new_status']
-        _idContagion = input_data['id_contagion']
 
         user_db = mysqldb.get_user_by_dni(dni)
 
@@ -249,14 +247,14 @@ class User(Resource):
                                          % dni,
                                          "User")
 
-        #if not mysqldb.update_user_satus(user_db, _currentStatus, _newStatus, _idContagion):
-        return create_error_response(500, "User update error",
-                                         "This Function has not been implemented"
-                                         % dni,
+        if _newStatus != "dead" or not mysqldb.update_user_satus(user_db):
+            return create_error_response(500, "User update error",
+                                         "Error updating user to status: %s"
+                                         % _newStatus,
                                          "User")
 
         # RENDER RESPONSE
-        #return '', 204
+        return '', 204
 
 
 class Diseases(Resource):

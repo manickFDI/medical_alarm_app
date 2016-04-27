@@ -993,3 +993,28 @@ entrada:
     }
 
 salida: - (204 NO CONTENT)
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+* Actualiza un usuario cambiando el estado.
+
+NOTA: status can be "undef", "healthy", "cured", "infected", "dead"
+
+recibe el new_status=dead y cambia el estado del usuario a dead y si estaba presente en algun contagio aumenta en uno el numeor de muertes
+de esa enferemedad
+
+
+apiurl:/malarm/api/user/12345678J/
+type: PUT
+
+entrada:
+
+    {
+        "user":{
+            "new_status":"dead"
+        }
+    }
+
+salida:  - (204 NO CONTENT)
