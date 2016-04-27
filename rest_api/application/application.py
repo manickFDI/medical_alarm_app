@@ -489,11 +489,13 @@ class Focuses(Resource):
                 lineParts.append(Point(location['location']['coordinates'][0], location['location']['coordinates'][1]))
             if len(lineParts) > 1:
                 lines.append(LineString(lineParts))
-
+        result = {}
         if len(lines) > 1:
-            return algorithm.calculateFocus(lines)
+            result = algorithm.calculateFocus(lines)
 
-        return {}
+        #Insert into mysql db
+
+        return result
 
 
 
