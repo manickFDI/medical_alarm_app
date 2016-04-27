@@ -1,6 +1,7 @@
 ENTRYPOINT_FOCUSES = "http://localhost:5000/malarm/api/focuses/",
 ENTRYPOINT_FOCUS = "http://localhost:5000/malarm/api/focus/",
-ENTRYPOINT_USER = "http://localhost:5000/malarm/api/user/"
+ENTRYPOINT_USER = "http://localhost:5000/malarm/api/user/",
+DOCTOR_ID = 1
 
 /*
 	Realiza la peticion AJAX para obtener la lista de focos activos.
@@ -230,7 +231,7 @@ function updateUsersToFocusTable(data) {
 */
 function confirmSubmit() {
 	personalAlert("CARGANDO  ", " --  Buscando los posibles focos...", "info", 1000, true);
-	var apiURL = ENTRYPOINT_FOCUS;
+	var apiURL = ENTRYPOINT_FOCUSES;
 	var table = document.getElementById('tableUsersToFocus');
 	var numFilas = table.rows.length;
 
@@ -238,37 +239,49 @@ function confirmSubmit() {
 		var description = document.getElementById('focusDescription').value; // Cogemos el campo descripcion del form
 		//if(description != "") {
 			if(confirm("¿Esta seguro de que quiere dar de alta este contagio?")) {
-				var userData = '{ "usersId":[';
+				var userData = '{ "focus_users":[';
 
 				for(i=1; i<numFilas; i++) { // Empezamos en i=1 para no contar la cabecera
-					var userId = table.rows[i].cells[2].firstChild.id; // Cogemos el id de los botones que contienen el id del usuario
+					//var userId = table.rows[i].cells[2].firstChild.id; // Cogemos el id de los botones que contienen el id del usuario
+					var dni = table.rows[i].cells[0].firstChild.nodeValue; // Cogemos el DNI
 					if(i == numFilas-1)
-						userData += '{"id":"' + userId + '"}'; // Si es la ultima fila no ponemos la coma en el json
+						userData += '{"dni":"' + dni + '"}'; // Si es la ultima fila no ponemos la coma en el json
 					else
-						userData += '{"id":"' + userId + '"},';
+						userData += '{"dni":"' + dni + '"},';
 				}
 
-				userData += '],"description":"' + description + '" }';
+				//userData += '],"description":"' + description + '" }';
+				userData += '],"description":"' + description + '", "doctor_id":"' + DOCTOR_ID + '" }';
 
 				console.log(userData);
 
-				/*userData = JSON.stringify(userData); // Verificamos que el formato es json
+				//userData = JSON.stringify(userData); // Verificamos que el formato es json
 
 				return $.ajax({
 					url: apiURL,
 					type: "POST",
 					data: userData
 				}).done(function (data, textStatus, jqXHR) {
-					alert("Contagio dado de alta correctamente");
-					createTableFocusFound(data);
-					location.href = "#focusFound";
-					//updateGoogleMap(data);
+					//alert("Contagio dado de alta correctamente");
+					if(data.length == 0) {
+						personalAlert("INFO  ", " --  Ningún foco encontrado.", "info", 2000, false);
+					}
+					else {
+						personalAlert("INFO  ", " --  Foco dado de alta correctamente.", "success", 2000, false);
+						createTableFocusFound(data);
+						initMap(data);
+						location.href = "#focusFound";
+					}				
 				}).fail(function (jqXHR, textStatus, errorThrown) {
-					alert("Error al dar de alta un foco.");
-				});*/
+					//alert("Error al dar de alta un foco.");
+					personalAlert("ERROR  ", " --  Error al dar de alta un foco.", "danger", 2000, false);
+				});
+
+				/*
 				location.href = "#focusFound";
 				initMap();
 				createTableFocusFound(); // OJO!! quitar esta linea cuando funcione la peticion AJAX
+				*/
 			}
 		/*}
 		else {
@@ -288,8 +301,7 @@ function confirmSubmit() {
 */
 function createTableFocusFound(data) {
 	var tblBody = document.getElementById('tbodyFocusFound');
-	var numFilas = 3; // OJO!!! numFilas viene en data
-	//var numFilas = data.length;
+	var numFilas = data.length;
 
 	for(var i=0; i<numFilas; i++) {
 		var fila = document.createElement("tr");
@@ -300,9 +312,13 @@ function createTableFocusFound(data) {
 		var textoCelda2 = document.createTextNode("celda en la columna 1");
 		//var textoCelda2 = document.createTextNode(data[i].place);
 		celda2.appendChild(textoCelda2);
+		var celda3 = document.createElement("td");
+		var textoCelda3 = document.createTextNode("Número de usuarios en el foco: " + data[i].num_users);
+		celda3.appendChild(textoCelda3);
 
 		fila.appendChild(celda);
 		fila.appendChild(celda2);
+		fila.appendChild(celda3);
 		tblBody.appendChild(fila);
 	}
 }
@@ -369,7 +385,7 @@ function duplicatedUserInTable(id) {
 */
 function initMap(data) {
 	console.log("initMap");
-	var myLatLng = {lat: 40.489, lng: -3.682};
+	/*var myLatLng = {lat: 40.489, lng: -3.682};
 
 	var map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 5,
@@ -380,7 +396,38 @@ function initMap(data) {
 		position: myLatLng,
 		map: map,
 		title: 'Foco 1'
+	});*/
+	
+	var myLatLng = {lat: 40.489, lng: -3.682};
+
+	var map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 5,
+		center: myLatLng
 	});
 
-	//marker.setMap(map);
+	var marker;
+	for(var i=0; i<data.length; i++) {
+		var focus = data[i];
+		
+		if(focus.type == "Point") {
+			var latitude = focus.points.coordinates[0];
+			var longitude = focus.points.coordinates[1];
+
+			marker = new google.maps.Marker({
+				position: new google.maps.LatLng(latitude, longitude),
+				map: map,
+				title: "Número de personas: " + focus.num_users
+			});
+
+			google.maps.event.addListener(marker, 'click', (function(marker, i) {
+				return function() {
+					infowindow.setContent("Número de personas: " + focus.num_users);
+					infowindow.open(map, marker);
+				}
+			})(marker, i));
+		}
+		else {
+			alert("Error: tipo del foco distinto de Point");
+		}
+	}
 }
