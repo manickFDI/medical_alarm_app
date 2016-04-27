@@ -133,12 +133,14 @@ class MysqlDatabase(object):
         rows = db.execute(selectContagionsIdQuery)
         contagions = []
         if rows is None or rows.rowcount < 1:
+            user['contagions'] = {}
             return user
         for row in rows:
             selectContagionsQuery = "SELECT * FROM {0} WHERE idContagio={1}".format(CONTAGIONS_TABLENAME,
                                                                                     row['idContagio'])
             rows = db.execute(selectContagionsQuery)
             if rows is None or rows.rowcount < 1:
+                user['contagions'] = {}
                 return user
             for row in rows:
                 contagion = self.create_contagion_object(row)
