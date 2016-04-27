@@ -2,24 +2,127 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-* Devuelve un usuario (consulta usuario).
+* Devuelve un usuario y sus contagios (consulta usuario).
 
-apiurl: malarm/api/user/122234569
+apiurl: /malarm/api/user/12345678J
 type: GET
 
 entrada: -
 
 salida:
     {
-        "birthday": "12-12-1222",
-        "email": "manuma",
-        "gender": "0",
-        "idnumber": "122234569",
-        "idusuario": "0",
-        "lastname": "Martinez",
-        "name": "Manu",
-        "state": 0,
-        "weight": 80.0
+      "birthday": "20/10/1990",
+      "contagions": [
+        {
+          "contagion_id": "1",
+          "date": "10/02/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "1",
+            "eradicated": "no",
+            "name": "Ebola",
+            "num_adults": "15",
+            "num_children": "4",
+            "num_contagions": "31",
+            "num_deaths": "10",
+            "num_elders": "2",
+            "num_men": "15",
+            "num_teenagers": "10",
+            "num_women": "16",
+            "weight": "60"
+          },
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "0",
+          "place": "Barcelona",
+          "time": "10"
+        },
+        {
+          "contagion_id": "4",
+          "date": "11/01/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "2",
+            "eradicated": "no",
+            "name": "Zika",
+            "num_adults": "20",
+            "num_children": "9",
+            "num_contagions": "37",
+            "num_deaths": "20",
+            "num_elders": "7",
+            "num_men": "23",
+            "num_teenagers": "10",
+            "num_women": "14",
+            "weight": "70"
+          },
+          "disease_id": "2",
+          "distance": "10",
+          "doctor_id": "1",
+          "level": "2",
+          "place": "Madrid",
+          "time": "40"
+        },
+        {
+          "contagion_id": "6",
+          "date": "13/01/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "3",
+            "eradicated": "no",
+            "name": "Dengue",
+            "num_adults": "15",
+            "num_children": "6",
+            "num_contagions": "42",
+            "num_deaths": "15",
+            "num_elders": "8",
+            "num_men": "16",
+            "num_teenagers": "13",
+            "num_women": "26",
+            "weight": "55"
+          },
+          "disease_id": "3",
+          "distance": "3",
+          "doctor_id": "1",
+          "level": "0",
+          "place": "Cartagena",
+          "time": "5"
+        },
+        {
+          "contagion_id": "7",
+          "date": "24/04/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "3",
+            "eradicated": "no",
+            "name": "Dengue",
+            "num_adults": "15",
+            "num_children": "6",
+            "num_contagions": "42",
+            "num_deaths": "15",
+            "num_elders": "8",
+            "num_men": "16",
+            "num_teenagers": "13",
+            "num_women": "26",
+            "weight": "55"
+          },
+          "disease_id": "3",
+          "distance": "3",
+          "doctor_id": "1",
+          "level": "0",
+          "place": "Barcelona",
+          "time": "1"
+        }
+      ],
+      "email": "jr@malarm.com",
+      "gender": "0",
+      "idnumber": "12345678J",
+      "lastname": "Rodriguez",
+      "name": "Juan",
+      "salt": "salt",
+      "state": 0,
+      "user_id": "2",
+      "weight": 65
     }
 
 
@@ -848,3 +951,45 @@ Salida:
             }
           }
         ]
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado un idUsuario y un idContagio borra la notificacion y pone el estado de usuario a sano si era indefinido
+
+/malarm/api/notification/
+
+type: DELETE
+
+entrada:
+    {
+        "notification":{
+            "user_id":"7",
+            "contagion_id":"3"
+        }
+    }
+
+
+salida: - (204 NO CONTENT)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado un idUsuario y un idContagio quita el contagio de la tabla de usuariosContagiados y actualiza el estado del usuario a
+curado si no tiene mas contagios
+
+/malarm/api/users/contagions/
+
+type: DELETE
+
+entrada:
+    {
+        "user_contagion":{
+            "user_id":"2",
+            "contagion_id":"6"
+        }
+    }
+
+salida: - (204 NO CONTENT)

@@ -225,19 +225,7 @@ class User(Resource):
                                          "User")
         # FILTER AND GENERATE RESPONSE
         # Create the envelope:
-        envelope = {}
-
-        envelope['idusuario'] = user_db['user_id']
-        envelope['name'] = user_db['name']
-        envelope['lastname'] = user_db['lastname']
-        envelope['email'] = user_db['email']
-        envelope['birthday'] = user_db['birthday']
-        envelope['gender'] = user_db['gender']
-        envelope['weight'] = user_db['weight']
-        envelope['idnumber'] = user_db['idnumber']
-        envelope['state'] = user_db['state']
-
-        return envelope
+        return user_db
 
     def put(self, dni):
         # PARSE THE REQUEST:
@@ -261,14 +249,14 @@ class User(Resource):
                                          % dni,
                                          "User")
 
-        if not mysqldb.update_user_satus(user_db, _currentStatus, _newStatus, _idContagion):
-            return create_error_response(500, "User update error",
-                                         "Error when updating the user %s status"
+        #if not mysqldb.update_user_satus(user_db, _currentStatus, _newStatus, _idContagion):
+        return create_error_response(500, "User update error",
+                                         "This Function has not been implemented"
                                          % dni,
                                          "User")
 
         # RENDER RESPONSE
-        return '', 204
+        #return '', 204
 
 
 class Diseases(Resource):
@@ -424,7 +412,24 @@ class UsersContagions(Resource):
         return create_error_response(403, "Error updating infected user",
                                      "There is no a user contagion with the provided ids",
                                      "UserContagions")
+    def delete(self):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['user_contagion']
+        _user_id = input_data['user_id']
+        _contagion_id = input_data['contagion_id']
 
+        if mysqldb.delete_user_contagion(_user_id, _contagion_id):
+            return '', 204
+
+        return create_error_response(403, "Error updating disease",
+                                         "There is no a disease or contagion with the provided ids",
+                                         "UserContagions")
 
 class Contagions(Resource):
     def get(self):
@@ -558,7 +563,24 @@ class Notification(Resource):
         return create_error_response(403, "Error updating notification",
                                      "There is no a notification with the provided ids",
                                      "Notification")
+    def delete(self):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['notification']
+        _user_id = input_data['user_id']
+        _contagion_id = input_data['contagion_id']
 
+        if mysqldb.delete_notification(_user_id, _contagion_id):
+            return '', 204
+
+        return create_error_response(403, "Error updating notification",
+                                     "There is no a notification with the provided ids",
+                                     "Notification")
 
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
