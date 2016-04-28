@@ -186,10 +186,11 @@ class MysqlDatabase(object):
         idNumber = row['DNI']
         state = row['estado']
         salt = row['salt']
+        secret = row['secret']
 
         user = {'user_id': id, 'name': name, 'lastname': lastname,
                 'email': email, 'birthday': birthday, 'gender': gender,
-                'weight': weight, 'idnumber': idNumber, 'state': state, 'salt': salt}
+                'weight': weight, 'idnumber': idNumber, 'state': state, 'salt': salt, 'secret': secret}
 
         return user
 
