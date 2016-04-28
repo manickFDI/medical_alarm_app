@@ -309,8 +309,8 @@ function createTableFocusFound(data) {
 		var textoCelda = document.createTextNode(i+1);
 		celda.appendChild(textoCelda);
 		var celda2 = document.createElement("td");
-		var textoCelda2 = document.createTextNode("celda en la columna 1");
-		//var textoCelda2 = document.createTextNode(data[i].place);
+		//var textoCelda2 = document.createTextNode("celda en la columna 1");
+		var textoCelda2 = document.createTextNode(data[i].points[0].address);
 		celda2.appendChild(textoCelda2);
 		var celda3 = document.createElement("td");
 		var textoCelda3 = document.createTextNode("Número de usuarios en el foco: " + data[i].num_users);
@@ -409,9 +409,9 @@ function initMap(data) {
 	for(var i=0; i<data.length; i++) {
 		var focus = data[i];
 		
-		if(focus.type == "Point") {
-			var latitude = focus.points.coordinates[0];
-			var longitude = focus.points.coordinates[1];
+		if(focus.points[0].type == "Point") {
+			var latitude = focus.points[0].coordinates[0];
+			var longitude = focus.points[0].coordinates[1];
 
 			marker = new google.maps.Marker({
 				position: new google.maps.LatLng(latitude, longitude),

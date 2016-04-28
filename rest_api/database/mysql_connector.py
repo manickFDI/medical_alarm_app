@@ -24,6 +24,7 @@ FOCUS_TABLENAME = "foco"
 FOCUS_TABLE_COLUMNS = "idFoco, descripcion, numPersonas, idMedico"
 FOCUS_PLACES_TABLENAME = "lugaresFoco"
 FOCUS_PLACES_TABLE_COLUMNS = "idFoco, lugar, fecha"
+FOCUS_USERS_TABLENAME = "usuarioEnFoco"
 CONTAGIONS_TABLENAME = "contagio"
 CONTAGIONS_USERS_TABLENAME = "usuarioContagiado"
 USER_NOTIFICATIONS_TABLENAME = "notificacion"
@@ -185,10 +186,11 @@ class MysqlDatabase(object):
         idNumber = row['DNI']
         state = row['estado']
         salt = row['salt']
+        secret = row['secret']
 
         user = {'user_id': id, 'name': name, 'lastname': lastname,
                 'email': email, 'birthday': birthday, 'gender': gender,
-                'weight': weight, 'idnumber': idNumber, 'state': state, 'salt': salt}
+                'weight': weight, 'idnumber': idNumber, 'state': state, 'salt': salt, 'secret': secret}
 
         return user
 
@@ -373,6 +375,34 @@ class MysqlDatabase(object):
             db.execute(deleteFocusQuery)
             return True
         return False
+
+    def insert_focus(self, foco):
+
+        insertQuery = "INSERT INTO {0} (descripcion, numPersonas, idMedico) VALUES (\"{1}\", {2}, {3})".format(FOCUS_TABLENAME,
+                                                                                                           foco['description'],
+                                                                                                           foco['num_users'],
+                                                                                                           foco['doctor_id'])
+        rows = db.execute(insertQuery)
+        if rows is not None:
+            return rows.lastrowid
+        return None
+
+    def insert_user_focus(self, focus, user):
+
+        insertQuery = "INSERT INTO {0} (idUsuario, idFoco) VALUES ({1},{2})".format(FOCUS_USERS_TABLENAME, user['user_id'],
+                                                                                    focus['focus_id'])
+
+        db.execute(insertQuery)
+        return True
+
+    def insert_focus_place(self, focus, point, date):
+
+        insertQuery = "INSERT INTO {0} (idFoco, lugar, fecha) VALUES ({1}, \"{2}\", \"{3}\")".format(FOCUS_PLACES_TABLENAME,
+                                                                                                    focus['focus_id'],
+                                                                                                    point['address'],
+                                                                                                    date)
+        db.execute(insertQuery)
+        return True
 
     @staticmethod
     def create_focus_object(row):
