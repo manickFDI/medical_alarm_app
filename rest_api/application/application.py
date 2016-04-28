@@ -7,6 +7,8 @@ from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
 from shapely.geometry import LineString, Point
 import requests
+from datetime import datetime
+import time
 
 # Define the application and the api
 app = Flask(__name__)
@@ -62,8 +64,8 @@ def reverse_geocode(coordinates):
     #   console.log(p);
     # })
     #
-    latitude = coordinates['lat']
-    longitude = coordinates['lng']
+    latitude = coordinates[0]
+    longitude = coordinates[1]
 
     # Did the geocoding request comes from a device with a
     # location sensor? Must be either true or false.
@@ -169,9 +171,7 @@ class Users(Resource):
         _id = mysqldb.create_user(_name, _lastName, _email, _birthday, _gender, _weight, _idNumber, _secret, _salt, 0)
 
         # CREATE RESPONSE AND RENDER
-        return Response(status=201,
-                        headers={"Location": api.url_for(User, id=_id)}
-                        )
+        return  '', 204
 
 
 class User(Resource):
@@ -479,25 +479,58 @@ class Focuses(Resource):
                                          "User")
             # Get the password sent through post body
         input_data = input['focus_users']
+        _description = input['description']
+        _doctorId = input['doctor_id']
 
         lines = []
+        _numUsers = 0
+        _users = []
         for dni in input_data:
             user = mysqldb.get_user_by_dni(dni['dni'])
-            locations = mongo_connector.getPointsGroupedByUser(user['user_id'])
-            lineParts = []
-            for location in locations:
-                lineParts.append(Point(location['location']['coordinates'][0], location['location']['coordinates'][1]))
-            if len(lineParts) > 1:
-                lines.append(LineString(lineParts))
+            if user is not None:
+                _numUsers += 1
+                _users.append(user)
+                locations = mongo_connector.getPointsGroupedByUser(user['user_id'])
+                lineParts = []
+                for location in locations:
+                    lineParts.append(Point(location['location']['coordinates'][0], location['location']['coordinates'][1]))
+                if len(lineParts) > 1:
+                    lines.append(LineString(lineParts))
         result = {}
+        ret = []
         if len(lines) > 1:
             result = algorithm.calculateFocus(lines)
+            if len(result) > 0:
+                focus = {}
+                focus['description'] = _description
+                focus['doctor_id'] = _doctorId
+                focus['num_users'] = _numUsers
+                focus['focus_id'] = mysqldb.insert_focus(focus)
+                for user in _users:
+                    mysqldb.insert_user_focus(focus, user)
 
-        #Insert into mysql db
+                date = time.strftime('%d/%m/%Y')
+                for placeResult in result:
+                    points = placeResult['points']
+                    newPoints = []
+                    if len(points) > 2:
+                        for point in points:
+                            addr = reverse_geocode(point['coordinates'])
+                            point['address'] = addr
+                            mysqldb.insert_focus_place(focus, point, date)
+                            newPoints.append(point)
+                    else:
+                        addr = reverse_geocode(points['coordinates'])
+                        points['address'] = addr
+                        mysqldb.insert_focus_place(focus, points, date)
+                        newPoints.append(points)
 
-        return result
+                    newPlaceResult = {}
+                    newPlaceResult['num_users'] = placeResult['num_users']
+                    newPlaceResult['points'] = newPoints
+                    ret.append(newPlaceResult)
 
-
+        return ret
 
 
 class Focus(Resource):
