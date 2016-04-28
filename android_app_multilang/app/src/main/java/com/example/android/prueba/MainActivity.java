@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, 3000);
 
-        if(!prefs.contains("Email")) {
+        if(!prefs.contains("DNI")) {
             //crear login
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         prefsEditor.commit();*/
 
 
-        // PRUEBA POST
+        // PRUEBA POST sensores
         //Intent intent = new Intent(this, ApiService.class);
         //startService(intent);
 

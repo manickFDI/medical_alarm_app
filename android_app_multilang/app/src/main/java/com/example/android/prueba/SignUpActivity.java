@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.example.android.prueba.models.User;
 
@@ -42,7 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText _dniText;
     private EditText _fechaText;
     private EditText _emailText;
-    private EditText _alturaText;
+    private RadioGroup _radioGroup;
+    //private EditText _alturaText;
     private EditText _pesoText;
     private EditText _passwordText;
     private EditText _repasswordText;
@@ -91,6 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
         final String name = _nameText.getText().toString();
         final String email = _emailText.getText().toString();
         final String password = _passwordText.getText().toString();
+        final String dni = _dniText.getText().toString();
 
         // TODO: Implement your own signup logic here.
 
@@ -99,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        onSignupSuccess(name, email, password); //guardamos el nuevo usuario en preferencias
+                        onSignupSuccess(name, email, password, dni); //guardamos el nuevo usuario en preferencias
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
@@ -113,7 +116,15 @@ public class SignUpActivity extends AppCompatActivity {
         nuevoUsuario.setDni(_dniText.getText().toString());
         nuevoUsuario.setBirthdate(_fechaText.getText().toString());
         nuevoUsuario.setEmail(_emailText.getText().toString());
-        nuevoUsuario.setHeight(Integer.parseInt(_alturaText.getText().toString()));
+        //nuevoUsuario.setHeight(Integer.parseInt(_alturaText.getText().toString()));
+        int gender = 0;
+        if(_radioGroup.getCheckedRadioButtonId() == R.id.radio_male) {
+            gender = 0;
+        }
+        else if(_radioGroup.getCheckedRadioButtonId() == R.id.radio_female) {
+            gender = 1;
+        }
+        nuevoUsuario.setGender(gender);
         nuevoUsuario.setWeight(Integer.parseInt(_pesoText.getText().toString()));
         nuevoUsuario.setPassword(_passwordText.getText().toString());
 
@@ -123,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void onSignupSuccess(String name, String email, String pass) {
+    public void onSignupSuccess(String name, String email, String pass, String dni) {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
 
@@ -132,6 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
         editor.putString("Nombre", name);
         editor.putString("Email", email);
         editor.putString("Password", pass);
+        editor.putString("DNI", dni);
         editor.commit();
 
         finish();
@@ -183,12 +195,21 @@ public class SignUpActivity extends AppCompatActivity {
         _dniText = (EditText) findViewById(R.id.input_dni);
         _fechaText = (EditText) findViewById(R.id.input_fechaNac);
         _emailText = (EditText) findViewById(R.id.input_email);
-        _alturaText = (EditText) findViewById(R.id.input_altura);
+        _radioGroup = (RadioGroup) findViewById(R.id.radioGroup_gender);
+        //_alturaText = (EditText) findViewById(R.id.input_altura);
         _pesoText = (EditText) findViewById(R.id.input_peso);
         _passwordText = (EditText) findViewById(R.id.input_password);
         _repasswordText = (EditText) findViewById(R.id.input_repassword);
         _signupButton = (Button) findViewById(R.id.btn_signup);
         _loginButton = (Button) findViewById(R.id.btn_login);
+
+        _radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            }
+        });
 
     }
 
@@ -201,7 +222,7 @@ public class SignUpActivity extends AppCompatActivity {
         builder.appendQueryParameter("dni", user.getDni());
         builder.appendQueryParameter("birthdate", user.getBirthdate());
         builder.appendQueryParameter("email", user.getEmail());
-        builder.appendQueryParameter("height", Integer.toString(user.getHeight()));
+        //builder.appendQueryParameter("height", Integer.toString(user.getHeight()));
         builder.appendQueryParameter("weight", Integer.toString(user.getWeight()));
         builder.appendQueryParameter("password", user.getPassword());
 
@@ -253,7 +274,7 @@ public class SignUpActivity extends AppCompatActivity {
                 writer.flush();
                 writer.close();
                 os.close();
-                Log.d("TAG", "Query:" + query);
+                //Log.d("TAG", "Query:" + query);
                 Log.d("TAG", "...connecting...");
                 conn.connect();
                 int responseCode = conn.getResponseCode(); // es aqui donde realmente se realiza el POST
@@ -279,19 +300,20 @@ public class SignUpActivity extends AppCompatActivity {
             try {
                 jo.put("name", user.getName());
                 jo.put("lastname", user.getSurnames());
-                jo.put("dni", user.getDni());
+                jo.put("idnumber", user.getDni());
                 jo.put("birthday", user.getBirthdate());
                 jo.put("email", user.getEmail());
-                jo.put("height", Integer.toString(user.getHeight()));
+                jo.put("gender", Integer.toString(user.getGender()));
                 jo.put("weight", Integer.toString(user.getWeight()));
                 jo.put("password", user.getPassword());
+
+                jo.put("secret", 1); // secret de prueba
 
                 jo2.put("user", jo);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            Log.d("TAG", jo2.toString());
             return jo2.toString();
         }
     }

@@ -101,22 +101,24 @@
 
         <!-- Sexo Label -->
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/radioGroup_gender"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:theme="@style/inputTextLayout"
-            android:orientation="vertical">
-            <RadioButton android:id="@+id/radio_pirates"
+            android:checkedButton="@+id/radio_male"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hombre"
-                android:color = "#000000"
-                android:onClick="onRadioButtonClicked"/>
-
-            <RadioButton android:id="@+id/radio_ninjas"
+                android:textColor="#ffffff"
+                />
+            <RadioButton android:id="@+id/radio_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mujer"
-                android:onClick="onRadioButtonClicked"/>
+                android:textColor="#ffffff"
+                />
         </RadioGroup>
 
         <!-- Peso Label -->

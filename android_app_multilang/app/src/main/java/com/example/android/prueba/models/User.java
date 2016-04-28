@@ -1,6 +1,8 @@
 package com.example.android.prueba.models;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,13 +14,14 @@ import java.lang.reflect.Type;
 public class User {
     private String user_id;
     private String name;
-    private String surnames;
-    private String dni;
-    private String birthdate;
+    private String lastname;
+    private String idnumber;
+    private String birthday;
     private String email;
-    private int height;
+    //private int height;
+    private int gender;
     private int weight;
-    private String password;
+    private String secret;
 
     public String getUser_id() {
         return user_id;
@@ -37,27 +40,27 @@ public class User {
     }
 
     public String getSurnames() {
-        return surnames;
+        return lastname;
     }
 
     public void setSurnames(String surnames) {
-        this.surnames = surnames;
+        this.lastname = surnames;
     }
 
     public String getDni() {
-        return dni;
+        return idnumber;
     }
 
     public void setDni(String dni) {
-        this.dni = dni;
+        this.idnumber = dni;
     }
 
     public String getBirthdate() {
-        return birthdate;
+        return birthday;
     }
 
     public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+        this.birthday = birthdate;
     }
 
     public String getEmail() {
@@ -68,12 +71,12 @@ public class User {
         this.email = email;
     }
 
-    public int getHeight() {
-        return height;
+    public int getGender() {
+        return gender;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public void setGender(int g) {
+        this.gender = g;
     }
 
     public int getWeight() {
@@ -85,11 +88,11 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return secret;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.secret = password;
     }
 
     /**
@@ -98,6 +101,8 @@ public class User {
      * @return the User correctly built
      */
     public static User buildUser(String json) {
+        Log.d("TAG", json);
+
         Gson gson = new Gson();
         Type type = new TypeToken<User>(){}.getType();
         return gson.fromJson(json, type);

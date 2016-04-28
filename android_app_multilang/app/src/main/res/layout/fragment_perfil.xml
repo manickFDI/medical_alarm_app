@@ -107,10 +107,10 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:layout_marginRight="@dimen/espacio_norma_2"
-                android:src="@drawable/ic_human_grey600_18dp" />
+                android:src="@drawable/gender_male_female" />
 
             <TextView
-                android:id="@+id/texto_altura"
+                android:id="@+id/texto_genero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

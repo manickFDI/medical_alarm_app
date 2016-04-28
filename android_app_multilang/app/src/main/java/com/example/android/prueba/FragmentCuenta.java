@@ -1,5 +1,7 @@
 package com.example.android.prueba;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,10 +66,19 @@ public class FragmentCuenta extends Fragment {
     }
 
     private void poblarViewPager(ViewPager viewPager) {
+
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        String dni = prefs.getString("DNI", "");
+        //Bundle bundle = new Bundle();
+        //bundle.putString("dni", dni);
+        FragmentPerfil fp = new FragmentPerfil();
+        fp.loadUser(dni);
+        //fp.setArguments(bundle);
+
         AdaptadorSecciones adapter = new AdaptadorSecciones(getFragmentManager());
         adapter.addFragment(new FragmentEstado(), getString(R.string.titulo_tab_estado));
         adapter.addFragment(new FragmentInfo(), getString(R.string.titulo_tab_info));
-        adapter.addFragment(new FragmentPerfil(), getString(R.string.titulo_tab_perfil));
+        adapter.addFragment(fp, getString(R.string.titulo_tab_perfil));
         viewPager.setAdapter(adapter);
     }
 
