@@ -1351,12 +1351,12 @@ salida:
 * Dado un id de usuario y de noticia elimina la fila corresponiente de noticiasPorUsuario
 
 entrada:
-      {
-              "user_news":{
-                  "user_dni":"1"
-                  "news_id":"2"
-              }
-          }
+     {
+         "user_news":{
+             "user_dni":"12345678J",
+             "news_id":"2"
+         }
+     }
 salida: - (204 NO CONTENT)
 
 
