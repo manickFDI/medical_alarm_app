@@ -56,7 +56,7 @@ def geocode(place):
     return data['results'][0]['geometry']['location']
 
 
-def reverse_geocode(coordinates):
+def reverse_geocode(coordinates, zone):
     # grab some lat/long coords from wherever. For this example,
     # I just opened a javascript console in the browser and ran:
     #
@@ -81,7 +81,10 @@ def reverse_geocode(coordinates):
     url = "{base}{params}".format(base=base, params=params)
     response = requests.get(url)
     data = response.json()
-    return data['results'][0]['formatted_address']
+    if not zone:
+        return data['results'][0]['formatted_address']
+    else:
+        return data['results'][0]['address_components'][2]['short_name']
 
 
 class Users(Resource):
@@ -515,12 +518,12 @@ class Focuses(Resource):
                     newPoints = []
                     if len(points) > 2:
                         for point in points:
-                            addr = reverse_geocode(point['coordinates'])
+                            addr = reverse_geocode(point['coordinates'], False)
                             point['address'] = addr
                             mysqldb.insert_focus_place(focus, point, date)
                             newPoints.append(point)
                     else:
-                        addr = reverse_geocode(points['coordinates'])
+                        addr = reverse_geocode(points['coordinates'], False)
                         points['address'] = addr
                         mysqldb.insert_focus_place(focus, points, date)
                         newPoints.append(points)
@@ -659,6 +662,20 @@ class News(Resource):
 
         return '', 204
 
+
+class Status(Resource):
+
+    def get(self):
+        _user = request.args['user_dni']
+        _lat = request.args['lat']
+        _lng = request.args['lng']
+
+        status = {}
+        status['user'] = mysqldb.get_user_by_dni(_user)
+        status['zone'] = mysqldb.get_contagions_by_zone(reverse_geocode([_lat,_lng], True))
+
+        return status
+
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
 app.url_map.converters['regex'] = RegexConverter
@@ -678,6 +695,7 @@ api.add_resource(Notifications, '/malarm/api/user/notifications/', endpoint='use
 api.add_resource(Notification, '/malarm/api/notification/', endpoint='notification')
 api.add_resource(Dispersion, '/malarm/api/dispersion/<name>/', endpoint='dispersion')
 api.add_resource(News, '/malarm/api/news/', endpoint='news')
+api.add_resource(Status, '/malarm/api/user/status/', endpoint='status')
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
 if __name__ == '__main__':

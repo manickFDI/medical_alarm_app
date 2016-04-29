@@ -1359,6 +1359,158 @@ entrada:
      }
 salida: - (204 NO CONTENT)
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
+*dado el dni de un usuairo y su localizacion (lat-lng) obtiene el estado del usuario (si tiene o no contagios) y la zona
+si hay contagios o no en la zona.
+
+apiurl: /malarm/api/user/status/?user_dni=12345678J&lat=40.451816&lng=-3.729581
+
+entrada: -
+
+salida:
+    {
+      "user": {
+        "birthday": "20/10/1990",
+        "contagions": [
+          {
+            "contagion_id": "1",
+            "date": "10/02/2016",
+            "description": "lorem impsum",
+            "disease": {
+              "disease_id": "1",
+              "eradicated": "no",
+              "name": "Ebola",
+              "num_adults": "15",
+              "num_children": "4",
+              "num_contagions": "31",
+              "num_deaths": "11",
+              "num_elders": "2",
+              "num_men": "15",
+              "num_teenagers": "10",
+              "num_women": "16",
+              "weight": "60"
+            },
+            "disease_id": "1",
+            "distance": "2",
+            "doctor_id": "1",
+            "level": "0",
+            "place": "Barcelona",
+            "time": "10"
+          },
+          {
+            "contagion_id": "4",
+            "date": "11/01/2016",
+            "description": "lorem impsum",
+            "disease": {
+              "disease_id": "2",
+              "eradicated": "no",
+              "name": "Zika",
+              "num_adults": "20",
+              "num_children": "9",
+              "num_contagions": "37",
+              "num_deaths": "21",
+              "num_elders": "7",
+              "num_men": "23",
+              "num_teenagers": "10",
+              "num_women": "14",
+              "weight": "70"
+            },
+            "disease_id": "2",
+            "distance": "10",
+            "doctor_id": "1",
+            "level": "2",
+            "place": "Madrid",
+            "time": "40"
+          },
+          {
+            "contagion_id": "6",
+            "date": "13/01/2016",
+            "description": "lorem impsum",
+            "disease": {
+              "disease_id": "3",
+              "eradicated": "no",
+              "name": "Dengue",
+              "num_adults": "15",
+              "num_children": "6",
+              "num_contagions": "42",
+              "num_deaths": "17",
+              "num_elders": "8",
+              "num_men": "16",
+              "num_teenagers": "13",
+              "num_women": "26",
+              "weight": "55"
+            },
+            "disease_id": "3",
+            "distance": "3",
+            "doctor_id": "1",
+            "level": "0",
+            "place": "Cartagena Spain",
+            "time": "5"
+          },
+          {
+            "contagion_id": "7",
+            "date": "24/04/2016",
+            "description": "lorem impsum",
+            "disease": {
+              "disease_id": "3",
+              "eradicated": "no",
+              "name": "Dengue",
+              "num_adults": "15",
+              "num_children": "6",
+              "num_contagions": "42",
+              "num_deaths": "17",
+              "num_elders": "8",
+              "num_men": "16",
+              "num_teenagers": "13",
+              "num_women": "26",
+              "weight": "55"
+            },
+            "disease_id": "3",
+            "distance": "3",
+            "doctor_id": "1",
+            "level": "0",
+            "place": "Barcelona",
+            "time": "1"
+          }
+        ],
+        "email": "jr@malarm.com",
+        "gender": "0",
+        "idnumber": "12345678J",
+        "lastname": "Rodriguez",
+        "name": "Juan",
+        "salt": "salt",
+        "secret": "secret",
+        "state": 4,
+        "user_id": "2",
+        "weight": 65
+      },
+      "zone": [
+        {
+          "contagion_id": "2",
+          "date": "07/04/2016",
+          "description": "lorem impsum",
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "2",
+          "place": "Madrid",
+          "time": "20"
+        },
+        {
+          "contagion_id": "4",
+          "date": "11/01/2016",
+          "description": "lorem impsum",
+          "disease_id": "2",
+          "distance": "10",
+          "doctor_id": "1",
+          "level": "2",
+          "place": "Madrid",
+          "time": "40"
+        }
+      ]
+    }
 
 

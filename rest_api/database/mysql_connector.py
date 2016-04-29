@@ -327,9 +327,6 @@ class MysqlDatabase(object):
 
         return data
 
-
-
-
     @staticmethod
     def create_disease_object(row):
 
@@ -587,6 +584,19 @@ class MysqlDatabase(object):
             updateQuery = "UPDATE {0} SET estado={1} WHERE idUsuario={2}".format(USERS_TABLENAME, 2, user_id)
             db.execute(updateQuery)
         return True
+
+    def get_contagions_by_zone(self, zone):
+
+        selectQuery = "SELECT * FROM {0} WHERE zona LIKE \"{1}{2}{3}\"".format(CONTAGIONS_TABLENAME, str("%%"), zone, str("%%"))
+        selectQuery = str(selectQuery)
+        rows = db.execute(selectQuery)
+        if rows is None or rows.rowcount < 1:
+            return {}
+        contagions = []
+        for row in rows:
+            contagions.append(self.create_contagion_object(row))
+
+        return contagions
 
     @staticmethod
     def create_contagion_object(row):
