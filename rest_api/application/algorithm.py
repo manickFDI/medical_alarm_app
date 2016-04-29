@@ -1,8 +1,11 @@
 import os
 import sys
+from functools import partial
 
 # Path for spark source folder
 from itertools import combinations
+
+from database import mongo_connector
 
 os.environ['SPARK_HOME'] = "/usr/local/Cellar/apache-spark/1.5.2"
 # Append pyspark  to Python Path
@@ -10,7 +13,7 @@ sys.path.append("/usr/local/Cellar/apache-spark/1.5.2/libexec/python/")
 
 from flask import json
 from pyspark import SparkContext, SparkConf
-from shapely.geometry import LineString, mapping
+from shapely.geometry import LineString, mapping, Point
 
 
 def initializeSpark(appName, sparkMaster):
@@ -45,7 +48,6 @@ def combine(items):
 
 
 def calculateFocus(lines):
-
     initializeSpark("Malarm", "local[2]")
     lineCombinations = combine(lines)
     result = []
@@ -60,3 +62,27 @@ def calculateFocus(lines):
 
     stopContext()
     return result
+
+
+def get_points_in_time(point, U):
+    return (point, mongo_connector.get_points_in_time_window(U['user_id'], point['timestamp']))
+
+
+def compare_points_location(point, possible_points, D):
+    points = []
+    user_point = Point(point['location']['coordinates'][0], point['location']['coordinates'][1])
+    for possible_point in possible_points:
+        aux = Point(possible_point['location']['coordinates'][0], point['location']['coordinates'][1])
+        if user_point.distance(aux) <= D.value:
+            points.append(possible_point)
+    return points
+
+
+def calculateContagion(user, time_window, distance):
+    initializeSpark("Malarm", "local[2]")
+    D = sc.broadcast(distance)
+    U = sc.broadcast(user)
+    points = sc.parallelize(mongo_connector.get_points_by_user_and_time(user['user_id'], time_window))
+    users = points.flatMap(partial(get_points_in_time, U=U)).map(partial(compare_points_location, D=D)).collect()
+    stopContext()
+    return users

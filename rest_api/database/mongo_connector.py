@@ -1,6 +1,8 @@
 # from flask.ext.mongoalchemy import MongoAlchemy
 
 from flask.ext.pymongo import PyMongo
+from datetime import date, timedelta, datetime
+import calendar
 
 
 def init_app(app):
@@ -54,5 +56,51 @@ def getPointsGroupedByUser(user_id):
     for item in cur:
         user = item
         points.append(user)
+
+    return points
+
+
+def get_points_in_time_window(user_id, timestamp):
+    aux_id = int(user_id)
+    aux_time = int(timestamp)
+    date_ts = datetime.datetime.fromtimestamp(aux_time)
+    lower_ts = calendar.timegm((date_ts - timedelta(minutes=5)).utctimetuple())
+    upper_ts = calendar.timegm((date_ts + timedelta(minutes=5)).utctimetuple())
+
+    cur = mongo.db.sensors.find({"user_id": {"$ne": aux_id}, "timestamp": {"$gte": lower_ts, "$lte": upper_ts}})
+
+    points = []
+    for item in cur:
+        point = {}
+        point['user_id'] = item['user_id']
+        point['location'] = item['location']
+        point['timestamp'] = item['timestamp']
+        point['magnetometer'] = item['magnetometer']
+        point['accelerometer'] = item['accelerometer']
+        point['light'] = item['light']
+        point['battery'] = item['battery']
+        points.append(point)
+
+    return points
+
+
+def get_points_by_user_and_time(user_id, time_window):
+    aux_id = int(user_id)
+    aux_time = int(time_window)
+    limit_date = date.today() - timedelta(days=aux_time)
+    limit_ts = calendar.timegm(limit_date.utctimetuple())
+    cur = mongo.db.sensors.find({"user_id": {"$eq": aux_id}, "timestamp": {"$gte": limit_ts}})
+
+    points = []
+    for item in cur:
+        point = {}
+        point['user_id'] = item['user_id']
+        point['location'] = item['location']
+        point['timestamp'] = item['timestamp']
+        point['magnetometer'] = item['magnetometer']
+        point['accelerometer'] = item['accelerometer']
+        point['light'] = item['light']
+        point['battery'] = item['battery']
+        points.append(point)
 
     return points
