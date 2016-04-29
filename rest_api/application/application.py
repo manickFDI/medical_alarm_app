@@ -429,6 +429,7 @@ class UsersContagions(Resource):
                                          "There is no a disease or contagion with the provided ids",
                                          "UserContagions")
 
+
 class Contagions(Resource):
     def get(self):
 
@@ -464,7 +465,6 @@ class Contagion(Resource):
                                          "There is no a contagion with id %s"
                                          % id,
                                          "Contagion")
-
 
 
 class Focuses(Resource):
@@ -558,6 +558,7 @@ class Focus(Resource):
                                          % id,
                                          "Focus")
 
+
 class Notifications(Resource):
     def get(self):
         _dni = request.args['dni']
@@ -615,6 +616,24 @@ class Notification(Resource):
                                      "There is no a notification with the provided ids",
                                      "Notification")
 
+
+class Dispersion(Resource):
+    def get(self, name):
+
+        disease_db = mysqldb.get_disease_by_name(name)
+
+        # PERFORM OPERATIONS
+        if not disease_db:
+            return create_error_response(404, "Unknown disease",
+                                         "There is no a disease with name %s"
+                                         % name,
+                                         "Dispersion")
+        dispersion = {}
+        dispersion['disease'] = disease_db
+        dispersion['data'] = mysqldb.get_dispersion(disease_db['disease_id'])
+
+        return dispersion
+
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
 app.url_map.converters['regex'] = RegexConverter
@@ -632,6 +651,7 @@ api.add_resource(Contagions, '/malarm/api/contagions/', endpoint='contagions')
 api.add_resource(UsersContagions, '/malarm/api/users/contagions/', endpoint='users_contagions')
 api.add_resource(Notifications, '/malarm/api/user/notifications/', endpoint='user_notifications')
 api.add_resource(Notification, '/malarm/api/notification/', endpoint='notification')
+api.add_resource(Dispersion, '/malarm/api/dispersion/<name>/', endpoint='dispersion')
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
 if __name__ == '__main__':

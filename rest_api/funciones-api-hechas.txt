@@ -1018,3 +1018,165 @@ entrada:
     }
 
 salida:  - (204 NO CONTENT)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+*Obtiene los datos para las dispersiones de una enfermedad
+
+apiurl:/malarm/api/dispersion/ebola/
+
+entrada: --
+
+salida:
+    {
+      "data": [
+        {
+          "contagion_id": "1",
+          "date": "10/02/2016",
+          "description": "lorem impsum",
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "0",
+          "place": "Barcelona",
+          "time": "10",
+          "users": [
+            {
+              "birthday": "20/10/1990",
+              "email": "jr@malarm.com",
+              "gender": "0",
+              "idnumber": "12345678J",
+              "lastname": "Rodriguez",
+              "name": "Juan",
+              "salt": "salt",
+              "secret": "secret",
+              "state": 4,
+              "user_id": "2",
+              "weight": 65
+            },
+            {
+              "birthday": "07/05/1992",
+              "email": "manuma02@ucm.es",
+              "gender": "0",
+              "idnumber": "11868634J",
+              "lastname": "Martinez",
+              "name": "Manuel",
+              "salt": "salt",
+              "secret": "secret",
+              "state": 1,
+              "user_id": "3",
+              "weight": 80
+            },
+            {
+              "birthday": "18/10/1993",
+              "email": "diediaz@malarm.com",
+              "gender": "0",
+              "idnumber": "52003456L",
+              "lastname": "Diaz",
+              "name": "Diego",
+              "salt": "salt",
+              "secret": "secret",
+              "state": 1,
+              "user_id": "4",
+              "weight": 60
+            },
+            {
+              "birthday": "15/02/1962",
+              "email": "pazsanga@gmail.com",
+              "gender": "1",
+              "idnumber": "50305550L",
+              "lastname": "Sanchez Garcia",
+              "name": "Paz",
+              "salt": "salt",
+              "secret": "secret",
+              "state": 0,
+              "user_id": "9",
+              "weight": 47
+            }
+          ]
+        },
+        {
+          "contagion_id": "2",
+          "date": "07/04/2016",
+          "description": "lorem impsum",
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "2",
+          "place": "Madrid",
+          "time": "20",
+          "users": [
+            {
+              "birthday": "18/10/1993",
+              "email": "diediaz@malarm.com",
+              "gender": "0",
+              "idnumber": "52003456L",
+              "lastname": "Diaz",
+              "name": "Diego",
+              "salt": "salt",
+              "secret": "secret",
+              "state": 1,
+              "user_id": "4",
+              "weight": 60
+            },
+            {
+              "birthday": "02/10/1960",
+              "email": "manuelzuri.martinez@ono.es",
+              "gender": "0",
+              "idnumber": "50301055D",
+              "lastname": "Martinez Zurimendi",
+              "name": "Manuel",
+              "salt": "salt",
+              "secret": "secret",
+              "state": 0,
+              "user_id": "10",
+              "weight": 47
+            }
+          ]
+        },
+        {
+          "contagion_id": "3",
+          "date": "20/03/2016",
+          "description": "lorem impsum",
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "1",
+          "place": "Cartagena Spain",
+          "time": "2",
+          "users": [
+            {
+              "birthday": "15/10/1998",
+              "email": "jprodriguez@malarm.com",
+              "gender": "0",
+              "idnumber": "12345678Z",
+              "lastname": "Guitierrez",
+              "name": "Juan Pedro",
+              "salt": "salt",
+              "secret": "secret",
+              "state": 1,
+              "user_id": "6",
+              "weight": 60
+            }
+          ]
+        }
+      ],
+      "disease": {
+        "disease_id": "1",
+        "eradicated": "no",
+        "name": "Ebola",
+        "num_adults": "15",
+        "num_children": "4",
+        "num_contagions": "31",
+        "num_deaths": "11",
+        "num_elders": "2",
+        "num_men": "15",
+        "num_teenagers": "10",
+        "num_women": "16",
+        "weight": "60"
+      }
+    }

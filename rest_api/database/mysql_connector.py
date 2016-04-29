@@ -304,6 +304,30 @@ class MysqlDatabase(object):
 
         return False
 
+    def get_dispersion(self, id):
+
+        selectQuery = "SELECT * FROM {0} WHERE idEnfermedad={1}".format(CONTAGIONS_TABLENAME, id)
+        rows = db.execute(selectQuery)
+
+        if rows is None or rows.rowcount < 1:
+            return {}
+        data = []
+        for row in rows:
+            contagion = self.create_contagion_object(row)
+            selectUserContagionQuery = "SELECT * FROM {0} WHERE idContagio={1}".format(CONTAGIONS_USERS_TABLENAME, contagion['contagion_id'])
+
+            usersId = db.execute(selectUserContagionQuery)
+            users = []
+            for userId in usersId:
+                users.append(self.get_user_by_id(userId['idUsuario']))
+            contagion['users'] = users
+            data.append(contagion)
+
+        return data
+
+
+
+
     @staticmethod
     def create_disease_object(row):
 
