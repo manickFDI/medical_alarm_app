@@ -1180,3 +1180,185 @@ salida:
         "weight": "60"
       }
     }
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado el id de un usuario devuelve los contagios y enferemedades de las noticias que no ha leido (que estan en la bbdd)
+
+apiurl: /malarm/api/news/?user_id=2
+entrada: -
+
+salida:
+    [
+      {
+        "contagion": {
+          "contagion_id": "1",
+          "date": "10/02/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "1",
+            "eradicated": "no",
+            "name": "Ebola",
+            "num_adults": "15",
+            "num_children": "4",
+            "num_contagions": "31",
+            "num_deaths": "11",
+            "num_elders": "2",
+            "num_men": "15",
+            "num_teenagers": "10",
+            "num_women": "16",
+            "weight": "60"
+          },
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "0",
+          "place": "Barcelona",
+          "time": "10"
+        },
+        "contagion_id": "1",
+        "description": "lorem impsum, loren impsum, salta con migo sa",
+        "news_id": "1"
+      },
+      {
+        "contagion": {
+          "contagion_id": "2",
+          "date": "07/04/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "1",
+            "eradicated": "no",
+            "name": "Ebola",
+            "num_adults": "15",
+            "num_children": "4",
+            "num_contagions": "31",
+            "num_deaths": "11",
+            "num_elders": "2",
+            "num_men": "15",
+            "num_teenagers": "10",
+            "num_women": "16",
+            "weight": "60"
+          },
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "2",
+          "place": "Madrid",
+          "time": "20"
+        },
+        "contagion_id": "2",
+        "description": "lorem impsum, loren impsum, salta con migo sa",
+        "news_id": "2"
+      },
+      {
+        "contagion": {
+          "contagion_id": "3",
+          "date": "20/03/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "1",
+            "eradicated": "no",
+            "name": "Ebola",
+            "num_adults": "15",
+            "num_children": "4",
+            "num_contagions": "31",
+            "num_deaths": "11",
+            "num_elders": "2",
+            "num_men": "15",
+            "num_teenagers": "10",
+            "num_women": "16",
+            "weight": "60"
+          },
+          "disease_id": "1",
+          "distance": "2",
+          "doctor_id": "1",
+          "level": "1",
+          "place": "Cartagena Spain",
+          "time": "2"
+        },
+        "contagion_id": "3",
+        "description": "lorem impsum, loren impsum, salta con migo sa",
+        "news_id": "3"
+      },
+      {
+        "contagion": {
+          "contagion_id": "4",
+          "date": "11/01/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "2",
+            "eradicated": "no",
+            "name": "Zika",
+            "num_adults": "20",
+            "num_children": "9",
+            "num_contagions": "37",
+            "num_deaths": "21",
+            "num_elders": "7",
+            "num_men": "23",
+            "num_teenagers": "10",
+            "num_women": "14",
+            "weight": "70"
+          },
+          "disease_id": "2",
+          "distance": "10",
+          "doctor_id": "1",
+          "level": "2",
+          "place": "Madrid",
+          "time": "40"
+        },
+        "contagion_id": "4",
+        "description": "lorem impsum, loren impsum, salta con migo sa",
+        "news_id": "4"
+      },
+      {
+        "contagion": {
+          "contagion_id": "5",
+          "date": "22/02/2016",
+          "description": "lorem impsum",
+          "disease": {
+            "disease_id": "2",
+            "eradicated": "no",
+            "name": "Zika",
+            "num_adults": "20",
+            "num_children": "9",
+            "num_contagions": "37",
+            "num_deaths": "21",
+            "num_elders": "7",
+            "num_men": "23",
+            "num_teenagers": "10",
+            "num_women": "14",
+            "weight": "70"
+          },
+          "disease_id": "2",
+          "distance": "10",
+          "doctor_id": "1",
+          "level": "3",
+          "place": "Barcelona",
+          "time": "3"
+        },
+        "contagion_id": "5",
+        "description": "lorem impsum, loren impsum, salta con migo sa",
+        "news_id": "5"
+      }
+    ]
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+* Dado un id de usuario y de noticia elimina la fila corresponiente de noticiasPorUsuario
+
+entrada:
+      {
+              "user_news":{
+                  "user_id":"1"
+                  "news_id":"2"
+              }
+          }
+salida: - (204 NO CONTENT)
+
+
+
+

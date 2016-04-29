@@ -634,6 +634,29 @@ class Dispersion(Resource):
 
         return dispersion
 
+
+class News(Resource):
+
+    def get(self):
+        _id = request.args['user_id']
+        return mysqldb.get_user_news(_id)
+
+    def delete(self):
+
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+        input_data = input['user_news']
+
+        _userId = input_data['user_id']
+        _newsId = input_data['news_id']
+
+        mysqldb.delete_user_news(_userId, _newsId)
+
+        return '', 204
+
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes
 app.url_map.converters['regex'] = RegexConverter
@@ -652,6 +675,7 @@ api.add_resource(UsersContagions, '/malarm/api/users/contagions/', endpoint='use
 api.add_resource(Notifications, '/malarm/api/user/notifications/', endpoint='user_notifications')
 api.add_resource(Notification, '/malarm/api/notification/', endpoint='notification')
 api.add_resource(Dispersion, '/malarm/api/dispersion/<name>/', endpoint='dispersion')
+api.add_resource(News, '/malarm/api/news/', endpoint='news')
 # Start the application
 # DATABASE SHOULD HAVE BEEN POPULATED PREVIOUSLY
 if __name__ == '__main__':

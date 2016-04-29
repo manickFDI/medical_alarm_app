@@ -85,3 +85,30 @@ insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (7, 3
 insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (2, 1, "14/01/2016", true);
 insert into notificacion (idUsuario, idContagio, fecha, confirmado) values (3, 6, "09/05/2016", true);
 
+#News
+
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 1);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 2);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 3);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 4);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 5);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 1);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 2);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 4);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 5);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 7);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 6);
+insert into noticia (descripcion, idContagio) values ("lorem impsum, loren impsum, salta con migo salta", 1);
+
+#NewsByUser
+
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (1, 2);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (2, 2);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (3, 2);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (4, 2);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (5, 2);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (1, 3);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (3, 3);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (4, 4);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (2, 4);
+insert into noticiasPorUsuario (idNoticia, idUsuario) values (1, 4);

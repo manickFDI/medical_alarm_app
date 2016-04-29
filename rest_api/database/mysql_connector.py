@@ -29,6 +29,8 @@ CONTAGIONS_TABLENAME = "contagio"
 CONTAGIONS_USERS_TABLENAME = "usuarioContagiado"
 USER_NOTIFICATIONS_TABLENAME = "notificacion"
 PLACE_FOCUS_TABLENAME = "lugaresFoco"
+NEWS_TABLENAME = "noticia"
+USER_NEWS_TABLENAME = "noticiasPorUsuario"
 
 global db
 db = create_engine(SQLALCHEMY_DATABASE_URI)
@@ -706,3 +708,58 @@ class MysqlDatabase(object):
         notification = {'user_id': idUser, 'contagion_id': idContagion, 'date': date, 'confirmed': confirmed}
 
         return notification
+
+    """
+    NEWS RELATED FUNCIONS
+    """
+
+    def get_news_from_id(self, id):
+        query = "SELECT * FROM {0} WHERE idNoticia = \"{1}\"".format(NEWS_TABLENAME, id)
+        rows = db.execute(query)
+
+        if rows is None or rows.rowcount > 1:
+            return None
+        for row in rows:
+            return self.create_news_object(row)
+
+    def get_user_news(self, id):
+        selectUserNewsQuery = "SELECT * FROM {0} WHERE idUsuario={1}".format(USER_NEWS_TABLENAME, id)
+
+        rows = db.execute(selectUserNewsQuery)
+        if rows is None or rows.rowcount < 1:
+            return {}
+        news = []
+        for row in rows:
+            new = self.get_news_from_id(row['idNoticia'])
+            contagion = self.get_contagion(new['contagion_id'])
+            contagion['disease'] = self.get_disease_by_id(contagion['disease_id'])
+            new['contagion'] = contagion
+            news.append(new)
+
+        return news
+
+    def delete_user_news(self, user_id, news_id):
+        deleteQuery = "DELETE FROM {0} WHERE idUsuario={1} AND idNoticia={2}".format(USER_NEWS_TABLENAME, user_id, news_id)
+
+        db.execute(deleteQuery)
+        return True
+
+    @staticmethod
+    def create_news_object(row):
+        """
+            +-------------+-------------+------+-----+---------+----------------+
+            | Field       | Type        | Null | Key | Default | Extra          |
+            +-------------+-------------+------+-----+---------+----------------+
+            | idNoticia   | int(11)     | NO   | PRI | NULL    | auto_increment |
+            | descripcion | varchar(45) | NO   |     | NULL    |                |
+            | idContagio  | int(11)     | NO   | MUL | NULL    |                |
+            +-------------+-------------+------+-----+---------+----------------+
+        """
+
+        idNews = str(row['idNoticia'])
+        description = row['descripcion']
+        idContagion = str(row['idContagio'])
+
+        news = {'news_id': idNews, 'description': description, 'contagion_id': idContagion}
+
+        return news
