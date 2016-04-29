@@ -1187,7 +1187,7 @@ salida:
 
 * Dado el id de un usuario devuelve los contagios y enferemedades de las noticias que no ha leido (que estan en la bbdd)
 
-apiurl: /malarm/api/news/?user_id=2
+apiurl: /malarm/api/news/?user_dni=12345678J
 entrada: -
 
 salida:
@@ -1353,7 +1353,7 @@ salida:
 entrada:
       {
               "user_news":{
-                  "user_id":"1"
+                  "user_dni":"1"
                   "news_id":"2"
               }
           }

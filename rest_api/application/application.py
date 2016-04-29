@@ -638,8 +638,9 @@ class Dispersion(Resource):
 class News(Resource):
 
     def get(self):
-        _id = request.args['user_id']
-        return mysqldb.get_user_news(_id)
+        _dni = request.args['user_dni']
+        user = mysqldb.get_user_by_dni(_dni)
+        return mysqldb.get_user_news(user['user_id'])
 
     def delete(self):
 
@@ -650,10 +651,11 @@ class News(Resource):
                                          "User")
         input_data = input['user_news']
 
-        _userId = input_data['user_id']
+        _userId = input_data['user_dni']
         _newsId = input_data['news_id']
 
-        mysqldb.delete_user_news(_userId, _newsId)
+        user = mysqldb.get_user_by_dni(_userId)
+        mysqldb.delete_user_news(user['user_id'], _newsId)
 
         return '', 204
 
