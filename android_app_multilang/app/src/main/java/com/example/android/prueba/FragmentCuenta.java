@@ -72,9 +72,11 @@ public class FragmentCuenta extends Fragment {
         //Bundle bundle = new Bundle();
         //bundle.putString("dni", dni);
         FragmentPerfil fp = new FragmentPerfil();
-        fp.loadUser(dni);
+        if(dni != "") {
+            fp.loadUser(dni);
+        }
         //fp.setArguments(bundle);
-
+        Log.d("TAG", "jejejejjee, dni: " + dni);
         AdaptadorSecciones adapter = new AdaptadorSecciones(getFragmentManager());
         adapter.addFragment(new FragmentEstado(), getString(R.string.titulo_tab_estado));
         adapter.addFragment(new FragmentInfo(), getString(R.string.titulo_tab_info));
