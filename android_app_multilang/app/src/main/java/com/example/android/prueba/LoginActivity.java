@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
+    SharedPreferences prefs;
+
     private EditText _dniText;
     private EditText _passwordText;
     private Button _loginButton;
@@ -102,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveSharedPreferences(String dni, String password) {
-        SharedPreferences prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("DNI", dni);
         editor.putString("Password", password);

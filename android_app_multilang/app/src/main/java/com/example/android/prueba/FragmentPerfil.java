@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +14,6 @@ import android.widget.TextView;
 
 import com.example.android.prueba.commons.HttpRequest;
 import com.example.android.prueba.models.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -47,6 +43,7 @@ public class FragmentPerfil extends Fragment {
     private String dni;
 
     public FragmentPerfil() {
+        Log.d("TAG", "costructor");
         //SharedPreferences prefs = this.getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         //String dni = prefs.getString("DNI", "");
         //loadDni();
@@ -60,6 +57,8 @@ public class FragmentPerfil extends Fragment {
             new LoadUserInfo().execute(this.dni); // solicita al API los datos del usuario
             printUserInfo();
         }*/
+
+
 
         super.onCreate(savedInstanceState);
     }
@@ -82,7 +81,20 @@ public class FragmentPerfil extends Fragment {
         //return inflater.inflate(R.layout.fragment_perfil, container, false);
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
         this.prepareUI(view); // instanciamos los elementos de la vista...
-        this.printUserInfo(); // ... y los rellenamos con la informacion del usuario
+
+        if(user == null) {
+            SharedPreferences prefs = this.getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+            String dni = prefs.getString("DNI", "jeje");
+            Log.d("TAG", "onCreate dni: " + dni);
+            //this.dni = dni;
+            //new LoadUserInfo().execute(this.dni); // solicita al API los datos del usuario
+
+            this.loadUser(dni);
+        }
+        else
+            this.printUserInfo();
+
+        //this.printUserInfo(); // ... y los rellenamos con la informacion del usuario
         return view;
     }
 
@@ -115,6 +127,9 @@ public class FragmentPerfil extends Fragment {
                 txtGenger.setText("Mujer");
             }
             txtWeight.setText(String.valueOf(user.getWeight()));
+        }
+        else {
+            Log.d("TAG", "Fallo user es null");
         }
     }
 
@@ -179,7 +194,7 @@ public class FragmentPerfil extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-
+            printUserInfo();
         }
 
     }
