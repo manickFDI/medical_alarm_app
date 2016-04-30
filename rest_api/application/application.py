@@ -477,7 +477,7 @@ class Contagions(Resource):
 
         infected_users = algorithm.calculateContagion(user, _time_window, _distance, mongodb)
 
-        return '', 204
+        return infected_users
 
 class Contagion(Resource):
     def put(self, id):

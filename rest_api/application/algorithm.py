@@ -62,23 +62,17 @@ def calculateFocus(lines):
     return result
 
 
-def get_points_in_time(point, U, M):
-    points = M.value.get_points_in_time_window(U.value['user_id'], point['timestamp'])
-    print(points)
-    ret = {}
-    ret['point'] = point
-    ret['points'] = points
-    return ret
+def get_points_in_time(user_point, U, M):
+    points = M.value.get_points_in_time_window(U.value['user_id'], user_point['timestamp'])
+    return ((user_point, point) for point in points)
 
 
 def compare_points_location(point_pair, D):
     points = []
-    print(point_pair)
-    user_point = Point(point_pair['point']['location']['coordinates'][0], point_pair['point']['location']['coordinates'][1])
-    for possible_point in point_pair['points']:
-        aux = Point(possible_point['location']['coordinates'][0], point_pair['point']['location']['coordinates'][1])
-        if user_point.distance(aux) <= D.value:
-            points.append(possible_point)
+    user_point = Point(point_pair[0]['location']['coordinates'][0], point_pair[0]['location']['coordinates'][1])
+    possible_point = Point(point_pair[1]['location']['coordinates'][0], point_pair[1]['location']['coordinates'][1])
+    if user_point.distance(possible_point) <= D.value:
+        points.append(point_pair[1])
     return points
 
 
@@ -88,7 +82,7 @@ def calculateContagion(user, time_window, distance, mongodb):
     U = sc.broadcast(user)
     M = sc.broadcast(mongodb)
     points = sc.parallelize(mongodb.get_points_by_user_and_time(user['user_id'], time_window))
-    users = points.flatMap(partial(get_points_in_time, U=U, M=M)).cache()\
-        .map(partial(compare_points_location, D=D)).collect()
+    possible_points = points.flatMap(partial(get_points_in_time, U=U, M=M))
+    users = possible_points.map(partial(compare_points_location, D=D)).collect()
     stopContext()
     return users

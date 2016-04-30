@@ -1,8 +1,7 @@
 # from flask.ext.mongoalchemy import MongoAlchemy
 
-from flask.ext.pymongo import PyMongo
 from datetime import date, timedelta, datetime
-import calendar
+import time
 
 from pymongo import Connection
 
@@ -72,10 +71,8 @@ class MongoDatabase(object):
         aux_id = int(user_id)
         aux_time = int(timestamp) / 1000
         date_ts = datetime.fromtimestamp(aux_time)
-        lower_ts = calendar.timegm((date_ts - timedelta(minutes=5)).timetuple())
-        upper_ts = calendar.timegm((date_ts + timedelta(minutes=5)).timetuple())
-        print("user_id=" + str(aux_id) + ", timestamp= " + str(aux_time) + ", lower_ts= " + str(
-            lower_ts) + ", upper_ts= " + str(upper_ts))
+        lower_ts = long(time.mktime((date_ts - timedelta(minutes=5)).timetuple()))*1000
+        upper_ts = long(time.mktime((date_ts + timedelta(minutes=5)).timetuple()))*1000
 
         cur = db.sensors.find({"user_id": {"$ne": aux_id}, "timestamp": {"$gte": lower_ts, "$lte": upper_ts}})
 
@@ -98,7 +95,7 @@ class MongoDatabase(object):
         aux_id = int(user_id)
         aux_time = int(time_window)
         limit_date = date.today() - timedelta(days=aux_time)
-        limit_ts = calendar.timegm(limit_date.timetuple())
+        limit_ts = time.mktime(limit_date.timetuple())
         cur = db.sensors.find({"user_id": {"$eq": aux_id}, "timestamp": {"$gte": limit_ts}})
 
         points = []
