@@ -6,7 +6,7 @@
 			40.451816, -3.729581
 		]
 	},
-	"timestamp" : NumberLong("1403133949719"),
+	"timestamp" : NumberLong("1462007127000"),
 	"magnetometer" : 53.050397,
 	"accelerometer" : -2.6292,
 	"light" : 6747.8933,
@@ -20,7 +20,7 @@
 			40.448159, -3.728916
 		]
 	},
-	"timestamp" : NumberLong("1403133949719"),
+	"timestamp" : NumberLong("1462007307000"),
 	"magnetometer" : 53.050397,
 	"accelerometer" : -2.6292,
 	"light" : 6747.8933,
@@ -34,7 +34,7 @@
 			40.445927, -3.727573
 		]
 	},
-	"timestamp" : NumberLong("1403133949719"),
+	"timestamp" : NumberLong("1462007547000"),
 	"magnetometer" : 53.050397,
 	"accelerometer" : -2.6292,
 	"light" : 6747.8933,
@@ -48,7 +48,7 @@
 			40.448534, -3.725684
 		]
 	},
-	"timestamp" : NumberLong("1403133949719"),
+	"timestamp" : NumberLong("1462007187000"),
 	"magnetometer" : 53.050397,
 	"accelerometer" : -2.6292,
 	"light" : 6747.8933,
@@ -56,6 +56,34 @@
 },
 {
 	"user_id" : 3,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			40.447919, -3.731533
+		]
+	},
+	"timestamp" : NumberLong("1462007247000"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 2,
+	"location" : {
+		"type" : "Point",
+		"coordinates" : [
+			40.448534, -3.725684
+		]
+	},
+	"timestamp" : NumberLong("1403133949719"),
+	"magnetometer" : 53.050397,
+	"accelerometer" : -2.6292,
+	"light" : 6747.8933,
+	"battery" : 2
+},
+{
+	"user_id" : 2,
 	"location" : {
 		"type" : "Point",
 		"coordinates" : [

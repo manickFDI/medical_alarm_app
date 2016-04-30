@@ -594,7 +594,9 @@ class MysqlDatabase(object):
             return {}
         contagions = []
         for row in rows:
-            contagions.append(self.create_contagion_object(row))
+            contagion = self.create_contagion_object(row)
+            contagion['disease'] = self.get_disease_by_id(contagion['disease_id'])
+            contagions.append(contagion)
 
         return contagions
 

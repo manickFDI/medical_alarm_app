@@ -5,8 +5,6 @@ from functools import partial
 # Path for spark source folder
 from itertools import combinations
 
-from database import mongo_connector
-
 os.environ['SPARK_HOME'] = "/usr/local/Cellar/apache-spark/1.5.2"
 # Append pyspark  to Python Path
 sys.path.append("/usr/local/Cellar/apache-spark/1.5.2/libexec/python/")
@@ -64,25 +62,33 @@ def calculateFocus(lines):
     return result
 
 
-def get_points_in_time(point, U):
-    return (point, mongo_connector.get_points_in_time_window(U['user_id'], point['timestamp']))
+def get_points_in_time(point, U, M):
+    points = M.value.get_points_in_time_window(U.value['user_id'], point['timestamp'])
+    print(points)
+    ret = {}
+    ret['point'] = point
+    ret['points'] = points
+    return ret
 
 
-def compare_points_location(point, possible_points, D):
+def compare_points_location(point_pair, D):
     points = []
-    user_point = Point(point['location']['coordinates'][0], point['location']['coordinates'][1])
-    for possible_point in possible_points:
-        aux = Point(possible_point['location']['coordinates'][0], point['location']['coordinates'][1])
+    print(point_pair)
+    user_point = Point(point_pair['point']['location']['coordinates'][0], point_pair['point']['location']['coordinates'][1])
+    for possible_point in point_pair['points']:
+        aux = Point(possible_point['location']['coordinates'][0], point_pair['point']['location']['coordinates'][1])
         if user_point.distance(aux) <= D.value:
             points.append(possible_point)
     return points
 
 
-def calculateContagion(user, time_window, distance):
+def calculateContagion(user, time_window, distance, mongodb):
     initializeSpark("Malarm", "local[2]")
     D = sc.broadcast(distance)
     U = sc.broadcast(user)
-    points = sc.parallelize(mongo_connector.get_points_by_user_and_time(user['user_id'], time_window))
-    users = points.flatMap(partial(get_points_in_time, U=U)).map(partial(compare_points_location, D=D)).collect()
+    M = sc.broadcast(mongodb)
+    points = sc.parallelize(mongodb.get_points_by_user_and_time(user['user_id'], time_window))
+    users = points.flatMap(partial(get_points_in_time, U=U, M=M)).cache()\
+        .map(partial(compare_points_location, D=D)).collect()
     stopContext()
     return users

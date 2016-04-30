@@ -1,5 +1,7 @@
-from datetime import datetime
-import time
+from datetime import date, timedelta, datetime
+import calendar
 
-current_date = datetime.strptime(time.strftime('%d/%m/%Y'), '%d/%m/%Y')
-print(time.strftime('%d/%m/%Y'))
+from database.mongo_connector import MongoDatabase
+
+mongo = MongoDatabase()
+mongo.get_points_in_time_window(4, 1462007127000)

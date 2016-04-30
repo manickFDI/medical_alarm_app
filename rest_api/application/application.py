@@ -3,6 +3,7 @@ from flask.ext.restful import Resource, Api
 # Own Imports
 import algorithm
 from database import mongo_connector
+from database.mongo_connector import MongoDatabase
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
 from shapely.geometry import LineString, Point
@@ -21,8 +22,10 @@ app.config.update({'MYSQL_DATABASE': MysqlDatabase()})
 mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
 # MongoDB
+app.config.update({'MONGO_DATABASE': MongoDatabase()})
 app.config['MONGO_DBNAME'] = 'malarm'
-mongo_connector.init_app(app)
+mongodb = app.config['MONGO_DATABASE']
+mongodb.init_app()
 
 # Start the RESTful API.
 api = Api(app)
@@ -309,7 +312,7 @@ class Sensors(Resource):
         _longitude = request.args['longitude'].replace("\"", "")
         _latitude = request.args['latitude'].replace("\"", "")
 
-        return mongo_connector.getNearByLocations(_distance, _latitude, _longitude)
+        return mongodb.getNearByLocations(_distance, _latitude, _longitude)
 
     def post(self):
         """
@@ -372,7 +375,7 @@ class Sensors(Resource):
                                          "Be sure you include all mandatory properties",
                                          "Sensors")
 
-        _id = mongo_connector.insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetometer,
+        _id = mongodb.insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetometer,
                                                   _accelerometer, _light, _battery)
 
         # CREATE RESPONSE AND RENDER
@@ -452,6 +455,29 @@ class Contagions(Resource):
         else:
             return {}
 
+    def post(self):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['user_contagion']
+        _user_dni = input_data['user_dni']
+        _distance = input_data['distance']
+        _time_window = input_data['time_window']
+
+        user = mysqldb.get_user_by_dni(_user_dni)
+
+        if user is None:
+            return create_error_response(403, "Error user not found",
+                              "There is no user with the provided dni: %s", _user_dni,
+                              "User")
+
+        infected_users = algorithm.calculateContagion(user, _time_window, _distance, mongodb)
+
+        return '', 204
 
 class Contagion(Resource):
     def put(self, id):
@@ -493,7 +519,7 @@ class Focuses(Resource):
             if user is not None:
                 _numUsers += 1
                 _users.append(user)
-                locations = mongo_connector.getPointsGroupedByUser(user['user_id'])
+                locations = mongodb.getPointsGroupedByUser(user['user_id'])
                 lineParts = []
                 for location in locations:
                     lineParts.append(Point(location['location']['coordinates'][0], location['location']['coordinates'][1]))
