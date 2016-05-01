@@ -494,24 +494,18 @@ class Contagions(Resource):
             contagion['description'] = _description
             contagion['users'] = []
 
-            contagions = {}
-            users = {}
+            contagions = []
             for list in infected_users:
                 for points in list:
                     zone = reverse_geocode(points['contagion_point'][0]['location']['coordinates'], True)
-                    aux = []
-                    user = {points['contagion_point'][0]['user_id'], zone}
-                    aux.append(user)
-                    user = {points['contagion_point'][1]['user_id'], zone}
-                    aux.append(user)
-                    users[zone] = aux
+                    user1 = points['contagion_point'][0]['user_id']
+                    user2 = points['contagion_point'][1]['user_id']
+                    contagion['users'].append(user1)
+                    contagion['users'].append(user2)
                     contagion['zone'] = zone
                     if not zone in contagions:
-                        contagions[zone] = contagion
-                    contagions[zone]['users'].append(users)
-
-
-
+                        mysqldb.insert_contagion(contagion)
+                        contagions.append(contagion)
 
         return contagions
 

@@ -1513,4 +1513,44 @@ salida:
       ]
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+* Da de alta un nuevo contagio.
+
+apiurl: malarm/api/contagions/
+type: POST
+
+entrada:
+    {
+        "user_contagion":{
+            "user_dni":"12345678J",
+            "distance":"10",
+            "time_window":"7",
+            "disease":"Ebola",
+            "doctor_id":"1",
+            "date":"20/01/2016",
+            "level":"2",
+            "description":"lorem impsum salta con migo salta"
+        }
+    }
+salida:
+    [
+      {
+        "date": "20/01/2016",
+        "description": "lorem impsum salta con migo salta",
+        "disease_id": "1",
+        "distance": "10",
+        "doctor_id": "1",
+        "level": "2",
+        "time_window": "7",
+        "users": [
+          2,
+          4
+        ],
+        "zone": "Collado Villalba"
+      }
+    ]
 
