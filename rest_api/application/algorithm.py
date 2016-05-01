@@ -72,7 +72,9 @@ def compare_points_location(point_pair, D):
     user_point = Point(point_pair[0]['location']['coordinates'][0], point_pair[0]['location']['coordinates'][1])
     possible_point = Point(point_pair[1]['location']['coordinates'][0], point_pair[1]['location']['coordinates'][1])
     if user_point.distance(possible_point) <= D.value:
-        points.append(point_pair[1])
+        cross = {}
+        cross['contagion_point']=point_pair
+        points.append(cross)
     return points
 
 
