@@ -87,11 +87,11 @@ public class User {
         this.weight = weight;
     }
 
-    public String getPassword() {
+    public String getSecret() {
         return secret;
     }
 
-    public void setPassword(String password) {
+    public void setSecret(String password) {
         this.secret = password;
     }
 
@@ -101,7 +101,7 @@ public class User {
      * @return the User correctly built
      */
     public static User buildUser(String json) {
-        Log.d("TAG", json);
+        //Log.d("TAG", json);
 
         Gson gson = new Gson();
         Type type = new TypeToken<User>(){}.getType();

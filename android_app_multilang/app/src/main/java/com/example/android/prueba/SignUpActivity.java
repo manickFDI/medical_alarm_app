@@ -126,7 +126,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
         nuevoUsuario.setGender(gender);
         nuevoUsuario.setWeight(Integer.parseInt(_pesoText.getText().toString()));
-        nuevoUsuario.setPassword(_passwordText.getText().toString());
+        nuevoUsuario.setSecret(_passwordText.getText().toString());
 
         Log.d("TAG", "RUNNING Post...");
         new PostUser().execute(nuevoUsuario);
@@ -224,7 +224,7 @@ public class SignUpActivity extends AppCompatActivity {
         builder.appendQueryParameter("email", user.getEmail());
         //builder.appendQueryParameter("height", Integer.toString(user.getHeight()));
         builder.appendQueryParameter("weight", Integer.toString(user.getWeight()));
-        builder.appendQueryParameter("password", user.getPassword());
+        builder.appendQueryParameter("password", user.getSecret());
 
         Uri.Builder builderf = new Uri.Builder();
         builderf.appendQueryParameter("user", builder.toString());
@@ -240,7 +240,8 @@ public class SignUpActivity extends AppCompatActivity {
     private class PostUser extends AsyncTask<User, Void, Void> {
 
         //private static final String MY_IP = "10.0.2.2";
-        private static final String MY_IP = "10.0.2.2:5000/malarm/api/";
+        //private static final String MY_IP = "10.0.2.2:5000/malarm/api/";
+        private static final String MY_IP = "192.168.1.33:5000/malarm/api/";
         private static final String MY_URL = "http://" + MY_IP + "users/"; //OJO!! No usar la 127.0.0.1
 
         /**
@@ -305,9 +306,9 @@ public class SignUpActivity extends AppCompatActivity {
                 jo.put("email", user.getEmail());
                 jo.put("gender", Integer.toString(user.getGender()));
                 jo.put("weight", Integer.toString(user.getWeight()));
-                jo.put("password", user.getPassword());
+                jo.put("password", user.getSecret());
 
-                jo.put("secret", 1); // secret de prueba
+                jo.put("secret", user.getSecret()); // secret de prueba
 
                 jo2.put("user", jo);
             } catch (JSONException e) {

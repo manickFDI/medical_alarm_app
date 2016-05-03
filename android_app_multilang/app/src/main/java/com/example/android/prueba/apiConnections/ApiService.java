@@ -1,10 +1,15 @@
 package com.example.android.prueba.apiConnections;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -23,7 +28,7 @@ public class ApiService extends IntentService {
 
     private static final String MY_IP = "192.168.1.33"; //OJO!! No usar la 127.0.0.1
 
-    private static final String MY_URL = "http://" + MY_IP + ":8000/sensorValues/"; //OJO!! No usar la 127.0.0.1
+    private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/sensors/"; //OJO!! No usar la 127.0.0.1
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -42,15 +47,13 @@ public class ApiService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle bundle = intent.getExtras();
-        Map<String, String> sensorValuesMap = buildSensorValuesMap(bundle);
+        //Map<String, String> sensorValuesMap = buildSensorValuesMap(bundle);
         //Map<String, String> sensorValuesMap = buildFakeMap();
+        String json = createJson(bundle);
 
-        Log.d("TAG", "RUNNING Post...");
-        excutePost(sensorValuesMap);
-        /*HttpRequest ret = HttpRequest.post(MY_URL, sensorValuesMap, false); //post(url, Map<K,V>, bool encode)
-        int responseCode = ret.code();
-        Log.d("TAG", "(Response code: " + responseCode + ")");*/
-        Log.d("TAG", "...FINISH Post");
+        //Log.d("TAG", "RUNNING Post (sensorValues)...");
+        excutePost(json);
+        //Log.d("TAG", "...FINISH Post (sensorValues)");
     }
 
 
@@ -102,7 +105,8 @@ public class ApiService extends IntentService {
     }
 
 
-    private static void excutePost(Map<String, String> sensorValues) {
+    //private static void excutePost(Map<String, String> sensorValues) {
+    private static void excutePost(String json) {
         URL url = null;
         try {
             url = new URL(MY_URL);
@@ -112,8 +116,9 @@ public class ApiService extends IntentService {
             conn.setRequestMethod("POST");
             conn.setDoOutput(true); // 'true' para POST y PUT
 
-            Uri.Builder builder = buildUriBuilder(sensorValues); // añade los parametros de la query
-            String query = builder.build().getEncodedQuery();   // creamos la query
+            //Uri.Builder builder = buildUriBuilder(sensorValues); // añade los parametros de la query
+            //String query = builder.build().getEncodedQuery();   // creamos la query
+            String query = json;
 
             OutputStream os = conn.getOutputStream();
 
@@ -123,16 +128,14 @@ public class ApiService extends IntentService {
             writer.close();
             os.close();
 
-            Log.d("TAG", "...connecting...");
+            //Log.d("TAG", "...connecting (sensorValues)...");
             conn.connect();
             int responseCode = conn.getResponseCode(); // es aqui donde realmente se realiza el POST
-            Log.d("TAG", "ResponseCode = " + responseCode);
+            //Log.d("TAG", "ResponseCode (sensorValues) = " + responseCode);
             if (responseCode < HttpURLConnection.HTTP_BAD_REQUEST) { //HTTP_BAD_REQUEST = 400
-                //inputStream = conn.getInputStream();
-                Log.d("TAG", "Successful connection");
+                //Log.d("TAG", "Successful connection (SensorValues)");
             } else {
-                //inputStream = conn.getErrorStream();
-                Log.d("TAG", "Failed connection");
+                //Log.d("TAG", "Failed connection (SensorValues)");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -156,5 +159,39 @@ public class ApiService extends IntentService {
 
         return builder;
     }
+
+
+    private String createJson(Bundle bundle) {
+        String dni = null;
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        if(prefs.contains("DNI"))
+            dni = prefs.getString("DNI", "");
+
+        JSONObject jo = new JSONObject();
+        JSONObject ret = new JSONObject();
+
+        try {
+            jo.put("user_dni", dni);
+            jo.put("latitude", String.valueOf(bundle.getDouble("latitude")));
+            jo.put("longitude", String.valueOf(bundle.getDouble("longitude")));
+            jo.put("altitude", String.valueOf(bundle.getDouble("altitude")));
+            jo.put("timestamp", bundle.getString("time"));
+            jo.put("magnetometer", String.valueOf(bundle.getDouble("magnetometer")));
+            jo.put("mgt_accuracy", String.valueOf(bundle.getInt("mgt_accuracy")));
+            jo.put("accelerometer", String.valueOf(bundle.getDouble("accelerometer")));
+            jo.put("acc_accuracy", String.valueOf(bundle.getInt("acc_accuracy")));
+            jo.put("light", String.valueOf(bundle.getDouble("light")));
+            jo.put("light_accuracy", String.valueOf(bundle.getInt("light_accuracy")));
+            jo.put("battery", bundle.getString("battery"));
+
+            ret.put("sensor", jo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Log.d("TAG", "JSON: " + ret.toString());
+        return ret.toString();
+    }
+
 
 }

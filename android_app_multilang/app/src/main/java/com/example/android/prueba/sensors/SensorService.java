@@ -1,10 +1,12 @@
 package com.example.android.prueba.sensors;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.android.prueba.FragmentEstado;
 import com.example.android.prueba.apiConnections.ApiService;
 import com.example.android.prueba.commons.Lock;
 import com.google.android.gms.common.ConnectionResult;
@@ -40,6 +43,7 @@ public class SensorService extends Service {
 
     @Override
     public void onCreate() {
+        Log.d("TAG", "onCreate SensorService");
         // Start up the thread running the service.  Note that we create a
         // separate thread because the service normally runs in the process's
         // main thread, which we don't want to block.  We also make it
@@ -232,6 +236,7 @@ public class SensorService extends Service {
                 valuesLock.unlock();
 
                 Intent intent = new Intent(getApplicationContext(), ApiService.class);
+
                 Bundle bundle = new Bundle();
                 bundle.putDouble("latitude", this.getCurrentValues().getLocLat());
                 bundle.putDouble("longitude", this.getCurrentValues().getLocLong());
@@ -244,8 +249,9 @@ public class SensorService extends Service {
                 bundle.putDouble("light", this.getCurrentValues().getLightVal());
                 bundle.putInt("light_accuracy", this.getCurrentValues().getLightAccuracy());
                 bundle.putString("battery", this.getCurrentValues().getBatVal().toString());
+
                 intent.putExtras(bundle);
-                //startService(intent);
+                startService(intent);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -275,13 +281,17 @@ public class SensorService extends Service {
         }
 
         public SensorResult getCurrentValues() {
-            //TODO: only one object and change through setters. Less memory consumption
-            return new SensorResult(mAccelerometer.getSensorValue(), mAccelerometer.getSensorAccuracy(),
-                                    mMagnetometer.getSensorValue(), mMagnetometer.getSensorAccuracy(),
-                                    mLight.getSensorValue(), mLight.getSensorAccuracy(),
-                                    mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
-                                    mCurrentLocation.getAltitude(), mCurrentLocationTime,
-                                    mBattery.getBatteryStatus());
+            if(mCurrentLocation != null) {
+                //TODO: only one object and change through setters. Less memory consumption
+                return new SensorResult(mAccelerometer.getSensorValue(), mAccelerometer.getSensorAccuracy(),
+                        mMagnetometer.getSensorValue(), mMagnetometer.getSensorAccuracy(),
+                        mLight.getSensorValue(), mLight.getSensorAccuracy(),
+                        mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
+                        mCurrentLocation.getAltitude(), mCurrentLocationTime,
+                        mBattery.getBatteryStatus());
+            }
+            else
+                return null;
         }
 
         public int getNumUpdates() {
@@ -294,4 +304,6 @@ public class SensorService extends Service {
             return SensorService.this;
         }
     }
+
+
 }

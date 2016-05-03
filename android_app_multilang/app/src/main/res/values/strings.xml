@@ -19,8 +19,10 @@
     <string name="etiqueta_contrasena">Contraseña</string>
     <string name="etiqueta_contagio_persona">RIESGO CONTAGIO DE INDIVIDUO</string>
     <string name="etiqueta_contagio_zona">RIESGO CONTAGIO DE ZONA</string>
-    <string name="etiqueta_contagio_persona_detallado">Su salud no corre peligro por ningún motivo relacionado con algún posible contagio</string>
-    <string name="etiqueta_contagio_zona_detallado">Su municipio está libre de individuos contagiados. Ninguna enfermedad detectada</string>
+    <string name="etiqueta_no_contagio_persona_detallado">Su salud no corre peligro por ningún motivo relacionado con algún posible contagio</string>
+    <string name="etiqueta_no_contagio_zona_detallado">Su municipio está libre de individuos contagiados. Ninguna enfermedad detectada</string>
+    <string name="etiqueta_contagio_persona_detallado">Actualmente esta contagiado por: </string>
+    <string name="etiqueta_contagio_zona_detallado">Actualmente en su municipio existen contagios de: </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

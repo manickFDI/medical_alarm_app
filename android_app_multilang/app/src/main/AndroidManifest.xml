@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.example.android.prueba.sensors.SensorService" android:exported="false" />
+        <service android:name="com.example.android.prueba.sensors.SensorService" />
         <service android:name="com.example.android.prueba.apiConnections.ApiService" android:exported="false" />
 
         <activity
