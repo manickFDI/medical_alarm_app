@@ -69,17 +69,19 @@ public class FragmentCuenta extends Fragment {
 
         SharedPreferences prefs = this.getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         String dni = prefs.getString("DNI", "");
-        //Bundle bundle = new Bundle();
-        //bundle.putString("dni", dni);
+
         FragmentPerfil fp = new FragmentPerfil();
+        FragmentInfo fi = new FragmentInfo();
+        FragmentEstado fe = new FragmentEstado();
         if(dni != "") {
             fp.loadUser(dni);
+            fi.loadUser(dni);
+            fe.loadUser(dni);
         }
-        //fp.setArguments(bundle);
-        Log.d("TAG", "jejejejjee, dni: " + dni);
+
         AdaptadorSecciones adapter = new AdaptadorSecciones(getFragmentManager());
         adapter.addFragment(new FragmentEstado(), getString(R.string.titulo_tab_estado));
-        adapter.addFragment(new FragmentInfo(), getString(R.string.titulo_tab_info));
+        adapter.addFragment(fi, getString(R.string.titulo_tab_info));
         adapter.addFragment(fp, getString(R.string.titulo_tab_perfil));
         viewPager.setAdapter(adapter);
     }

@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-        Log.d(TAG, "Login");
+        Log.d("TAG", "Login");
 
         validate();
         /*if (!this.valid) {
@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
     private void saveSharedPreferences(String dni, String password) {
         prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+        Log.d("TAG", "dni en login: " + dni);
         editor.putString("DNI", dni);
         editor.putString("Password", password);
         editor.commit();
@@ -164,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         //peticion API
-        new LoadUserInfo().execute(_dniText.getText().toString());
+        new LoadUserInfo().execute(dni, password);
 
 
         /*if((this.user.getPassword().compareTo(password) != 0)) {
@@ -185,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void validateResponse(String pass) {
-        if((this.user.getPassword().compareTo(pass) != 0)) {
+        if((this.user.getSecret().compareTo(pass) != 0)) {
             _passwordText.setError("Contraseña o email incorrectos");
             valid = false;
         }
@@ -194,7 +195,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private class LoadUserInfo extends AsyncTask<String, Void, String> {
 
-        private static final String MY_IP = "10.0.2.2";
+        //private static final String MY_IP = "10.0.2.2";
+        private static final String MY_IP = "192.168.1.33";
         //private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/users/1/"; //OJO!! No usar la 127.0.0.1
         private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/user/"; //OJO!! No usar la 127.0.0.1
 
@@ -206,11 +208,11 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             StringBuilder result = new StringBuilder();
             try {
-                Log.d("TAG", "Peticion al API...");
+                Log.d("TAG", "Peticion al API LoginActivity...");
 
                 //String url = URL + params[0];
                 String urlAux = MY_URL + params[0];
-                Log.d("TAG", urlAux);
+                //Log.d("TAG", urlAux);
 
                 //return HttpRequest.get(url).accept("application/json").body();
                 URL url = new URL(urlAux);
@@ -227,11 +229,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     user = User.buildUser(result.toString());
-                    Log.d("TAG", "DNI: " + user.getDni());
+                    /*Log.d("TAG", "DNI: " + user.getDni());
 
                     Log.d("TAG", "PASS: " + user.getPassword());
                     validateResponse(user.getPassword());
-                    saveSharedPreferences(user.getDni(), user.getPassword());
+                    saveSharedPreferences(user.getDni(), user.getPassword());*/
 
                     //_loginButton.setEnabled(false);
 
@@ -276,6 +278,12 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            user = User.buildUser(result);
+            //Log.d("TAG", "DNI: " + user.getDni());
+
+            //Log.d("TAG", "PASS: " + user.getSecret());
+            validateResponse(user.getSecret());
+            saveSharedPreferences(user.getDni(), user.getSecret());
         }
 
     }
