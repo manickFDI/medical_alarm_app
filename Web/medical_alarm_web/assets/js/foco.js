@@ -302,24 +302,28 @@ function confirmSubmit() {
 function createTableFocusFound(data) {
 	var tblBody = document.getElementById('tbodyFocusFound');
 	var numFilas = data.length;
-
+	
 	for(var i=0; i<numFilas; i++) {
-		var fila = document.createElement("tr");
-		var celda = document.createElement("td");
-		var textoCelda = document.createTextNode(i+1);
-		celda.appendChild(textoCelda);
-		var celda2 = document.createElement("td");
-		//var textoCelda2 = document.createTextNode("celda en la columna 1");
-		var textoCelda2 = document.createTextNode(data[i].points[0].address);
-		celda2.appendChild(textoCelda2);
-		var celda3 = document.createElement("td");
-		var textoCelda3 = document.createTextNode("Número de usuarios en el foco: " + data[i].num_users);
-		celda3.appendChild(textoCelda3);
 
-		fila.appendChild(celda);
-		fila.appendChild(celda2);
-		fila.appendChild(celda3);
-		tblBody.appendChild(fila);
+		for(var j=0; j<data[i].points.length; j++) {
+
+			var fila = document.createElement("tr");
+			var celda = document.createElement("td");
+			var textoCelda = document.createTextNode(i+1);
+			celda.appendChild(textoCelda);
+			var celda2 = document.createElement("td");
+			//var textoCelda2 = document.createTextNode("celda en la columna 1");
+			var textoCelda2 = document.createTextNode(data[i].points[j].address);
+			celda2.appendChild(textoCelda2);
+			var celda3 = document.createElement("td");
+			var textoCelda3 = document.createTextNode("Número de usuarios en el foco: " + data[i].num_users);
+			celda3.appendChild(textoCelda3);
+
+			fila.appendChild(celda);
+			fila.appendChild(celda2);
+			fila.appendChild(celda3);
+			tblBody.appendChild(fila);
+		}
 	}
 }
 
@@ -408,26 +412,29 @@ function initMap(data) {
 	var marker;
 	for(var i=0; i<data.length; i++) {
 		var focus = data[i];
+
+		for(var j=0; j<focus.points.length; j++) {
 		
-		if(focus.points[0].type == "Point") {
-			var latitude = focus.points[0].coordinates[0];
-			var longitude = focus.points[0].coordinates[1];
+			//if(focus.points[j].type == "Point") {
+				var latitude = focus.points[j].coordinates[0];
+				var longitude = focus.points[j].coordinates[1];
 
-			marker = new google.maps.Marker({
-				position: new google.maps.LatLng(latitude, longitude),
-				map: map,
-				title: "Número de personas: " + focus.num_users
-			});
+				marker = new google.maps.Marker({
+					position: new google.maps.LatLng(latitude, longitude),
+					map: map,
+					title: "Número de personas: " + focus.num_users
+				});
 
-			google.maps.event.addListener(marker, 'click', (function(marker, i) {
-				return function() {
-					infowindow.setContent("Número de personas: " + focus.num_users);
-					infowindow.open(map, marker);
-				}
-			})(marker, i));
-		}
-		else {
-			alert("Error: tipo del foco distinto de Point");
+				google.maps.event.addListener(marker, 'click', (function(marker, i) {
+					return function() {
+						infowindow.setContent("Número de personas: " + focus.num_users);
+						infowindow.open(map, marker);
+					}
+				})(marker, i));
+			/*}
+			else {
+				alert("Error: tipo del foco distinto de Point");
+			}*/
 		}
 	}
 }

@@ -559,51 +559,70 @@ class MysqlDatabase(object):
         return contagions
 
     def insert_contagion(self, contagion):
+        selectContagionQuery = "SELECT * FROM {0} WHERE idEnfermedad={1} AND zona=\"{2}\"".format(CONTAGIONS_TABLENAME,
+                                                                                                  int(contagion[
+                                                                                                          'disease_id']),
+                                                                                                  contagion['zone'])
+        exists = db.execute(selectContagionQuery)
+        contagion_id = 1
+        if exists is not None and exists.rowcount < 1:
+            insertQuery = "INSERT INTO {0} (idEnfermedad, idMedico, tiempo, distancia, fecha, nivel, descripcion, zona) VALUES " \
+                          "({1},{2},{3},{4},\"{5}\",{6},\"{7}\",\"{8}\")".format(CONTAGIONS_TABLENAME,
+                                                                                 int(contagion['disease_id']),
+                                                                                 int(contagion['doctor_id']),
+                                                                                 int(contagion['time_window']),
+                                                                                 int(contagion['distance']),
+                                                                                 contagion['date'],
+                                                                                 int(contagion['level']),
+                                                                                 contagion['description'],
+                                                                                 contagion['zone'])
 
-        insertQuery = "INSERT INTO {0} (idEnfermedad, idMedico, tiempo, distancia, fecha, nivel, descripcion, zona) VALUES " \
-                      "({1},{2},{3},{4},\"{5}\",{6},\"{7}\",\"{8}\")".format(CONTAGIONS_TABLENAME,
-                                                                             int(contagion['disease_id']),
-                                                                             int(contagion['doctor_id']),
-                                                                             int(contagion['time_window']),
-                                                                             int(contagion['distance']),
-                                                                             contagion['date'],
-                                                                             int(contagion['level']),
-                                                                             contagion['description'],
-                                                                             contagion['zone'])
+            rows = db.execute(insertQuery)
+            if rows is None or rows.rowcount == 0:
+                return False
+            contagion_id = rows.lastrowid
 
-        rows = db.execute(insertQuery)
-        if rows is None or rows.rowcount == 0:
-            return False
+            insertNewsQuery = "INSERT INTO {0} (descripcion, idContagio) VALUES (\"{1}\", {2})".format(NEWS_TABLENAME,
+                                                                                                       contagion[
+                                                                                                           'description'],
+                                                                                                       int(
+                                                                                                           contagion_id))
+            rows = db.execute(insertNewsQuery)
+            if rows is None or rows.rowcount == 0:
+                return False
 
-        contagion_id = rows.lastrowid
+            news_id = rows.lastrowid
+
+            selectUsersQuery = "SELECT * FROM {0}".format(USERS_TABLENAME)
+
+            rows = db.execute(selectUsersQuery)
+            if rows is None or rows.rowcount == 0:
+                return False
+            for row in rows:
+                user_aux = self.create_user_object(row)
+                inserNewsUserQuery = "INSERT INTO {0} (idNoticia, idUsuario) VALUES ({1},{2})".format(
+                    USER_NEWS_TABLENAME,
+                    int(news_id), user_aux['user_id'])
+                db.execute(inserNewsUserQuery)
+
+        else:
+            for item in exists:
+                contagion_id = self.create_contagion_object(item)['contagion_id']
+
         for user in contagion['users']:
-            insertNotificationQuery="INSERT INTO {0} (idUsuario, idContagio, fecha, confirmado)" \
-                                   "VALUES ({1},{2},\"{3}\",{4})".format(USER_NOTIFICATIONS_TABLENAME,
-                                                                         int(user),
-                                                                         int(contagion_id),
-                                                                         contagion['date'],
-                                                                         False)
-            db.execute(insertNotificationQuery)
-
-        insertNewsQuery="INSERT INTO {0} (descripcion, idContagio) VALUES (\"{1}\", {2})".format(NEWS_TABLENAME,
-                                                                                                    contagion['description'],
-                                                                                                    int(contagion_id))
-        rows = db.execute(insertNewsQuery)
-        if rows is None or rows.rowcount == 0:
-            return False
-
-        news_id = rows.lastrowid
-
-        selectUsersQuery = "SELECT * FROM {0}".format(USERS_TABLENAME)
-
-        rows = db.execute(selectUsersQuery)
-        if rows is None or rows.rowcount == 0:
-            return False
-        for row in rows:
-            user_aux = self.create_user_object(row)
-            inserNewsUserQuery="INSERT INTO {0} (idNoticia, idUsuario) VALUES ({1},{2})".format(USER_NEWS_TABLENAME,
-                                                                                                int(news_id), user_aux['user_id'])
-            db.execute(inserNewsUserQuery)
+            selectNotificacionQuery = "SELECT * FROM {0} WHERE idUsuario={1} AND idContagio={2}".format(
+                USER_NOTIFICATIONS_TABLENAME,
+                int(user),
+                int(contagion_id))
+            exists = db.execute(selectNotificacionQuery)
+            if exists is not None and exists.rowcount < 1:
+                insertNotificationQuery = "INSERT INTO {0} (idUsuario, idContagio, fecha, confirmado)" \
+                                          "VALUES ({1},{2},\"{3}\",{4})".format(USER_NOTIFICATIONS_TABLENAME,
+                                                                                int(user),
+                                                                                int(contagion_id),
+                                                                                contagion['date'],
+                                                                                False)
+                db.execute(insertNotificationQuery)
 
         return True
 

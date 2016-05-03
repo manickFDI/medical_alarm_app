@@ -468,6 +468,7 @@ class Contagions(Resource):
         _user_dni = input_data['user_dni']
         _distance = input_data['distance']
         _time_window = input_data['time_window']
+        _exposure = input_data['exposure']
         _disease_name = input_data['disease']
         _id_doctor = input_data['doctor_id']
         _date = input_data['date']
@@ -481,7 +482,7 @@ class Contagions(Resource):
                                          "There is no user with the provided dni: %s", _user_dni,
                                          "User")
 
-        infected_users = algorithm.calculateContagion(user, _time_window, _distance, mongodb)
+        infected_users = algorithm.calculateContagion(user, _time_window, _distance, _exposure, mongodb)
 
         if infected_users is not None and len(infected_users) > 0:
             contagion = {}
@@ -576,15 +577,33 @@ class Focuses(Resource):
                     newPoints = []
                     if len(points) > 2:
                         for point in points:
-                            addr = reverse_geocode(point['coordinates'], False)
-                            point['address'] = addr
-                            mysqldb.insert_focus_place(focus, point, date)
-                            newPoints.append(point)
+                            if len(point['coordinates']) > 1:
+                                for coordinate in point['coordinates']:
+                                    addr = reverse_geocode(coordinate, False)
+                                    aux = {}
+                                    aux['address'] = addr
+                                    aux['coordinates'] = coordinate
+                                    mysqldb.insert_focus_place(focus, aux, date)
+                                    newPoints.append(aux)
+                            else:
+                                addr = reverse_geocode(point['coordinates'], False)
+                                point['address'] = addr
+                                mysqldb.insert_focus_place(focus, point, date)
+                                newPoints.append(point)
                     else:
-                        addr = reverse_geocode(points['coordinates'], False)
-                        points['address'] = addr
-                        mysqldb.insert_focus_place(focus, points, date)
-                        newPoints.append(points)
+                        if len(points['coordinates']) > 1:
+                            for coordinate in points['coordinates']:
+                                addr = reverse_geocode(coordinate, False)
+                                aux = {}
+                                aux['address'] = addr
+                                aux['coordinates'] = coordinate
+                                mysqldb.insert_focus_place(focus, aux, date)
+                                newPoints.append(aux)
+                        else:
+                            addr = reverse_geocode(points['coordinates'], False)
+                            points['address'] = addr
+                            mysqldb.insert_focus_place(focus, points, date)
+                            newPoints.append(points)
 
                     newPlaceResult = {}
                     newPlaceResult['num_users'] = placeResult['num_users']

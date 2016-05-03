@@ -112,6 +112,30 @@ class MongoDatabase(object):
 
         return points
 
+    def get_points_by_user_and_forward_time(self, user_id, time_window, timestamp):
+        self.init_app()
+        aux_id = int(user_id)
+        aux_time_window = int(time_window)
+        aux_time = int(timestamp) / 1000
+        date_ts = datetime.fromtimestamp(aux_time)
+        limit_date = date_ts + timedelta(minutes=aux_time_window)
+        limit_ts = time.mktime(limit_date.timetuple())*1000
+        cur = db.sensors.find({"user_id": {"$eq": aux_id}, "timestamp": {"$gte": timestamp, "$lte": limit_ts}})
+
+        points = []
+        for item in cur:
+            point = {}
+            point['user_id'] = item['user_id']
+            point['location'] = item['location']
+            point['timestamp'] = item['timestamp']
+            point['magnetometer'] = item['magnetometer']
+            point['accelerometer'] = item['accelerometer']
+            point['light'] = item['light']
+            point['battery'] = item['battery']
+            points.append(point)
+
+        return points
+
 
 """
 def init_app(app):
