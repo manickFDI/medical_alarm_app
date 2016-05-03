@@ -3,6 +3,7 @@ from flask.ext.restful import Resource, Api
 # Own Imports
 import algorithm
 from database import mongo_connector
+from database.mongo_connector import MongoDatabase
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
 from shapely.geometry import LineString, Point
@@ -21,8 +22,10 @@ app.config.update({'MYSQL_DATABASE': MysqlDatabase()})
 mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
 # MongoDB
+app.config.update({'MONGO_DATABASE': MongoDatabase()})
 app.config['MONGO_DBNAME'] = 'malarm'
-mongo_connector.init_app(app)
+mongodb = app.config['MONGO_DATABASE']
+mongodb.init_app()
 
 # Start the RESTful API.
 api = Api(app)
@@ -174,7 +177,7 @@ class Users(Resource):
         _id = mysqldb.create_user(_name, _lastName, _email, _birthday, _gender, _weight, _idNumber, _secret, _salt, 0)
 
         # CREATE RESPONSE AND RENDER
-        return  '', 204
+        return '', 204
 
 
 class User(Resource):
@@ -309,7 +312,7 @@ class Sensors(Resource):
         _longitude = request.args['longitude'].replace("\"", "")
         _latitude = request.args['latitude'].replace("\"", "")
 
-        return mongo_connector.getNearByLocations(_distance, _latitude, _longitude)
+        return mongodb.getNearByLocations(_distance, _latitude, _longitude)
 
     def post(self):
         """
@@ -372,8 +375,8 @@ class Sensors(Resource):
                                          "Be sure you include all mandatory properties",
                                          "Sensors")
 
-        _id = mongo_connector.insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetometer,
-                                                  _accelerometer, _light, _battery)
+        _id = mongodb.insert_sensor_value(_userId, _timestamp, _latitude, _longitude, _magnetometer,
+                                          _accelerometer, _light, _battery)
 
         # CREATE RESPONSE AND RENDER
         return Response(status=201,
@@ -413,6 +416,7 @@ class UsersContagions(Resource):
         return create_error_response(403, "Error updating infected user",
                                      "There is no a user contagion with the provided ids",
                                      "UserContagions")
+
     def delete(self):
         # PARSE THE REQUEST:
         input = request.get_json(force=True)
@@ -429,8 +433,8 @@ class UsersContagions(Resource):
             return '', 204
 
         return create_error_response(403, "Error updating disease",
-                                         "There is no a disease or contagion with the provided ids",
-                                         "UserContagions")
+                                     "There is no a disease or contagion with the provided ids",
+                                     "UserContagions")
 
 
 class Contagions(Resource):
@@ -451,6 +455,59 @@ class Contagions(Resource):
 
         else:
             return {}
+
+    def post(self):
+        # PARSE THE REQUEST:
+        input = request.get_json(force=True)
+        if not input:
+            return create_error_response(415, "Unsupported Media Type",
+                                         "Use a JSON compatible format",
+                                         "User")
+            # Get the password sent through post body
+        input_data = input['user_contagion']
+        _user_dni = input_data['user_dni']
+        _distance = input_data['distance']
+        _time_window = input_data['time_window']
+        _disease_name = input_data['disease']
+        _id_doctor = input_data['doctor_id']
+        _date = input_data['date']
+        _level = input_data['level']
+        _description = input_data['description']
+
+        user = mysqldb.get_user_by_dni(_user_dni)
+
+        if user is None:
+            return create_error_response(403, "Error user not found",
+                                         "There is no user with the provided dni: %s", _user_dni,
+                                         "User")
+
+        infected_users = algorithm.calculateContagion(user, _time_window, _distance, mongodb)
+
+        if infected_users is not None and len(infected_users) > 0:
+            contagion = {}
+            contagion['disease_id'] = mysqldb.get_disease_by_name(_disease_name)['disease_id']
+            contagion['doctor_id'] = _id_doctor
+            contagion['time_window'] = _time_window
+            contagion['distance'] = _distance
+            contagion['date'] = _date
+            contagion['level'] = _level
+            contagion['description'] = _description
+            contagion['users'] = []
+
+            contagions = []
+            for list in infected_users:
+                for points in list:
+                    zone = reverse_geocode(points['contagion_point'][0]['location']['coordinates'], True)
+                    user1 = points['contagion_point'][0]['user_id']
+                    user2 = points['contagion_point'][1]['user_id']
+                    contagion['users'].append(user1)
+                    contagion['users'].append(user2)
+                    contagion['zone'] = zone
+                    if not zone in contagions:
+                        mysqldb.insert_contagion(contagion)
+                        contagions.append(contagion)
+
+        return contagions
 
 
 class Contagion(Resource):
@@ -493,10 +550,11 @@ class Focuses(Resource):
             if user is not None:
                 _numUsers += 1
                 _users.append(user)
-                locations = mongo_connector.getPointsGroupedByUser(user['user_id'])
+                locations = mongodb.getPointsGroupedByUser(user['user_id'])
                 lineParts = []
                 for location in locations:
-                    lineParts.append(Point(location['location']['coordinates'][0], location['location']['coordinates'][1]))
+                    lineParts.append(
+                        Point(location['location']['coordinates'][0], location['location']['coordinates'][1]))
                 if len(lineParts) > 1:
                     lines.append(LineString(lineParts))
         result = {}
@@ -551,7 +609,7 @@ class Focus(Resource):
         # PEROFRM OPERATIONS
         # Try to delete the focus. If it could not be deleted, the database
         # returns False.
-        if mysqldb.delete_place_focus(id,_place):
+        if mysqldb.delete_place_focus(id, _place):
             # RENDER RESPONSE
             return '', 204
         else:
@@ -600,6 +658,7 @@ class Notification(Resource):
         return create_error_response(403, "Error updating notification",
                                      "There is no a notification with the provided ids",
                                      "Notification")
+
     def delete(self):
         # PARSE THE REQUEST:
         input = request.get_json(force=True)
@@ -622,7 +681,6 @@ class Notification(Resource):
 
 class Dispersion(Resource):
     def get(self, name):
-
         disease_db = mysqldb.get_disease_by_name(name)
 
         # PERFORM OPERATIONS
@@ -639,14 +697,12 @@ class Dispersion(Resource):
 
 
 class News(Resource):
-
     def get(self):
         _dni = request.args['user_dni']
         user = mysqldb.get_user_by_dni(_dni)
         return mysqldb.get_user_news(user['user_id'])
 
     def delete(self):
-
         input = request.get_json(force=True)
         if not input:
             return create_error_response(415, "Unsupported Media Type",
@@ -664,7 +720,6 @@ class News(Resource):
 
 
 class Status(Resource):
-
     def get(self):
         _user = request.args['user_dni']
         _lat = request.args['lat']
@@ -672,9 +727,10 @@ class Status(Resource):
 
         status = {}
         status['user'] = mysqldb.get_user_by_dni(_user)
-        status['zone'] = mysqldb.get_contagions_by_zone(reverse_geocode([_lat,_lng], True))
+        status['zone'] = mysqldb.get_contagions_by_zone(reverse_geocode([_lat, _lng], True))
 
         return status
+
 
 # Add the Regex Converter so we can use regex expressions when we define the
 # routes

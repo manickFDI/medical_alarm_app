@@ -5,8 +5,6 @@ from functools import partial
 # Path for spark source folder
 from itertools import combinations
 
-from database import mongo_connector
-
 os.environ['SPARK_HOME'] = "/usr/local/Cellar/apache-spark/1.5.2"
 # Append pyspark  to Python Path
 sys.path.append("/usr/local/Cellar/apache-spark/1.5.2/libexec/python/")
@@ -64,25 +62,29 @@ def calculateFocus(lines):
     return result
 
 
-def get_points_in_time(point, U):
-    return (point, mongo_connector.get_points_in_time_window(U['user_id'], point['timestamp']))
+def get_points_in_time(user_point, U, M):
+    points = M.value.get_points_in_time_window(U.value['user_id'], user_point['timestamp'])
+    return ((user_point, point) for point in points)
 
 
-def compare_points_location(point, possible_points, D):
+def compare_points_location(point_pair, D):
     points = []
-    user_point = Point(point['location']['coordinates'][0], point['location']['coordinates'][1])
-    for possible_point in possible_points:
-        aux = Point(possible_point['location']['coordinates'][0], point['location']['coordinates'][1])
-        if user_point.distance(aux) <= D.value:
-            points.append(possible_point)
+    user_point = Point(point_pair[0]['location']['coordinates'][0], point_pair[0]['location']['coordinates'][1])
+    possible_point = Point(point_pair[1]['location']['coordinates'][0], point_pair[1]['location']['coordinates'][1])
+    if user_point.distance(possible_point) <= D.value:
+        cross = {}
+        cross['contagion_point']=point_pair
+        points.append(cross)
     return points
 
 
-def calculateContagion(user, time_window, distance):
+def calculateContagion(user, time_window, distance, mongodb):
     initializeSpark("Malarm", "local[2]")
     D = sc.broadcast(distance)
     U = sc.broadcast(user)
-    points = sc.parallelize(mongo_connector.get_points_by_user_and_time(user['user_id'], time_window))
-    users = points.flatMap(partial(get_points_in_time, U=U)).map(partial(compare_points_location, D=D)).collect()
+    M = sc.broadcast(mongodb)
+    points = sc.parallelize(mongodb.get_points_by_user_and_time(user['user_id'], time_window))
+    possible_points = points.flatMap(partial(get_points_in_time, U=U, M=M))
+    users = possible_points.map(partial(compare_points_location, D=D)).collect()
     stopContext()
     return users

@@ -316,7 +316,8 @@ class MysqlDatabase(object):
         data = []
         for row in rows:
             contagion = self.create_contagion_object(row)
-            selectUserContagionQuery = "SELECT * FROM {0} WHERE idContagio={1}".format(CONTAGIONS_USERS_TABLENAME, contagion['contagion_id'])
+            selectUserContagionQuery = "SELECT * FROM {0} WHERE idContagio={1}".format(CONTAGIONS_USERS_TABLENAME,
+                                                                                       contagion['contagion_id'])
 
             usersId = db.execute(selectUserContagionQuery)
             users = []
@@ -401,10 +402,11 @@ class MysqlDatabase(object):
 
     def insert_focus(self, foco):
 
-        insertQuery = "INSERT INTO {0} (descripcion, numPersonas, idMedico) VALUES (\"{1}\", {2}, {3})".format(FOCUS_TABLENAME,
-                                                                                                           foco['description'],
-                                                                                                           foco['num_users'],
-                                                                                                           foco['doctor_id'])
+        insertQuery = "INSERT INTO {0} (descripcion, numPersonas, idMedico) VALUES (\"{1}\", {2}, {3})".format(
+                FOCUS_TABLENAME,
+                foco['description'],
+                foco['num_users'],
+                foco['doctor_id'])
         rows = db.execute(insertQuery)
         if rows is not None:
             return rows.lastrowid
@@ -412,7 +414,8 @@ class MysqlDatabase(object):
 
     def insert_user_focus(self, focus, user):
 
-        insertQuery = "INSERT INTO {0} (idUsuario, idFoco) VALUES ({1},{2})".format(FOCUS_USERS_TABLENAME, user['user_id'],
+        insertQuery = "INSERT INTO {0} (idUsuario, idFoco) VALUES ({1},{2})".format(FOCUS_USERS_TABLENAME,
+                                                                                    user['user_id'],
                                                                                     focus['focus_id'])
 
         db.execute(insertQuery)
@@ -420,10 +423,11 @@ class MysqlDatabase(object):
 
     def insert_focus_place(self, focus, point, date):
 
-        insertQuery = "INSERT INTO {0} (idFoco, lugar, fecha) VALUES ({1}, \"{2}\", \"{3}\")".format(FOCUS_PLACES_TABLENAME,
-                                                                                                    focus['focus_id'],
-                                                                                                    point['address'],
-                                                                                                    date)
+        insertQuery = "INSERT INTO {0} (idFoco, lugar, fecha) VALUES ({1}, \"{2}\", \"{3}\")".format(
+                FOCUS_PLACES_TABLENAME,
+                focus['focus_id'],
+                point['address'],
+                date)
         db.execute(insertQuery)
         return True
 
@@ -554,6 +558,55 @@ class MysqlDatabase(object):
 
         return contagions
 
+    def insert_contagion(self, contagion):
+
+        insertQuery = "INSERT INTO {0} (idEnfermedad, idMedico, tiempo, distancia, fecha, nivel, descripcion, zona) VALUES " \
+                      "({1},{2},{3},{4},\"{5}\",{6},\"{7}\",\"{8}\")".format(CONTAGIONS_TABLENAME,
+                                                                             int(contagion['disease_id']),
+                                                                             int(contagion['doctor_id']),
+                                                                             int(contagion['time_window']),
+                                                                             int(contagion['distance']),
+                                                                             contagion['date'],
+                                                                             int(contagion['level']),
+                                                                             contagion['description'],
+                                                                             contagion['zone'])
+
+        rows = db.execute(insertQuery)
+        if rows is None or rows.rowcount == 0:
+            return False
+
+        contagion_id = rows.lastrowid
+        for user in contagion['users']:
+            insertNotificationQuery="INSERT INTO {0} (idUsuario, idContagio, fecha, confirmado)" \
+                                   "VALUES ({1},{2},\"{3}\",{4})".format(USER_NOTIFICATIONS_TABLENAME,
+                                                                         int(user),
+                                                                         int(contagion_id),
+                                                                         contagion['date'],
+                                                                         False)
+            db.execute(insertNotificationQuery)
+
+        insertNewsQuery="INSERT INTO {0} (descripcion, idContagio) VALUES (\"{1}\", {2})".format(NEWS_TABLENAME,
+                                                                                                    contagion['description'],
+                                                                                                    int(contagion_id))
+        rows = db.execute(insertNewsQuery)
+        if rows is None or rows.rowcount == 0:
+            return False
+
+        news_id = rows.lastrowid
+
+        selectUsersQuery = "SELECT * FROM {0}".format(USERS_TABLENAME)
+
+        rows = db.execute(selectUsersQuery)
+        if rows is None or rows.rowcount == 0:
+            return False
+        for row in rows:
+            user_aux = self.create_user_object(row)
+            inserNewsUserQuery="INSERT INTO {0} (idNoticia, idUsuario) VALUES ({1},{2})".format(USER_NEWS_TABLENAME,
+                                                                                                int(news_id), user_aux['user_id'])
+            db.execute(inserNewsUserQuery)
+
+        return True
+
     def delete_contagion(self, id):
 
         existsContagionQuery = "SELECT * FROM {0} WHERE idContagio = {1}".format(CONTAGIONS_TABLENAME, id)
@@ -587,14 +640,17 @@ class MysqlDatabase(object):
 
     def get_contagions_by_zone(self, zone):
 
-        selectQuery = "SELECT * FROM {0} WHERE zona LIKE \"{1}{2}{3}\"".format(CONTAGIONS_TABLENAME, str("%%"), zone, str("%%"))
+        selectQuery = "SELECT * FROM {0} WHERE zona LIKE \"{1}{2}{3}\"".format(CONTAGIONS_TABLENAME, str("%%"), zone,
+                                                                               str("%%"))
         selectQuery = str(selectQuery)
         rows = db.execute(selectQuery)
         if rows is None or rows.rowcount < 1:
             return {}
         contagions = []
         for row in rows:
-            contagions.append(self.create_contagion_object(row))
+            contagion = self.create_contagion_object(row)
+            contagion['disease'] = self.get_disease_by_id(contagion['disease_id'])
+            contagions.append(contagion)
 
         return contagions
 
@@ -749,7 +805,8 @@ class MysqlDatabase(object):
         return news
 
     def delete_user_news(self, user_id, news_id):
-        deleteQuery = "DELETE FROM {0} WHERE idUsuario={1} AND idNoticia={2}".format(USER_NEWS_TABLENAME, user_id, news_id)
+        deleteQuery = "DELETE FROM {0} WHERE idUsuario={1} AND idNoticia={2}".format(USER_NEWS_TABLENAME, user_id,
+                                                                                     news_id)
 
         db.execute(deleteQuery)
         return True
