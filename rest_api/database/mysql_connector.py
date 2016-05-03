@@ -320,11 +320,16 @@ class MysqlDatabase(object):
                                                                                        contagion['contagion_id'])
 
             usersId = db.execute(selectUserContagionQuery)
-            users = []
             for userId in usersId:
-                users.append(self.get_user_by_id(userId['idUsuario']))
-            contagion['users'] = users
-            data.append(contagion)
+                u = self.get_user_by_id(userId['idUsuario'])
+                aux = {}
+                aux['weight'] = u['weight']
+                birth_date = datetime.strptime(u['birthday'], '%d/%m/%Y')
+                current_date = datetime.strptime(time.strftime('%d/%m/%Y'), '%d/%m/%Y')
+                difference_in_years = relativedelta(current_date, birth_date).years
+                aux['birthday'] = difference_in_years
+                aux['gender'] = u['gender']
+                data.append(u)
 
         return data
 
