@@ -1526,9 +1526,10 @@ type: POST
 entrada:
     {
         "user_contagion":{
-            "user_dni":"12345678J",
+            "user_dni":"12345678P",
             "distance":"10",
             "time_window":"7",
+            "exposure":"10",
             "disease":"Ebola",
             "doctor_id":"1",
             "date":"20/01/2016",
