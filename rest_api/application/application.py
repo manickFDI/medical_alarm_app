@@ -1,12 +1,10 @@
 from flask import Flask, request, Response, jsonify
 from flask.ext.restful import Resource, Api
 # Own Imports
-import algorithm
 from database import mongo_connector
 from database.mongo_connector import MongoDatabase
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
-from shapely.geometry import LineString, Point
 import requests
 from datetime import datetime
 import time
@@ -23,7 +21,7 @@ mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
 # MongoDB
 app.config.update({'MONGO_DATABASE': MongoDatabase()})
-app.config['MONGO_DBNAME'] = 'malarm'
+app.config['MONGO_DBNAME'] = 'malarm_db'
 mongodb = app.config['MONGO_DATABASE']
 mongodb.init_app()
 
@@ -711,7 +709,6 @@ class Dispersion(Resource):
                                          % name,
                                          "Dispersion")
         dispersion = {}
-        dispersion['disease'] = disease_db
         dispersion['data'] = mysqldb.get_dispersion(disease_db['disease_id'])
 
         return dispersion
