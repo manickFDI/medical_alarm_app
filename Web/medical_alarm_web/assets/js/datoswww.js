@@ -63,11 +63,13 @@ function getDiseaseByZoneAndDate() {
     	var params = false;
     	if(date != ""){
     		if(!params) apiurl = apiurl + "?";
+            params = true;
     		apiurl = apiurl + "date=" + date;
     	}
     	if(zone != ""){
     		if(!params) apiurl = apiurl + "?";
     		else apiurl = apiurl + "&";
+            zone = zone.replace(" ", "+")
     		apiurl = apiurl + "zone=" + zone;
     	}
 
@@ -117,8 +119,10 @@ function getDiseaseByName() {
     var name = document.getElementById("nameInput").value;
 	
 	var apiurl = ENTRYPOINT + HEATMAP;
-	if(name != "")
-		apiurl = apiurl + "?" + name;
+	if(name != ""){
+        name = name.replace(" ", "+")
+		apiurl = apiurl + "?disease=" + name;
+    }
 
     getDiseasesByNameFromDB(apiurl);
 }
