@@ -43,7 +43,6 @@ public class FragmentPerfil extends Fragment {
     private String dni;
 
     public FragmentPerfil() {
-        Log.d("TAG", "costructor");
         //SharedPreferences prefs = this.getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         //String dni = prefs.getString("DNI", "");
         //loadDni();
@@ -84,12 +83,13 @@ public class FragmentPerfil extends Fragment {
 
         if(user == null) {
             SharedPreferences prefs = this.getActivity().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
-            String dni = prefs.getString("DNI", "jeje");
-            Log.d("TAG", "onCreate dni: " + dni);
+            String dni = prefs.getString("DNI", "");
+            //Log.d("TAG", "onCreate dni: " + dni);
             //this.dni = dni;
             //new LoadUserInfo().execute(this.dni); // solicita al API los datos del usuario
 
             this.loadUser(dni);
+            printUserInfo();
         }
         else
             this.printUserInfo();
@@ -116,6 +116,7 @@ public class FragmentPerfil extends Fragment {
      * This function updates the UI fields
      */
     private void printUserInfo() {
+        while(user == null) {}
         if(user != null) {
             txtName.setText(user.getName() + " " + user.getSurnames());
             txtDni.setText(user.getDni());
@@ -145,7 +146,8 @@ public class FragmentPerfil extends Fragment {
      */
     private class LoadUserInfo extends AsyncTask<String, Void, String> {
 
-        private static final String MY_IP = "10.0.2.2";
+        //private static final String MY_IP = "10.0.2.2";
+        private static final String MY_IP = "192.168.1.33";
         //private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/users/1/"; //OJO!! No usar la 127.0.0.1
         private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/user/"; //OJO!! No usar la 127.0.0.1
 
@@ -157,10 +159,10 @@ public class FragmentPerfil extends Fragment {
         protected String doInBackground(String... params) {
             StringBuilder result = new StringBuilder();
             try {
-                Log.d("TAG", "Peticion al API...");
+                //Log.d("TAG", "Peticion al API FragmentPerfil...");
 
                 //String url = URL + params[0];
-                String urlAux = MY_URL + dni;
+                String urlAux = MY_URL + dni + "/";
                 //Log.d("TAG", urlAux);
 
                 //return HttpRequest.get(url).accept("application/json").body();
@@ -194,7 +196,7 @@ public class FragmentPerfil extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            printUserInfo();
+            //printUserInfo();
         }
 
     }

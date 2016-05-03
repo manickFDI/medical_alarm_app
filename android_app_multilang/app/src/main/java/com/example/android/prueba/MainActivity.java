@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.android.prueba.sensors.SensorService;
+
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
                 }, 3000);
 
         if(!prefs.contains("DNI")) {
-            //crear login
             Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            //startActivity(intent);
+            startActivityForResult(intent, 1);
         }
 
         agregarToolbar();//encapsulación
@@ -74,21 +76,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (navigationView != null) {
             prepararDrawer(navigationView);
-            // Seleccionar item por defecto
-            seleccionarItem(navigationView.getMenu().getItem(0));
+            seleccionarItem(navigationView.getMenu().getItem(0)); // Seleccionar item por defecto
         }
 
 
-        /*String[] cosasPorHacer = new String[] { "Aprender a programar en Android",
-                "Hacer una aplicación famosa","Vender la aplicación","Esperar a que llegue el dinero"};
-
-        lista = (ListView) findViewById(R.id.lista_soporte);
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, cosasPorHacer);
-        lista.setAdapter(adapter);*/
-
-        //PABLO
-        //Intent intent = new Intent(this, SensorService.class);
-        //startService(intent);
+        // PABLO
+        Intent intent = new Intent(this, SensorService.class);
+        startService(intent);
 
 
         /*SharedPreferences.Editor prefsEditor = prefs.edit();

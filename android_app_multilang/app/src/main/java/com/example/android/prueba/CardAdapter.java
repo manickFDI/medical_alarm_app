@@ -1,7 +1,10 @@
 package com.example.android.prueba;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +17,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -24,12 +37,14 @@ import java.util.List;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
 
     private List<CardInfo> items;
+    private String dni;
     //private FragmentManager manager;
 
     private static ClickListener clickListener; //ClickListener es una interfaz creada al final de esta clase
 
-    public CardAdapter(List<CardInfo> items) {
+    public CardAdapter(List<CardInfo> items, String dni) {
         this.items = items;
+        this.dni = dni;
     }
 
     /*
@@ -42,7 +57,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public int getItemCount() {
-        return items.size();
+        if(items != null)
+            return items.size();
+        else
+            return 0;
     }
 
     @Override
@@ -53,9 +71,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public void onBindViewHolder(CardViewHolder viewHolder, int i) {
-        viewHolder.info.setText(items.get(i).getTexto());
-        viewHolder.gravedad.setText("Riesgo: " + String.valueOf(items.get(i).getGravedad()));
-        viewHolder.fecha.setText(items.get(i).getFecha());
+        viewHolder.info.setText(items.get(i).getDescription());
+        viewHolder.gravedad.setText("Riesgo: " + items.get(i).getGravedad());
+        viewHolder.fecha.setText(items.get(i).getDate());
         viewHolder.imagen.setImageResource(items.get(i).getIdImagen());
         //viewHolder.setFragmentManager(this.manager);
     }
@@ -66,6 +84,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public void removeItem(int position) {
         items.remove(position);
         notifyDataSetChanged();
+
+        //new DeleteNewFromUser().execute(this.dni);
     }
 
     public CardInfo getCardByPosition(int position) {
@@ -130,8 +150,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
          */
         @Override
         public void onClick(View v) {
+            int new_id = getCardByPosition(getAdapterPosition()).getNews_id();
+            new DeleteNewTask().execute(new_id);
+
             removeItem(getAdapterPosition());
-            Toast toast = Toast.makeText(v.getContext(), "Card eliminada", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(v.getContext(), "Noticia eliminada correctamente", Toast.LENGTH_LONG);
             //toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
@@ -150,5 +173,65 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     public interface ClickListener {
         void onItemClick(int position, View v);
+    }
+
+
+
+    private class DeleteNewTask extends AsyncTask<Integer, Void, Void> {
+
+        //private static final String MY_IP = "10.0.2.2";
+        private static final String MY_IP = "192.168.1.33";
+        private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/news/"; //OJO!! No usar la 127.0.0.1
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            Log.d("TAG", "Deleting new...");
+
+            try {
+                URL url = new URL(MY_URL);
+                Log.d("TAG", "URL: " + url.toString());
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("DELETE");
+
+                DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream ());
+
+                JSONObject jsonParam = new JSONObject();
+                JSONObject jsonAux = new JSONObject();
+                jsonAux.put("user_dni", dni);
+                jsonAux.put("news_id", params[0]);
+                jsonParam.put("user_news", jsonAux);
+
+                wr.writeBytes(jsonParam.toString());
+
+                wr.flush();
+                wr.close();
+
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    //Log.d("TAG", "Response doInBackgound: " + response);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    urlConnection.disconnect();
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
     }
 }
