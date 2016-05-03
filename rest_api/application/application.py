@@ -360,7 +360,7 @@ class Sensors(Resource):
                                          "User")
         input_data = input['sensor']
 
-        _userId = input_data['user_id']
+        _userDni = input_data['user_dni']
         _timestamp = input_data['timestamp']
         _latitude = input_data['latitude']
         _longitude = input_data['longitude']
@@ -368,6 +368,8 @@ class Sensors(Resource):
         _accelerometer = input_data['accelerometer']
         _light = input_data['light']
         _battery = input_data['battery']
+
+        _userId = mysqldb.get_user_by_dni(_userDni)['user_id']
 
         if not _userId or not _timestamp or not _latitude or not _longitude \
                 or not _magnetometer or not _accelerometer or not _light or not _battery:
