@@ -152,28 +152,7 @@
 
                             <div class="panel-body">
                                 <ul id="contagiosList">
-                                    <!--
-                                    <li>
-                                     <span class="sm-box bggreen2" ></span>
-                                                <span class="leyenda">Enfermedad: Gripe A || Madrid-Centro || Contagios: 12</span>
-                                                <a href="#" class="btn btn-info btn-xs">Erradicar </a>
-                                    </li>
-                                    <li>
-                                     <span class="sm-box bgyellow2" ></span>
-                                                <span class="leyenda">Enfermedad: Gripe A || Barcelona || Contagios: 7</span>
-                                                <a href="#" class="btn btn-info btn-xs">Erradicar </a>
-                                    </li>
-                                    <li>
-                                     <span class="sm-box bgred2" ></span>
-                                                <span class="leyenda">Enfermedad: Tuberculosis || Cáceres || Contagios: 4</span>
-                                                <a href="#" class="btn btn-info btn-xs">Erradicar </a>
-                                    </li>
-                                    <li>
-                                     <span class="sm-box bgblue2" ></span>
-                                                <span class="leyenda"> Enfermedad: Legionella || Manzanares || Contagios: 25</span>
-                                                <a href="#" class="btn btn-info btn-xs">Erradicar </a>
-                                    </li>
-                                    -->
+
                                 </ul>
                             </div>
                         </div>
@@ -194,11 +173,11 @@
                                 <label>Mensaje: </label>
                                 <textarea rows="9" class="form-control"></textarea>
                                 <hr />
-                                <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Confirmar </a>&nbsp;
+                                <a class="btn btn-success" onclick="sendMessage()"><span class="glyphicon glyphicon-ok"></span> Confirmar </a>&nbsp;
                                 <a class="btn btn-danger" onclick="hideMessage()"><span class="glyphicon glyphicon-remove"></span>  Cancelar </a>
                             </div>
                             <div class="panel-footer text-muted">
-                                <strong>Nota : </strong>Este mensaje será enviado al correo del paciente(sale si se da al boton "enviar mensaje")
+                                <strong>Nota : </strong>Este mensaje será enviado al correo del paciente
                             </div>
                         </div>
                     </div>

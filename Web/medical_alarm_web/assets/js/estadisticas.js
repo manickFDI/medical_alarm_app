@@ -5,7 +5,6 @@
 var ENTRYPOINT = "http://localhost:5000/malarm/api/";
 
 var DEBUG = true;
-var WHITE_SPACE = " ";
 
 window.onload = load();//function that is called when the page is loaded (general graphics)
 
@@ -115,7 +114,6 @@ function prepareTable() {
  * @param ref_tabla
  * @param enfermedad
  */
-
 function completeDisease(ref_titulo, ref_tabla, enfermedad) {
 
     $("#enfermedad").show(500);
@@ -127,6 +125,9 @@ function completeDisease(ref_titulo, ref_tabla, enfermedad) {
     generateTitle(ref_titulo, enfermedad);
     generateTable(ref_tabla, enfermedad);
     generateGraphicsDisease(enfermedad);
+
+    var apiurl = ENTRYPOINT + 'dispersion/' + enfermedad.name;
+    getDataDispersion(apiurl);
 }
 
 
@@ -160,6 +161,31 @@ function generateTable(ref, enfermedad) {
             enfermedad.weight + ' Kg</td></tr></tbody></table>';
     }
     ref.innerHTML = tabla;
+}
+
+
+/**
+ * obtains from database the data for create the graphics and diagrams of dispersions
+ * @param apiurl
+ * @returns {*}
+ */
+function getDataDispersion(apiurl) {
+    return $.ajax({
+        url: apiurl,
+        dataType:"json"
+    }).done(function (data, textStatus, jqXHR){
+        if (DEBUG) {
+            console.log ("RECEIVED RESPONSE: data:",data,"; textStatus:",textStatus)
+        }
+
+        generateGraphicsDispersion(data); //c3.js
+
+    }).fail(function (jqXHR, textStatus, errorThrown){
+        if (DEBUG) {
+            console.log ("RECEIVED ERROR: textStatus:",textStatus, ";error:",errorThrown)
+        }
+        personalAlert("ERROR  ", " --  No se pudo obtener los datos para la grafica de dispersiones", "danger", 2000, false);
+    });
 }
 
 
@@ -255,7 +281,157 @@ function generateGraphicsDisease(data) {
     var aux_a = Number(((data.numadults * 100) / data.numcontagions).toFixed(2));
     var aux_v = Number(100 - (aux_n + aux_a + aux_t));
 
+    createGraphicSexo(aux_h, aux_m);
+    createGraphicPoblacion(aux_n, aux_t, aux_a, aux_v);
+}
 
+
+function generateGraphicsDispersion(data) {
+
+    var disp1 = c3.generate({
+        /*data: {
+         xs: {
+         setosa: 'setosa_x',
+         versicolor: 'versicolor_x'
+         },
+         // iris data from R
+         columns: [
+         ["setosa_x", 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3.0, 3.0, 4.0, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3.0, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3.0, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3.0, 3.8, 3.2, 3.7, 3.3],
+         ["versicolor_x", 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2.0, 3.0, 2.2, 2.9, 2.9, 3.1, 3.0, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3.0, 2.8, 3.0, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3.0, 3.4, 3.1, 2.3, 3.0, 2.5, 2.6, 3.0, 2.6, 2.3, 2.7, 3.0, 2.9, 2.9, 2.5, 2.8],
+         ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
+         ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3]
+         ],
+         type: 'scatter'
+         },*/
+
+        data: {
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            json: data.data,
+            keys: {
+                x: 'birthday',
+                value: ['gender']
+            },
+            type : 'scatter',
+            labels: true
+            // Descomentar esto para jugar con los colores
+            /*color: function (color, d) {
+             return colors[d.index];
+             }*/
+        },
+        color: {
+            pattern: ['#0F9BDC']
+        },
+        size: {
+            height: 340,
+            width: 500
+        },
+        point: {
+            r: 4
+        },
+        bindto: '#disp1',
+        axis: {
+            x: {
+                label: 'Edad'
+                },
+            y: {
+                label: 'Sexo'
+            }
+        },
+        legend: {
+            hide: true
+            //or hide: 'data1'
+            //or hide: ['data1', 'data2']
+        }
+    });
+
+    var disp2 = c3.generate({
+
+        data: {
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            json: data.data,
+            keys: {
+                x: 'weight',
+                value: ['gender']
+            },
+            type : 'scatter',
+            labels: true
+            // Descomentar esto para jugar con los colores
+            /*color: function (color, d) {
+             return colors[d.index];
+             }*/
+        },
+        color: {
+            pattern: ['#FF8705']
+        },
+        size: {
+            height: 340,
+            width: 500
+        },
+        point: {
+            r: 4
+        },
+        bindto: '#disp2',
+        axis: {
+            x: {
+                label: 'Peso'
+                },
+            y: {
+                label: 'Sexo'
+            }
+        },
+        legend: {
+            hide: true
+            //or hide: 'data1'
+            //or hide: ['data1', 'data2']
+        }
+    });
+
+    var disp3 = c3.generate({
+
+        data: {
+            // Con esta opcion vamos a tratar de hacerlo dinámico
+            json: data.data,
+            keys: {
+                x: 'birthday',
+                value: ['weight']
+            },
+            type : 'scatter',
+            labels: true
+            // Descomentar esto para jugar con los colores
+            /*color: function (color, d) {
+             return colors[d.index];
+             }*/
+        },
+        color: {
+            pattern: ['#D20202']
+        },
+        size: {
+            height: 340,
+            width: 1080
+        },
+        point: {
+            r: 5
+        },
+        bindto: '#disp3',
+        axis: {
+            x: {
+                label: 'Edad'
+            },
+            y: {
+                label: 'Peso'
+            }
+        },
+        legend: {
+            hide: true
+            //or hide: 'data1'
+            //or hide: ['data1', 'data2']
+        }
+    });
+}
+
+
+
+function createGraphicSexo(men, women) {
     var chart = c3.generate({
         size: {
             height: 240,
@@ -265,8 +441,8 @@ function generateGraphicsDisease(data) {
         data: {
             // Con esto podríamos crear un grafico a mano
             columns: [
-                ['data1', aux_h],
-                ['data2', aux_m]
+                ['data1', men],
+                ['data2', women]
             ],
             names: {
                 data1: 'Hombres',
@@ -287,7 +463,11 @@ function generateGraphicsDisease(data) {
             }
         }
     });
+}
 
+
+
+function createGraphicPoblacion(children, teenager, adult, old) {
     var chart = c3.generate({
         size: {
             height: 240,
@@ -297,10 +477,10 @@ function generateGraphicsDisease(data) {
         data: {
             // Con esto podríamos crear un grafico a mano
             columns: [
-                ['data1', aux_n],
-                ['data2', aux_t],
-                ['data3', aux_a],
-                ['data4', aux_v]
+                ['data1', children],
+                ['data2', teenager],
+                ['data3', adult],
+                ['data4', old]
             ],
             names: {
                 data1: 'Niños',
@@ -323,141 +503,7 @@ function generateGraphicsDisease(data) {
             }
         }
     });
-
-
-    /////
-
-    var disp1 = c3.generate({
-        data: {
-            xs: {
-                setosa: 'setosa_x',
-                versicolor: 'versicolor_x'
-            },
-            // iris data from R
-            columns: [
-                ["setosa_x", 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3.0, 3.0, 4.0, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3.0, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3.0, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3.0, 3.8, 3.2, 3.7, 3.3],
-                ["versicolor_x", 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2.0, 3.0, 2.2, 2.9, 2.9, 3.1, 3.0, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3.0, 2.8, 3.0, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3.0, 3.4, 3.1, 2.3, 3.0, 2.5, 2.6, 3.0, 2.6, 2.3, 2.7, 3.0, 2.9, 2.9, 2.5, 2.8],
-                ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
-                ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3]
-            ],
-            type: 'scatter'
-        },
-        size: {
-            height: 340,
-            width: 500
-        },
-        bindto: '#disp1',
-        axis: {
-            x: {
-                label: 'Sepal.Width',
-                tick: {
-                    fit: false
-                }
-            },
-            y: {
-                label: 'Petal.Width'
-            }
-        }
-    });
-
-    var disp2 = c3.generate({
-        data: {
-            xs: {
-                setosa: 'setosa_x',
-                versicolor: 'versicolor_x'
-            },
-            // iris data from R
-            columns: [
-                ["setosa_x", 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3.0, 3.0, 4.0, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3.0, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3.0, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3.0, 3.8, 3.2, 3.7, 3.3],
-                ["versicolor_x", 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2.0, 3.0, 2.2, 2.9, 2.9, 3.1, 3.0, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3.0, 2.8, 3.0, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3.0, 3.4, 3.1, 2.3, 3.0, 2.5, 2.6, 3.0, 2.6, 2.3, 2.7, 3.0, 2.9, 2.9, 2.5, 2.8],
-                ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
-                ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3]
-            ],
-            type: 'scatter'
-        },
-        size: {
-            height: 340,
-            width: 500
-        },
-        bindto: '#disp2',
-        axis: {
-            x: {
-                label: 'Sepal.Width',
-                tick: {
-                    fit: false
-                }
-            },
-            y: {
-                label: 'Petal.Width'
-            }
-        }
-    });
-
-    var storedData = [{
-        "edad": "23",
-        "peso": "82",
-        "sexo": "1"
-    }, {
-        "edad": "55",
-        "peso": "72",
-        "sexo": "1"
-    }, {
-        "edad": "14",
-        "peso": "55",
-        "sexo": "1"
-    }];
-
-    var colors = ['#FA0303'];
-
-    var disp3 = c3.generate({
-        /*data: {
-            xs: {
-                setosa: 'setosa_x',
-                versicolor: 'versicolor_x'
-            },
-            // iris data from R
-            columns: [
-                ["setosa_x", 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3.0, 3.0, 4.0, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3.0, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3.0, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3.0, 3.8, 3.2, 3.7, 3.3],
-                ["versicolor_x", 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2.0, 3.0, 2.2, 2.9, 2.9, 3.1, 3.0, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3.0, 2.8, 3.0, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3.0, 3.4, 3.1, 2.3, 3.0, 2.5, 2.6, 3.0, 2.6, 2.3, 2.7, 3.0, 2.9, 2.9, 2.5, 2.8],
-                ["setosa", 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
-                ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3]
-            ],
-            type: 'scatter'
-        },*/
-
-        data: {
-            // Con esta opcion vamos a tratar de hacerlo dinámico
-            json: storedData,
-            keys: {
-                x: 'edad',
-                value: ['peso']
-            },
-            type : 'scatter',
-            labels: true
-            // Descomentar esto para jugar con los colores
-            /*color: function (color, d) {
-                return colors[d.index];
-            }*/
-        },
-        color: {
-            pattern: ['#FA0303']
-        },
-        size: {
-            height: 340,
-            width: 1080
-        },
-        bindto: '#disp3',
-        axis: {
-            x: {
-                label: 'Edad'
-            },
-            y: {
-                label: 'Peso'
-            }
-        }
-    });
 }
-
 
 
 /**
@@ -635,18 +681,10 @@ function generateGraphicsAllUsers(data) {
 }
 
 
+// *******************************************************************************************************************
 
 
-
-
-
-
-
-/**
- * generate the graphics for the web. Use c3.js and d3.js with many types of graphics
- */
-
-function generate() {}
+//  PLANTILLAS PARA LAS GRAFICAS //  ---------------------------------------------------------------------------------
 
     /*var chart = c3.generate({
         size: {
@@ -855,7 +893,7 @@ function generate() {}
     }
     });*/
 
-    var line = c3.generate({
+    /*var line = c3.generate({
     size: {
         height: 340,
         width: 1080

@@ -77,6 +77,13 @@ function createListDiseasesUser(user, div) {
 }
 
 
+/**
+ * Remove a disease of a user, deleting the reference in the database and refreshing the view of the web
+ * @param idUser
+ * @param idContagion
+ * @param id_li
+ * @returns {*}
+ */
 function confirmCuredDisease(idUser, idContagion, id_li) {
 
     var aux = "list" + id_li;
@@ -115,6 +122,12 @@ function confirmCuredDisease(idUser, idContagion, id_li) {
 }
 
 
+
+/**
+ * change the state of a user to dead. This changes the tables in the database
+ * @param dni_user
+ * @returns {*}
+ */
 function confirmDead(dni_user) {
 
     var data = '{"user":{ "new_status":"dead"}}'; // Creamos el txt con el json
@@ -145,6 +158,8 @@ function confirmDead(dni_user) {
     });
 }
 
+
+
 /**
  * obtain the user from the searcher. It search by the dni.
  */
@@ -159,6 +174,8 @@ function getUser() {
         personalAlert("ERROR  ", " --  Formato de DNI incorrecto", "danger", 2000, false);
     }
 }
+
+
 
 
 /**
@@ -191,6 +208,7 @@ function getUser_db(apiurl) {
 
 
 
+
 /**
  * function that communicate with the api_REST. It update the state of a user when the doctor changes it
  * @param apiurl
@@ -219,6 +237,8 @@ function updateEstate(apiurl, userData) {
 }
 
 
+
+
 /**
  * function that call to other function chosen to give back the active contagions from the db.
  */
@@ -231,6 +251,7 @@ function loadContagions() {
 }
 
 
+
 /**
  * function that call to other function chosen to give back the active contagions from the db reloading the data and cleaning the previous data.
  */
@@ -241,11 +262,12 @@ function reLoadContagions() {
 
 
 
+
+
 /**
  * Connect with the api_REST and obtain all the active contagions in the system with the necessary information
  * @returns {*}
  */
-
 function getContagions(apiurl) {
     return $.ajax({
         url: apiurl,
@@ -268,6 +290,7 @@ function getContagions(apiurl) {
         personalAlert("ERROR  ", " --  No se han podido cargar los contagios activos", "danger", 2000, false);
     });
 }
+
 
 
 /**
@@ -330,6 +353,7 @@ function deleteContagion(id) {
 }
 
 
+
 /**
  * remove or set the level of the contagion to 0 and delete the contagion from the db
  * @param apiurl
@@ -351,6 +375,7 @@ function removeContagion_db(apiurl) {
         personalAlert("ERROR  ", " --  No se ha podido eliminar el contagio", "danger", 2000, false);
     });
 }
+
 
 
 /**
@@ -384,6 +409,14 @@ function hideMessage() {
 
 
 /**
+ * this function is not implemented, only shows a message, a alert message
+ */
+function sendMessage() {
+    personalAlert("MENSAJE ENVIADO", "--> Su mensaje se ha enviado correctamente", "success", 1000, false);
+}
+
+
+/**
  * shows the message to email with a user
  */
 function showMessage() {
@@ -400,6 +433,10 @@ function showButtonsUser(dni_user) {
 }
 
 
+/**
+ * Creates the buttons of the view of index.html
+ * @param dni_user
+ */
 function createButtonsUser(dni_user) {
     //var aux = "'" + dni_user + "'";
     var div = document.getElementById("botonesPanelUsuario");
@@ -408,6 +445,7 @@ function createButtonsUser(dni_user) {
 
     div.innerHTML = str;
 }
+
 
 
 /**
@@ -434,6 +472,7 @@ function loadMap(apiurl) {
 }
 
 
+
 /**
  * create the map
  * @param data
@@ -457,6 +496,7 @@ function initMap(data) {
         map: map
     });
 }
+
 
 
 // Heatmap data example: barcelona y madrid
