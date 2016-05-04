@@ -1,4 +1,5 @@
 NUM_COLUMNS = 5, // dni, nombre, enfermedad, fecha, confirmar revision
+DOCTOR_ID = 1,
 ENTRYPOINT_CONTAGIONS = "http://localhost:5000/malarm/api/contagions/",
 ENTRYPOINT_USERS_CONTAGIONS = "http://localhost:5000/malarm/api/users/contagions/",
 ENTRYPOINT_NOTIFICATION = "http://localhost:5000/malarm/api/notification/",
@@ -13,7 +14,7 @@ function getNotifications() {
 	if(dni != "") {
 		if(validateDNI(dni)) {
 			var apiURL = ENTRYPOINT_USERS_NOTIFICATIONS + "?dni=" + dni;
-			personalAlert("CARGANDO  ", " --  Cargando notificaciones...", "info", 500, true);
+			personalAlert("CARGANDO  ", " --  Cargando notificaciones...", "info", 150, true);
 			return $.ajax({
 				url: apiURL,
 			}).always(function() {
@@ -237,7 +238,6 @@ function confirmSubmit() {
 	var dni = document.getElementById('dni').value;
 	if(validateDNI(dni)) {
 		if(confirm("¿Esta seguro de que quiere dar de alta este contagio?")) {
-			var apiURL = ENTRYPOINT_CONTAGIONS;
 			// Valores del formulario
 			var time = document.getElementById('time').value;
 			var distance = document.getElementById('distance').value;
@@ -246,19 +246,24 @@ function confirmSubmit() {
 			var date = $("#datetimepicker").data("DateTimePicker").date(); // lo devuelve en ¿segundos? desde ... ?
 			var comboboxLevel = document.getElementById('level');
 			var level = comboboxLevel.options[comboboxLevel.selectedIndex].value;
+			var timeWindow = document.getElementById('timeWindow');
 			var description = document.getElementById('description').value;
 
-			var userData = '{ "dni":"' + dni + '",' +
-							'"time":"' + time + '",' +
+			var userData = '{"user_contagion":{ "user_dni":"' + dni + '",' +
+							'"exposure":"' + time + '",' +
 							'"distance":"' + distance + '",' +
 							'"disease":"' + disease + '",' +
 							'"date":"' + date + '",' +
 							'"level":"' + level + '",' +
+							'"time_window":"' + timeWindow + '",' +
+							'"doctor_id":"' + DOCTOR_ID + '",' +
 							'"description":"' + description + '"' +
-							' }'; // Creamos el txt con el json
+							' }}'; // Creamos el txt con el json
 			//alert(userData);
 			
-			/*userData = JSON.stringify(userData); // Verificamos que el formato es json
+			//userData = JSON.stringify(userData); // Verificamos que el formato es json
+
+			var apiURL = ENTRYPOINT_CONTAGIONS;
 
 			return $.ajax({
 				url: apiURL,
@@ -266,11 +271,11 @@ function confirmSubmit() {
 				data: userData
 			}).done(function (data, textStatus, jqXHR) {
 				//alert("Contagio dado de alta correctamente");
-				personalAlert("SUCCESS  ", " --  Contagio dado de alta correctamente.", "danger", 2000, false);
+				personalAlert("SUCCESS  ", " --  Contagio dado de alta correctamente.", "success", 2000, false);
 			}).fail(function (jqXHR, textStatus, errorThrown) {
 				//alert("Error al buscar usuario.");
-				personalAlert("ERROR  ", " --  Error al buscar usuario.", "danger", 2000, false);
-			});*/
+				personalAlert("ERROR  ", " --  Error al dar de alta el contagio.", "danger", 2000, false);
+			});
 		}
 	}
 	else {
