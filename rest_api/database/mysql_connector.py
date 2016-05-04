@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 import time
 
 MYSQL_DATABASE_USER = 'root'
-MYSQL_DATABASE_PASSWORD = 'hyd1992'
+MYSQL_DATABASE_PASSWORD = 'rooting'
 MYSQL_DATABASE_DB = 'malarm'
 MYSQL_DATABASE_HOST = 'localhost'
 SQLALCHEMY_DATABASE_URI = 'mysql://{0}:{1}@{2}/{3}'.format(MYSQL_DATABASE_USER,

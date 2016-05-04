@@ -246,7 +246,7 @@ function confirmSubmit() {
 			var date = $("#datetimepicker").data("DateTimePicker").date(); // lo devuelve en ¿segundos? desde ... ?
 			var comboboxLevel = document.getElementById('level');
 			var level = comboboxLevel.options[comboboxLevel.selectedIndex].value;
-			var timeWindow = document.getElementById('timeWindow');
+			var timeWindow = document.getElementById('timeWindow').value;
 			var description = document.getElementById('description').value;
 
 			var userData = '{"user_contagion":{ "user_dni":"' + dni + '",' +

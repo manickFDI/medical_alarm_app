@@ -1,12 +1,12 @@
+from datetime import datetime
 from flask import Flask, request, Response, jsonify
 from flask.ext.restful import Resource, Api
 # Own Imports
-from database import mongo_connector
+import algorithm
 from database.mongo_connector import MongoDatabase
 from database.mysql_connector import MysqlDatabase
 from utils import RegexConverter
 import requests
-from datetime import datetime
 import time
 
 # Define the application and the api
@@ -21,7 +21,7 @@ mysqldb = app.config['MYSQL_DATABASE']
 mysqldb.init(MYSQL_DB_PATH)
 # MongoDB
 app.config.update({'MONGO_DATABASE': MongoDatabase()})
-app.config['MONGO_DBNAME'] = 'malarm_db'
+app.config['MONGO_DBNAME'] = 'malarm'
 mongodb = app.config['MONGO_DATABASE']
 mongodb.init_app()
 
@@ -471,8 +471,17 @@ class Contagions(Resource):
         _exposure = input_data['exposure']
         _disease_name = input_data['disease']
         _id_doctor = input_data['doctor_id']
-        _date = input_data['date']
-        _level = input_data['level']
+        _ts_date = input_data['date']
+        aux_time = int(_ts_date) / 1000
+        _date = (datetime.fromtimestamp(aux_time)).strftime('%d/%m/%Y')
+        _s_level = input_data['level']
+        _level = 0
+        if _s_level == "bajo":
+            _level = 1
+        elif _s_level == "medio":
+            _level = 2
+        elif _s_level == "alto":
+            _level = 3
         _description = input_data['description']
 
         user = mysqldb.get_user_by_dni(_user_dni)
