@@ -3,7 +3,8 @@ DOCTOR_ID = 1,
 ENTRYPOINT_CONTAGIONS = "http://localhost:5000/malarm/api/contagions/",
 ENTRYPOINT_USERS_CONTAGIONS = "http://localhost:5000/malarm/api/users/contagions/",
 ENTRYPOINT_NOTIFICATION = "http://localhost:5000/malarm/api/notification/",
-ENTRYPOINT_USERS_NOTIFICATIONS = "http://localhost:5000/malarm/api/user/notifications/"
+ENTRYPOINT_USERS_NOTIFICATIONS = "http://localhost:5000/malarm/api/user/notifications/",
+ENTRYPOINT_DISEASES = "http://localhost:5000/malarm/api/diseases/"
 
 /*
 	Busca las notificaciones enviadas a un usuario.
@@ -287,56 +288,24 @@ function confirmSubmit() {
 
 
 /*
-	Comprueba que el dni tenga el formato correcto
+	Carga de la BD la lista de enfermedades y rellena el comboBox con ellas
 */
-/*function validateDNI(dni) {
-    var numero;
-    var letra;
-    var letraSet;
-    var expresion_regular_dni;
-    var ret = false;
+function loadDiaseases() {
+	var apiURL = ENTRYPOINT_DISEASES + "?type=all&top=0";
 
-    expresion_regular_dni = /^\d{8}[a-zA-Z]$/; //expresion regular formada por 8 digitos y una letra (mayus o minus)
+	return $.ajax({
+		url: apiURL
+	}).done(function (data, textStatus, jqXHR) {
+		var comboboxDiseases = document.getElementById('disease');
 
-    if(expresion_regular_dni.test (dni) == true){ //test -> comprueba que dni es correcto
-        numero = dni.substr(0,dni.length-1); //nos quedamos con los digitos
-        letra = dni.substr(dni.length-1,1);//nos quedamos con la letra
+		for(var i=0; i<data.length; i++) {
+			var option = document.createElement("option");
+			option.text = data[i].name;
+			option.value = data[i].name;
+			comboboxDiseases.appendChild(option, i);
+		}
 
-        numero = numero % 23; //necesario para saber si la letra es valida (proceso)
-
-        letraSet='TRWAGMYFPDXBNJZSQVHLCKET'; //todas las letras posibles (ni Ñ ni I ni O)
-
-        letraSet=letraSet.substring(numero,numero+1);
-
-        if (letraSet==letra.toUpperCase()) {
-            ret = true;
-        }
-    }
-    return ret;
-}*/
-
-
-/*
-	Dado el enumerado, devuelve el string del estado de un usuario
-	* Params: state - int [0,1,2,3,4]
-*/
-/*function parserState(state) {
-	var ret;
-	switch(state) {
-		case 1: ret = "Sano"; break;
-		case 2: ret = "Curado"; break;
-		case 3: ret = "Enfermo"; break;
-		case 4: ret = "Fallecido"; break;
-		default: ret = "Indefinido"; break;
-	}
-	return ret;
-}*/
-
-
-/*
-	Comprueba que el texto solo contenga letras y espacios para evitar entradas malintencionadas
-*/
-/*function correctInput(text) {
-    var exp = /^[A-Za-z\-\.\s\xF1\xD1]+$/; //alfabetico con espacios
-    return exp.test(text);
-}*/
+	}).fail(function (jqXHR, textStatus, errorThrown) {
+		personalAlert("ERROR  ", " --  Error al obtener la lista de enfermedades.", "danger", 2000, false);
+	});
+}
