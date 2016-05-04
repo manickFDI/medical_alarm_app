@@ -270,6 +270,8 @@ class Diseases(Resource):
             return mysqldb.get_top_deaths(_top)
         elif _type == "c":  # For contagions
             return mysqldb.get_top_contagions(_top)
+        elif _type == "all":  # For contagions
+            return mysqldb.get_diseases()
         else:
             return {}
 

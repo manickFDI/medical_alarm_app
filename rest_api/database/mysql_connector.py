@@ -211,6 +211,19 @@ class MysqlDatabase(object):
     DISEASE RELATED FUNCTIONS
     """
 
+    def get_diseases(self):
+        query = "SELECT *, (numHombres+numMujeres) as numContagions  FROM {0}".format(DISEASE_TABLENAME)
+
+        rows = db.execute(query)
+
+        if rows is None or rows.rowcount < 1:
+            return {}
+        diseases = []
+        for row in rows:
+            diseases.append(self.create_disease_object(row))
+
+        return diseases
+
     def get_disease_by_id(self, id):
         query = "SELECT *, (numHombres+numMujeres) as numContagions FROM {0} " \
                 "WHERE idEnfermedad = \"{1}\"".format(DISEASE_TABLENAME, id)
