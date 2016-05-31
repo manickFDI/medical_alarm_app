@@ -241,7 +241,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         //private static final String MY_IP = "10.0.2.2";
         //private static final String MY_IP = "10.0.2.2:5000/malarm/api/";
-        private static final String MY_IP = "192.168.1.33:5000/malarm/api/";
+        private static final String MY_IP = "147.96.80.89:5000/malarm/api/";
         private static final String MY_URL = "http://" + MY_IP + "users/"; //OJO!! No usar la 127.0.0.1
 
         /**

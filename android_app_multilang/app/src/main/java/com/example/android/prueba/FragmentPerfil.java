@@ -147,7 +147,7 @@ public class FragmentPerfil extends Fragment {
     private class LoadUserInfo extends AsyncTask<String, Void, String> {
 
         //private static final String MY_IP = "10.0.2.2";
-        private static final String MY_IP = "192.168.1.33";
+        private static final String MY_IP = "147.96.80.89";
         //private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/users/1/"; //OJO!! No usar la 127.0.0.1
         private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/user/"; //OJO!! No usar la 127.0.0.1
 

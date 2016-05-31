@@ -235,7 +235,7 @@ public class FragmentInfo extends Fragment {
     private class UpdateNewsTask extends AsyncTask<String, Void, List<CardInfo>> {
 
         //private static final String MY_IP = "10.0.2.2";
-        private static final String MY_IP = "192.168.1.33";
+        private static final String MY_IP = "147.96.80.89";
         private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/news/"; //OJO!! No usar la 127.0.0.1
 
         protected List<CardInfo> doInBackground(String... params) {

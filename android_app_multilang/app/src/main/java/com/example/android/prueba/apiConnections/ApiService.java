@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class ApiService extends IntentService {
 
-    private static final String MY_IP = "192.168.1.33"; //OJO!! No usar la 127.0.0.1
+    private static final String MY_IP = "147.96.80.89"; //OJO!! No usar la 127.0.0.1
 
     private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/sensors/"; //OJO!! No usar la 127.0.0.1
 

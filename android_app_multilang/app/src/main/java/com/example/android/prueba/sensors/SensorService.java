@@ -228,10 +228,10 @@ public class SensorService extends Service {
                 Log.d(SENSOR_TAG, "new location update: " + mNumUpdates);
                 mCurrentLocation = location;
                 mCurrentLocationTime = DateFormat.getTimeInstance().format(new Date());
-                if(mNumUpdates == 20){
+                /*if(mNumUpdates == 20){
                     stopHandlerWork();
                     stopSelf();
-                }
+                }*/
                 mNumUpdates++;
                 valuesLock.unlock();
 
