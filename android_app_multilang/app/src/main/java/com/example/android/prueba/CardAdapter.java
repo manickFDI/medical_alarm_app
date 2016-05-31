@@ -1,12 +1,6 @@
 package com.example.android.prueba;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -180,7 +174,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     private class DeleteNewTask extends AsyncTask<Integer, Void, Void> {
 
         //private static final String MY_IP = "10.0.2.2";
-        private static final String MY_IP = "192.168.1.33";
+        private static final String MY_IP = "147.96.80.89";
         private static final String MY_URL = "http://" + MY_IP + ":5000/malarm/api/news/"; //OJO!! No usar la 127.0.0.1
 
         @Override
